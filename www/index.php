@@ -52,10 +52,10 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
   <img height=256 width=256 src="/img/hardinfo_logo.png">
   <img height=256 src="/img/tux.png">
 <h1>Hardinfo2</h1>
-<a href="/img/?img=hardinfo1.png"><img src="/img/hardinfo1.png" width=33% height=33%></a>
-<a href="/img/?img=hardinfo4.png"><img src="/img/hardinfo4.png" width=33% height=33%></a><br>
-<a href="/img/?img=hardinfo3.png"><img src="/img/hardinfo3.png" width=33% height=33%></a>
-<a href="/img/?img=hardinfo2.png"><img src="/img/hardinfo2.png" width=33% height=33%></a><br>
+<a href="/img/?img=hardinfo1.png"><img src="/img/hardinfo1.png" width=400></a>
+<a href="/img/?img=hardinfo4.png"><img src="/img/hardinfo4.png" width=400></a><br>
+<a href="/img/?img=hardinfo3.png"><img src="/img/hardinfo3.png" width=400></a>
+<a href="/img/?img=hardinfo2.png"><img src="/img/hardinfo2.png" width=400></a><br>
 
 <article>
 <b>System Information and Benchmark for Linux Systems</b> - Initially created in 2003 by lpereira.<br>

@@ -16,9 +16,10 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
   //Save data
   if($_SERVER['REQUEST_METHOD']=="POST"){
       //Test mariadb
-      $db=mysqli_connect("127.0.0.1","hardinfo","hardinfo","hardinfo");
-      mysqli_query($db,"insert into test values ('".file_get_contents("php://input")."','','');");
+      //$db=mysqli_connect("127.0.0.1","hardinfo","hardinfo","hardinfo");
+      //mysqli_query($db,"insert into test values ('".file_get_contents("php://input")."','','');");
 
+      //Currently looping through go-server - TODO 
       $options = array('http' => array(
       'method' => 'POST',
       'content' => file_get_contents("php://input"),
@@ -28,6 +29,7 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
 
   //Fetch data
   if($_SERVER['REQUEST_METHOD']=="GET"){
+    //Currently looping through go-server - TODO
     echo file_get_contents("http://127.0.0.1".$_SERVER['REQUEST_URI']);
   }
   
@@ -86,7 +88,7 @@ Has online benchmark and some fixes/updates from the last 10 years.<br>
    echo "<article><table>";
    echo "<tr><td colspan=3><h2>Results from hardinfo database</h2></td></tr>";  
    //TODO use mariadb instead
-   $db = new SQLite3('../hardinfo-database.db');
+   $db = new SQLite3('../../hardinfo-database.db');
    echo "<tr><td valign=top><table>"; 
    results($db,"CPU Blowfish (Single-thread)","desc");
    results($db,"CPU Blowfish (Multi-thread)","desc");

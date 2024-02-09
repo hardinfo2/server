@@ -16,9 +16,7 @@ Changes in this repository are updated every hour on the server.
 
 License
 ------
-The Project License has been changed in 2024 from GPL2 to **GPL2 or later**
-
-Because we use LGPL2.1+ and GPL3 code. To future proof the project, lpereira and other developers has agreed to change license of source code also to GPL2+. (https://github.com/lpereira/hardinfo/issues/530) (https://github.com/lpereira/hardinfo/issues/707).
+The Project License is **GPL2 or later**
 
 It is all about open source and creating together - Read more about GPL license here: https://www.gnu.org/licenses/gpl-faq.html#AllCompatibility
 

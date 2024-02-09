@@ -1,12 +1,12 @@
 <?php
 //Show Image
-if(isset($_GET['img'])){//substr($_SERVER['REQUEST_URI'],0,5)=="/img/?"){
-  echo '<html><head><title>hardinfo.bigbear.dk</title>
+if(isset($_GET['img'])){
+  echo '<html><head><title>hardinfo2.org</title>
   <meta charset="utf-8"/><meta name="robots" content="noindex"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/default.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico"></head><body>';
-  if(isset($_GET['img'])) {echo "<a href='/'><img src='/img/".$_GET['img']."'><h1>Click on Picture to Return</h1></a>";}
+  echo "<a href='/'><img src='/img/".basename($_GET['img'])."'><h1>Click on Picture to Return</h1></a>";
   echo "</body></html>";
   exit(0);
 }
@@ -24,13 +24,13 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
       'method' => 'POST',
       'content' => file_get_contents("php://input"),
       'header' => "Content-Type: application/octet-stream\r\n"));
-    echo file_get_contents("http://127.0.0.1".$_SERVER['REQUEST_URI'],false,stream_context_create($options));
+    echo file_get_contents("http://127.0.0.1:90".$_SERVER['REQUEST_URI'],false,stream_context_create($options));
   }
 
   //Fetch data
   if($_SERVER['REQUEST_METHOD']=="GET"){
     //Currently looping through go-server - TODO
-    echo file_get_contents("http://127.0.0.1".$_SERVER['REQUEST_URI']);
+    echo file_get_contents("http://127.0.0.1:90".$_SERVER['REQUEST_URI']);
   }
   
   exit(0);
@@ -41,7 +41,7 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
 <!doctype html>
 <html>
 <head>
-<title>hardinfo.bigbear.dk</title>
+<title>hardinfo2.org</title>
 <meta charset="utf-8"/>
 <meta name="robots" content="noindex"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,7 +71,7 @@ Has online benchmark and some fixes/updates from the last 10 years.<br>
 
 
 <?php
-//Show results from database
+//---- Show results from database ------
    function results($db,$bench,$sort){ 
      $results = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where benchmark_type="'.$bench.'" group by cpu_name,benchmark_type order by benchmark_type,res '.$sort.';');
      $old="";

@@ -1,4 +1,4 @@
-Hardinfo2 - Www-Server
+Hardinfo2 - WWW-Server
 ======================
 
 This is the web server for hardinfo2. 

@@ -3,6 +3,7 @@ Hardinfo2 - WWW-Server
 
 This is the web server for hardinfo2. 
 It takes care of the project homepage and the API interface to hardinfo2 online benchmarking.
+It is using a standard LAMP server (Linux, Apache2, MariaDb, PHP)
 
 Status
 ------

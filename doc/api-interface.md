@@ -1,11 +1,17 @@
-api interface
+API Interface
 -------------
+
+The API interface is very simple - GET or POST to http://api.hardinfo2.org/benchmark.json
 
 WIP - Please continue documenting the api interface, thanx.
 
+GET - Example
+-------------
+Just go to http://api.hardinfo2.org/benchmark.json
 
-below this is an example of data being sent to the server:
-
+POST Example
+------------
+```
 {
   "CPU Blowfish (Single-thread)" : {
     "Board" : "Intel 440BX Desktop Reference Platform (VMware VMware Virtual Platform)",
@@ -359,3 +365,4 @@ below this is an example of data being sent to the server:
     "BenchmarkVersion" : 1000020
   }
 }
+```

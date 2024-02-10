@@ -1,23 +1,24 @@
-database - MariaDB
+Database - MariaDB
 ------------------
 
 WIP - Please continue documenting the database, thanx.
 
-settings database
+Settings Table
 -----------------
+```
 CREATE TABLE `settings` (
   `name` varchar(30) NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
-
+```
 
 right now only contains one record "dbver=1", this will be used to upgrade the database via github.
 
 
-incoming benchmark results from json
+Incoming Benchmark (results from JSON) Table
 --------------------------------------
-
+```
 CREATE TABLE `benchmark_result` (
   `benchmark_type` text DEFAULT NULL,
   `benchmark_result` double DEFAULT NULL,
@@ -45,8 +46,8 @@ CREATE TABLE `benchmark_result` (
   `num_nodes` int(11) DEFAULT NULL,
   `timestamp` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+```
 
-
-outgoing benchmark results to json
+Outgoing Benchmark (results to JSON) Table
 -----------------------------------
-will be pulled from the same table for a start
+Will be pulled from the same table for a start

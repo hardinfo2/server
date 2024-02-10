@@ -49,25 +49,34 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <img height=180 width=180 src="/img/hardinfo2_logo.png">
-  <img height=180 src="/img/hardinfo2_text.png">
-  <img height=180 src="/img/tux.png"><br>
-<a href="/img/?img=hardinfo1.png"><img src="/img/hardinfo1.png" width=400></a>
-<a href="/img/?img=hardinfo4.png"><img src="/img/hardinfo4.png" width=400></a><br>
-<a href="/img/?img=hardinfo3.png"><img src="/img/hardinfo3.png" width=400></a>
-<a href="/img/?img=hardinfo2.png"><img src="/img/hardinfo2.png" width=400></a><br>
-
 <article>
-<b>System Information and Benchmark for Linux Systems</b> - Initially created in 2003 by lpereira.<br>
-Many has helped testing and develop code, made art/graphics and translations for hardinfo2 open source project GPL2+<br>
+<table><tr><td colspan=3>
+<img height=150 width=150 src="/img/hardinfo2_logo.png">
+<img height=150 src="/img/hardinfo2_text.png">
+<img height=150 src="/img/tux.png">
+</td></tr><tr><td colspan=3>
+<a href="/img/?img=hardinfo1.png"><img src="/img/hardinfo1.png" width=350></a>
+<a href="/img/?img=hardinfo4.png"><img src="/img/hardinfo4.png" width=350></a>
+</td></tr><tr><td colspan=3>
+<a href="/img/?img=hardinfo3.png"><img src="/img/hardinfo3.png" width=350></a>
+<a href="/img/?img=hardinfo2.png"><img src="/img/hardinfo2.png" width=350></a>
+</td></tr><tr><td colspan=3>
+<b>System Information and Benchmark for Linux Systems</b><br>
+- Initially created in 2003 by lpereira.<br>
+Many has helped testing and develop code, made art/graphics and written<br>
+translations for hardinfo2 open source project GPL2+<br>
 <br>
 Now, finally released after more than 10 years with no releases.<br>
 Has online benchmark and some fixes/updates from the last 10 years.<br>
 <br>
-<b>Developers are welcome</b> - there is so much fun we can do. Program is written in C has lot of kernel access and the webserver is a LAMP (Linux Apache2 MariaDB PHP). Lots of fun technologies to add on to. Interested? - Please join github project and join the discussion.<br>
+<b>Developers are welcome</b><br>
+- There is so much fun we can do. Program is written in C has lot of <br>
+kernel access and the webserver is a LAMP (Linux Apache2 MariaDB PHP).<br>
+Lots of fun technologies to add on to. Interested?<br>
+- Please join github project and join the discussion.<br>
 <p>Get hardinfo2 source from:<br><a href='https://github.com/hardinfo2/hardinfo2'>https://github.com/hardinfo2/hardinfo2</a></p>
 <p>Get hardinfo2 prebuilds from:<br><a href='https://github.com/hardinfo2/hardinfo2/releases/tag/release-2.0.1pre'>https://github.com/hardinfo2/hardinfo2/releases/tag/release-2.0.1pre</a></p>
-<br></article>
+</td></tr>
 
 
 <?php
@@ -85,7 +94,6 @@ Has online benchmark and some fixes/updates from the last 10 years.<br>
      }
    }
 
-   echo "<article><table>";
    echo "<tr><td colspan=3><h2>Results from hardinfo database</h2></td></tr>";  
    //TODO use mariadb instead
    $db = new SQLite3('../../hardinfo-database.db');

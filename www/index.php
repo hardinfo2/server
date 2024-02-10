@@ -49,9 +49,9 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <img height=256 width=256 src="/img/hardinfo_logo.png">
-  <img height=256 src="/img/tux.png">
-<h1>Hardinfo2</h1>
+  <img height=180 width=180 src="/img/hardinfo2_logo.png">
+  <img height=180 src="/img/hardinfo2_text.png">
+  <img height=180 src="/img/tux.png"><br>
 <a href="/img/?img=hardinfo1.png"><img src="/img/hardinfo1.png" width=400></a>
 <a href="/img/?img=hardinfo4.png"><img src="/img/hardinfo4.png" width=400></a><br>
 <a href="/img/?img=hardinfo3.png"><img src="/img/hardinfo3.png" width=400></a>

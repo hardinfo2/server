@@ -17,6 +17,8 @@ Development
 ----
 Changes in this repository are updated every hour on the server.
 
+Please checkout the doc folder, which has more documentation about development.
+
 License
 ------
 The Project License is **GPL2 or later**

@@ -59,7 +59,7 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
 
 <article>
 <b>System Information and Benchmark for Linux Systems</b> - Initially created in 2003 by lpereira.<br>
-Many has helped testing and develope code, made art/graphics and translations for hardinfo2 open source project GPL2+<br>
+Many has helped testing and develop code, made art/graphics and translations for hardinfo2 open source project GPL2+<br>
 <br>
 Now, finally released after more than 10 years with no releases.<br>
 Has online benchmark and some fixes/updates from the last 10 years.<br>

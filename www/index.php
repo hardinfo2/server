@@ -11,7 +11,7 @@ if(isset($_GET['img'])){
   exit(0);
 }
 
-//API Interface - TODO: Implement JSON store and fetch here to mariadb
+//API Interface
 if($_SERVER['REQUEST_URI']=="/benchmark.json"){
   //Save data
   if($_SERVER['REQUEST_METHOD']=="POST"){
@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
              num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
              gpu_desc, pointer_bits, data_from_super_user, used_threads,
              elapsed_time, machine_data_version, legacy, num_nodes
-	     from benchmark_result where benchmark_type='".$rbt[0]."' group by cpu_name");//,pointer_bits;");
+	     from benchmark_result where benchmark_type='".$rbt[0]."' group by cpu_name order by rand() limit 50");//,pointer_bits;");
          while($r=$q->fetch_array()){
 	    $a=array();
 	    $a['MachineId']=$r[0];

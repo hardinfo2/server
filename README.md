@@ -10,8 +10,6 @@ It is using a standard LAMP server (Linux, Apache2, MariaDb, PHP)
 Status
 ------
  - Has an initial homepage for the project and shows some results from the benchmarking data
- - Is currently using the GO-server with sqllite3 database.
- - TODO: add save data(JSON->Mariadb), fetch data(Mariadb->JSON)
 
 Development
 ----

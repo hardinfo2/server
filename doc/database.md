@@ -37,14 +37,15 @@ CREATE TABLE `benchmark_result` (
   `gpu_desc` text DEFAULT NULL,
   `pointer_bits` int(11) DEFAULT NULL,
   `data_from_super_user` int(11) DEFAULT NULL,
-  `user_threads` int(11) DEFAULT NULL,
-  `benchmark_version` text DEFAULT NULL,
+  `used_threads` int(11) DEFAULT NULL,
+  `benchmark_version` int(11) DEFAULT NULL,
   `user_note` text DEFAULT NULL,
   `elapsed_time` double DEFAULT NULL,
   `machine_data_version` int(11) DEFAULT NULL,
   `legacy` int(11) DEFAULT NULL,
   `num_nodes` int(11) DEFAULT NULL,
-  `timestamp` int(11) DEFAULT NULL
+  `timestamp` int(11) DEFAULT NULL,
+  `machine_type` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 ```
 

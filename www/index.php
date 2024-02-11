@@ -74,49 +74,94 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
 
 //----------------- WEB PAGE ------------------------
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<title>hardinfo2.org</title>
-<meta charset="utf-8"/>
-<meta name="robots" content="noindex"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/css/default.css">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="utf-8">
+    <title>hardinfo2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="A System Information and Benchmark for Linux Systems">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/default.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-<article>
-<table><tr><td colspan=3>
-<img height=150 width=150 src="/img/hardinfo2_logo.png">
-<img height=150 src="/img/hardinfo2_text.png">
-<img height=150 src="/img/tux.png">
-</td></tr><tr><td colspan=3>
-<a href="/img/?img=hardinfo1.png"><img src="/img/hardinfo1.png" width=350></a>
-<a href="/img/?img=hardinfo4.png"><img src="/img/hardinfo4.png" width=350></a>
-</td></tr><tr><td colspan=3>
-<a href="/img/?img=hardinfo3.png"><img src="/img/hardinfo3.png" width=350></a>
-<a href="/img/?img=hardinfo2.png"><img src="/img/hardinfo2.png" width=350></a>
-</td></tr><tr><td colspan=3>
-<b>System Information and Benchmark for Linux Systems</b><br>
-- Initially created in 2003 by lpereira.<br>
-Many has helped testing and develop code, made art/graphics and written<br>
-translations for hardinfo2 open source project GPL2+<br>
-<br>
-Now, finally released after more than 10 years with no releases.<br>
-Has online benchmark and some fixes/updates from the last 10 years.<br>
-<br>
-<b>Developers are welcome</b><br>
-- There is so much fun we can do. Program is written in C has lot of <br>
-kernel access and the webserver is a LAMP (Linux Apache2 MariaDB PHP).<br>
-Lots of fun technologies to add on to. Interested?<br>
-- Please join github project and join the discussion.<br>
-<p>Get hardinfo2 source from:<br><a href='https://github.com/hardinfo2/hardinfo2'>https://github.com/hardinfo2/hardinfo2</a></p>
-<p>Get hardinfo2 prebuilds from:<br><a href='https://github.com/hardinfo2/hardinfo2/releases/tag/release-2.0.1pre'>https://github.com/hardinfo2/hardinfo2/releases/tag/release-2.0.1pre</a></p>
-</td></tr>
+    <section class="hero is-fullheight is-default is-bold">
+        <nav class="navbar is-transparent">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="/">
+                        <img src="/img/hardinfo2_text.png" alt="[hardinfo2]">
+                    </a>
 
+                    <div id="navbar-toggle" class="navbar-burger">
+						<span></span>
+						<span></span>
+						<span></span>
+                    </div>
+                </div>
 
+                <div id="navbar-menu" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a href="javascript:void(0);" class="navbar-item">Features</a>
+                        <a href="javascript:void(0);" class="navbar-item">Log in</a>
+                        <a href="javascript:void(0);" class="navbar-item">
+                            <span class="button signup-button is-danger is-rounded">Sign up</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <div class="column is-5 is-offset-1 landing-caption">
+                        <h1 class="title is-1 is-spaced">hard<span class="has-text-link">info</span><span class="has-text-danger">2</span></h1>
+                        <h2 class="subtitle is-5 has-text-grey">A System Information and Benchmark for Linux Systems</h2>
+
+                        <a target="_blank" href="https://github.com/hardinfo2/hardinfo2/releases/" class="button is-link is-rounded">
+							<span class="icon">
+								<i class="fas fa-download"></i>
+							</span>
+							<span>Download</span>
+						</a>
+
+						<a target="_blank" href="https://github.com/hardinfo2/hardinfo2/" class="button is-dark is-rounded">
+							<span class="icon">
+								<i class="fab fa-github"></i>
+							</span>
+							<span>GitHub</span>
+						</a>
+                    </div>
+
+                    <div class="column is-5">
+                        <figure class="image">
+                            <img src="/img/hardinfo1.png" alt="hardinfo2 screenshot">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+		const navbarToggle = document.getElementById('navbar-toggle');
+		const navbarMenu = document.getElementById('navbar-menu');
+
+		navbarToggle.addEventListener('click', () => {
+			navbarToggle.classList.toggle('is-active');
+			navbarMenu.classList.toggle('is-active');
+		});
+    </script>
+</body>
+</html>
 <?php
 //---- Show results from database ------
+/*
    function results($db,$bench,$sort){ 
      $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where benchmark_type="'.$bench.'" group by cpu_name,benchmark_type order by benchmark_type,res '.$sort.';');
      $old="";
@@ -148,4 +193,5 @@ Lots of fun technologies to add on to. Interested?<br>
    results($db,"SysBench Memory (Single-thread)","desc");
    results($db,"SysBench Memory (Multi-thread)","desc");
    echo "</table></td></tr></table></article>";
+   */
 ?>

@@ -1,8 +1,38 @@
-body { text-align: center; padding: 20px; font: 20px Helvetica, sans-serif; color: #333; }
-@media (min-width: 768px){body{ padding-top: 10px; }}
-h1 { font-size: 50px; color:blue; }
-article { display: block; text-align: left; max-width: 800px; margin: 0 auto; }
-a { color: #dc8100; text-decoration: none; }
-a:hover { color: #333; text-decoration: none; }
-#ip { color:gray; font-size:10px;}
-c { text-align:center;}
+.navbar .navbar-item {
+	color: #999;
+}
+
+.navbar .navbar-burger {
+	color: #a9abac;
+}
+
+.navbar .navbar-burger span {
+	height: 2px;
+}
+
+.hero-body .title {
+	font-family: "Montserrat", sans-serif;
+	color: #444f60;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .navbar-menu .navbar-end a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 767px) {
+	.landing-caption {
+		text-align: center;
+	}
+
+	.navbar-menu .navbar-item {
+		text-align: center !important;
+	}
+
+	.navbar-menu .navbar-item .signup-button {
+		width: 100% !important;
+	}
+}

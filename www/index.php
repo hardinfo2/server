@@ -1,5 +1,5 @@
 <?php
-//Show Image
+//Show Image - TO BE REMOVED!!
 if(isset($_GET['img'])){
   echo '<html><head><title>hardinfo2.org</title>
   <meta charset="utf-8"/><meta name="robots" content="noindex"/>
@@ -70,8 +70,5 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
   exit(0);
 }
 
-
-//This will do for now
-echo file_get_contents("./index.html");
 
 ?>

@@ -12,5 +12,5 @@ wget -O /var/www/html/server/www/vendor.ids https://raw.githubusercontent.com/ha
 #backup to github - serverDB
 cd /var/www/html/serverDB
 mysqldump hardinfo |gzip -c > hardinfo2.sql.tgz
-git commit -m "Database Backup"
+git commit -a -m "Database Backup"
 git push

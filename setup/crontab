@@ -1,0 +1,6 @@
+
+
+#hardinfo update every hour
+0 * * * * root /bin/bash /var/www/html/server/setup/update_hardinfo_hour.sh
+#hardinfo update every 14 day
+0 0 * * 0 root /bin/bash /var/www/html/server/setup/update_hardinfo_week.sh

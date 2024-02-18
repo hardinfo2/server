@@ -15,7 +15,9 @@ systemclt restart mariadb
 
 echo "Fetching latest database backup"
 cd /var/www/html
-git clone https://github.com/hardinfo2/serverDB
+echo "Please enter your github passkey:"
+read passkey
+git clone https://$passkey@github.com/hardinfo2/serverDB
 cd serverDB
 cat hardinfo2.sql |mysql -u root
 cd /var/www/html/server/setup/

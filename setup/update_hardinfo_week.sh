@@ -9,5 +9,8 @@ wget -O /var/www/html/server/www/kernel-module-icons.json https://raw.githubuser
 wget -O /var/www/html/server/www/sdcard.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/sdcard.ids
 wget -O /var/www/html/server/www/vendor.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/vendor.ids
 
-#TODO
 #backup to github - serverDB
+cd /var/www/html/serverDB
+mysqldump hardinfo |gzip -c > hardinfo2.sql.tgz
+git commit -m "Database Backup"
+git push

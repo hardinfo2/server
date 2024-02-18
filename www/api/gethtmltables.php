@@ -4,7 +4,7 @@
 
 
   function results($db,$bench,$sort){
-    $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where benchmark_type="'.$bench.'" group by cpu_name,benchmark_type order by benchmark_type,res '.$sort.';');
+    $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where benchmark_type="'.$bench.'" group by cpu_name order by res '.$sort.';');
     $old="";
     while ($row = $q->fetch_array()) {
       if($old!=$row[1]) {

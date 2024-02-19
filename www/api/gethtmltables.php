@@ -17,7 +17,7 @@
   }
 
   echo "<table>";
-  echo "<tr><td colspan=3><h2>Results from hardinfo database</h2></td></tr>";
+  echo "<tr><td colspan=3><h2>Results from <font color=black>hard<font color=blue>info<font color=red>2</font></font></font> database</h2></td></tr>";
   $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
   echo "<tr><td valign=top><table>";
   results($db,"CPU Blowfish (Single-thread)","desc");

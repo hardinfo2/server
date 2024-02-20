@@ -30,6 +30,7 @@
   echo "</table></td><td>&nbsp;&nbsp;&nbsp;</td><td valign=top><table valign=top>";
   results($db,"FPU FFT","desc");
   results($db,"FPU Raytracing (Single-thread)","desc");
+  results($db,"Internal Network Speed","desc");
   results($db,"SysBench CPU (Single-thread)","desc");
   results($db,"SysBench CPU (Multi-thread)","desc");
   results($db,"SysBench Memory (Single-thread)","desc");

@@ -14,9 +14,9 @@ CREATE TABLE `settings` (
 ```
 
 *settings*
-dbver - this will be used to upgrade the database via github.
-github-refresh - timer for max 1 per hour request for release information
-github-releasetxt - the cached releasetxt from github
+ - dbver - this will be used to upgrade the database via github.
+ - github-refresh - timer for max 1 request per hour for release information
+ - github-releasetxt - the cached releasetxt from github
 
 
 Incoming Benchmark (results from JSON) Table

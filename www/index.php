@@ -70,5 +70,19 @@ if($_SERVER['REQUEST_URI']=="/benchmark.json"){
   exit(0);
 }
 
+if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
+  //Fetch data
+  if($_SERVER['REQUEST_METHOD']=="GET"){
+      $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
+      $q=$mysqli->query("Select value from settings where name='blobs-update-version'");
+      $r=$q->fetch_array();
+      $a=array();
+      $a['update-version']=$r[0];
+      $a['program-version']=$_GET['ver'];
+      echo json_encode($a);
+  }
+  exit(0);
+}
+
 
 ?>

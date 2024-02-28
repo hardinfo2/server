@@ -8,12 +8,15 @@ Settings Table
 ```
 CREATE TABLE `settings` (
   `name` varchar(30) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+    `value` blob NOT NULL,
+      PRIMARY KEY (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 ```
 
-right now only contains one record "dbver=1", this will be used to upgrade the database via github.
+*settings*
+dbver - this will be used to upgrade the database via github.
+github-refresh - timer for max 1 per hour request for release information
+github-releasetxt - the cached releasetxt from github
 
 
 Incoming Benchmark (results from JSON) Table
@@ -46,7 +49,7 @@ CREATE TABLE `benchmark_result` (
   `num_nodes` int(11) DEFAULT NULL,
   `timestamp` int(11) DEFAULT NULL,
   `machine_type` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 ```
 
 Outgoing Benchmark (results to JSON) Table

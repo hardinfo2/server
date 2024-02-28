@@ -1,17 +1,34 @@
 <?php
+$db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
+$r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600 from settings where name='github-refresh'"));
 
-$opts = [
-    'http' => [
-      'method' => 'GET',
-      'header' => [
-          'User-Agent: PHP'
-       ]
-    ]
-];
+if(1*$r[0]){ //refresh
 
-$context = stream_context_create($opts);
+    $opts = [
+        'http' => [
+            'method' => 'GET',
+            'header' => [
+                'User-Agent: PHP'
+             ]
+         ]
+    ];
 
-$releasetxt = file_get_contents('https://api.github.com/repos/hardinfo2/hardinfo2/releases', false, $context);
+    $context = stream_context_create($opts);
+    $releasetxt = file_get_contents('https://api.github.com/repos/hardinfo2/hardinfo2/releases', false, $context);
+    $q=$db->prepare("update settings set value=? where name='github-releasetxt'");
+    $q->bind_param('b',$releasetxt);
+    $q->send_long_data(0,$releasetxt);
+    $q->execute();
+
+    mysqli_query($db,"update settings set value=unix_timestamp(now()) where name='github-refresh'");
+
+}else{
+
+    $r=mysqli_fetch_row(mysqli_query($db,"select value from settings where name='github-releasetxt'"));
+    $releasetxt=$r[0];
+}
+mysqli_close($db);
+
 $releases = json_decode($releasetxt);
 
 $action="";

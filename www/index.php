@@ -84,5 +84,6 @@ if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
   exit(0);
 }
 
-
+header('HTTP/1.0 404 Not Found');
+http_response_code(404);
 ?>

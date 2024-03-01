@@ -26,10 +26,11 @@
 
   echo '],
     "datasets": [{
-        "label": "'.$BT.'",
-	"borderColor": "red",
-	"backgroundColor": "red",
-        "data": [';
+        "label": "'.$BT.'",';
+    if($BT!="Internal Network Speed") echo '
+        "borderColor": "red",
+	"backgroundColor": "red",';
+        echo '"data": [';
 
     //Benchmark data
     $i=0;
@@ -40,7 +41,9 @@
     }
 
   echo '] }]},
-    "options": {"maintainAspectRatio":false, "indexAxis":"y", "responsive": true, "scales": {"x":{"type":"logarithmic", "y":{"type":"category"}} } }
+    "options": {"maintainAspectRatio":false, "indexAxis":"y", "responsive": true';
+    if($BT!="Internal Network Speed") echo ', "scales": {"x":{"type":"logarithmic", "y":{"type":"category"}} }';
+    echo '}
     }';
 
 ?>

@@ -20,12 +20,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .then((text) => {
 	    draw_chart(JSON.parse(text),'chart1');
 	});    
-    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Multi-thread)')
+//    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Multi-thread)')
+    fetch('/api/getcomparechart?CPU1=AMD+Ryzen+9+7950X&CPU2=AMD+Ryzen+9+5950X&CPU3=AMD+EPYC+9354P')
 	.then((response) => response.text())
         .then((text) => {
 	    draw_chart(JSON.parse(text),'chart2');
 	});    
-    fetch('/api/getbenchmarkchart?BT=CPU+CryptoHash')
+    fetch('/api/getbenchmarkchart?BT=Internal+Network+Speed')
 	.then((response) => response.text())
         .then((text) => {
 	    draw_chart(JSON.parse(text),'chart3');

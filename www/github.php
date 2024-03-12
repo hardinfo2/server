@@ -71,15 +71,26 @@ if($action=="latest_prerelease"){
     }
 }
 
-//get latest git release fallback to master
+//get latest git release
+//used by users to switch to stable builds
+//will get latest prerelease just before release
+//release is only build by distros, but the prerelease just before is the same as distro release
 if($action=="latest_git_release"){
     $n=0;
     $url="master";
+    $foundrelease=0;
     while(isset($releases[$n])){
-        if(!$releases[$n]->prerelease){
-            $url = $releases[$n]->tag_name;
-	    $n=-2;
-        }
+        if($foundrelease==0){
+            if(!$releases[$n]->prerelease){
+	        $foundrelease=1;
+                $url = $releases[$n]->tag_name;
+            }
+	} else {
+            if($releases[$n]->prerelease){
+                $url = $releases[$n]->tag_name;
+	        $n=-2;
+            }
+	}
         $n++;
     }
     echo $url;

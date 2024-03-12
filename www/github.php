@@ -35,6 +35,8 @@ $action="";
 if(isset($_GET['latest'])) $action="latest";
 if(isset($_GET['latest_release'])) $action="latest_release";
 if(isset($_GET['latest_prerelease'])) $action="latest_prerelease";
+#
+if(isset($_GET['latest_git_release'])) $action="latest_git_release";
 
 $url="";
 
@@ -68,6 +70,22 @@ if($action=="latest_prerelease"){
         $n++;
     }
 }
+
+//get latest git release fallback to master
+if($action=="latest_git_release"){
+    $n=0;
+    $url="master";
+    while(isset($releases[$n])){
+        if(!$releases[$n]->prerelease){
+            $url = $releases[$n]->tag_name;
+	    $n=-2;
+        }
+        $n++;
+    }
+    echo $url;
+    exit(0);
+}
+
 
 if($url!=""){
     header('Location: ' . $url);

@@ -10,7 +10,7 @@
   $CPU2="AMD Ryzen 9 7950X";if(isset($_GET['CPU2'])) $CPU2=mysqli_real_escape_string($db,$_GET['CPU2']);
   $CPU3="";if(isset($_GET['CPU3'])) {$CPU3=mysqli_real_escape_string($db,$_GET['CPU3']);$cn=3;}
 
-  $q = $db->query('SELECT benchmark_type,round(avg(if(cpu_name="'.$CPU1.'",benchmark_result,NULL)),2) res1,round(avg(if(cpu_name="'.$CPU2.'",benchmark_result,NULL)),2) res2,round(avg(if(cpu_name="'.$CPU3.'",benchmark_result,NULL)),2) res3 FROM benchmark_result where cpu_name in ("'.$CPU1.'","'.$CPU2.'","'.$CPU3.'") group by benchmark_type order by benchmark_type;');
+  $q = $db->query('SELECT benchmark_type,round(avg(if(cpu_name="'.$CPU1.'",benchmark_result,NULL)),2) res1,round(avg(if(cpu_name="'.$CPU2.'",benchmark_result,NULL)),2) res2,round(avg(if(cpu_name="'.$CPU3.'",benchmark_result,NULL)),2) res3 FROM benchmark_result where left(machine_type,7)!="Virtual" and  cpu_name in ("'.$CPU1.'","'.$CPU2.'","'.$CPU3.'") group by benchmark_type order by benchmark_type;');
   $c = $q->num_rows;
   $r = $q->fetch_all();
 

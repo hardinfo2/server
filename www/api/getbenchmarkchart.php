@@ -7,7 +7,7 @@
   $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
   $BT="";if(isset($_GET['BT'])) $BT=mysqli_real_escape_string($db,$_GET['BT']);
 
-  $q = $db->query('SELECT cpu_name,round(avg(benchmark_result),2) res FROM benchmark_result where benchmark_type="'.$BT.'" group by cpu_name order by res desc;');
+  $q = $db->query('SELECT cpu_name,round(avg(benchmark_result),2) res FROM benchmark_result where left(machine_type,7)!="Virtual" and benchmark_type="'.$BT.'" group by cpu_name order by res desc;');
   $c = $q->num_rows;
   $r = $q->fetch_all();
 

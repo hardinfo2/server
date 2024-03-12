@@ -4,7 +4,7 @@
 
 
   $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
-    $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result group by benchmark_type,cpu_name order by benchmark_type,res desc;');
+    $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where left(machine_type,7)!="Virtual" group by benchmark_type,cpu_name order by benchmark_type,res desc;');
     $old="";
     echo "<table width=100%>";
     while ($row = $q->fetch_array()) {

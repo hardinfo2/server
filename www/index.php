@@ -12,7 +12,7 @@ if(isset($_GET['img'])){
 }
 
 //API Interface
-if($_SERVER['REQUEST_URI']=="/benchmark.json"){
+if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
   //Save data
   if($_SERVER['REQUEST_METHOD']=="POST"){
       //Store JSON in Mariadb

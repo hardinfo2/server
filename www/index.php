@@ -1,18 +1,8 @@
 <?php
-//Show Image - TO BE REMOVED!!
-if(isset($_GET['img'])){
-  echo '<html><head><title>hardinfo2.org</title>
-  <meta charset="utf-8"/><meta name="robots" content="noindex"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/default.css">
-  <link rel="icon" type="image/x-icon" href="favicon.ico"></head><body>';
-  echo "<a href='/'><img width=100% src='/img/".basename($_GET['img'])."'><h1>Click on Picture to Return</h1></a>";
-  echo "</body></html>";
-  exit(0);
-}
 
 //API Interface
 if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
+
   //Save data
   if($_SERVER['REQUEST_METHOD']=="POST"){
       //Store JSON in Mariadb
@@ -24,6 +14,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
           $stmt->execute();
       }
   }
+
   //Fetch data
   if($_SERVER['REQUEST_METHOD']=="GET"){
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
@@ -69,6 +60,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
   }
   exit(0);
 }
+
 
 if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
   //Fetch data

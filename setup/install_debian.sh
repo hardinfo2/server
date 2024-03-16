@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo " --  Install script is untested and is WIP  --"
+echo " --  Install script is for debian 12 - untested and is WIP  --"
 exit
 cd /var/www/html/server/setup/
 
@@ -11,7 +11,6 @@ echo "Settings up Mariadb..."
 cp -f 50-server.cnf /etc/mysql/mariadb.conf/
 systemclt enable mariadb
 systemclt restart mariadb
-#add user hardinfo,hardinfo
 
 echo "Fetching latest database backup"
 cd /var/www/html
@@ -19,7 +18,12 @@ echo "Please enter your github passkey:"
 read passkey
 git clone https://$passkey@github.com/hardinfo2/serverDB
 cd serverDB
-cat hardinfo2.sql |mysql -u root
+zcat hardinfo2.sql.tar.gz |mysql
+
+echo "add user hardinfo,hardinfo"
+echo "CREATE USER 'hardinfo'@'127.0.0.1' IDENTIFIED BY 'hardinfo';" | mysql
+echo "GRANT DELETE, EXECUTE, INSERT, LOCK TABLES, UPDATE ON hardinfo.* TO 'hardinfo'@'127.0.0.1';" | mysql
+echo "FLUSH PRIVILEGES;" | mysql
 cd /var/www/html/server/setup/
 
 echo "Settings up Apache2..."
@@ -29,7 +33,7 @@ systemctl stop apache2
 a2ensite hardinfo2
 
 echo "Installing certificate from LetsEncrypt"
-certbot --cert-only --standalone -D hardinfo2.org -D www.hardinfo2.org -D api.hardinfo2.org
+certbot certonly --standalone -D hardinfo2.org -D www.hardinfo2.org -D api.hardinfo2.org
 systemctl restart apache2
 
 echo "Setting up cron tasks..."

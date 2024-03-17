@@ -8,11 +8,29 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       //Store JSON in Mariadb
       $j=json_decode(file_get_contents("php://input"),true,3);
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
-      foreach($j as $k=>$v){
-          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),? );");
-          $stmt->bind_param('sdsssssiiiiisssiiiisdiiis',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType']);
-          $stmt->execute();
+      if(0){
+         $q=$mysqli->prepare("update settings set value=? where name='lastdata'");
+	 $post=file_get_contents("php://input");
+         $q->bind_param('b',$post);
+         $q->send_long_data(0,$post);
+         $q->execute();
+	 $q->close();
       }
+      $url=$_SERVER['SCRIPT_URI']."?".$_SERVER['QUERY_STRING'];
+      foreach($j as $k=>$v){
+          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,? );");
+          $stmt->bind_param('sdsssssiiiiisssiiiisdiiissss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url);
+          $stmt->execute();
+          if(0 && $stmt->error){
+             $q=$mysqli->prepare("update settings set value=? where name='lasterror'");
+             $q->bind_param('b',$stmt->error);
+             $q->send_long_data(0,$stmt->error);
+             $q->execute();
+	     $q->close();
+          }
+      }
+      $stmt->close();
+      $mysqli->close();
   }
 
   //Fetch data
@@ -57,6 +75,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
          }
       }
       echo json_encode($d);
+      $mysqli->close();
   }
   exit(0);
 }
@@ -72,9 +91,12 @@ if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
       $a['update-version']=$r[0];
       $a['program-version']=$_GET['ver'];
       echo json_encode($a);
+      $mysqli->close();
   }
   exit(0);
 }
+
+if(0) echo serialize($_SERVER);
 
 header('HTTP/1.0 404 Not Found');
 http_response_code(404);

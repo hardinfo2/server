@@ -5,6 +5,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 
   //Save data
   if($_SERVER['REQUEST_METHOD']=="POST"){
+      if(!isset($_GET['rel']) || $_GET['rel']>=0){
       //Store JSON in Mariadb
       $j=json_decode(file_get_contents("php://input"),true,3);
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
@@ -31,6 +32,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       }
       $stmt->close();
       $mysqli->close();
+      }
   }
 
   //Fetch data

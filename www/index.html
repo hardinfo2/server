@@ -4,17 +4,49 @@
 <title>hardinfo2.org</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="/css/default.css">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<script type="text/javascript" src="/js/example.js"></script>
+<script type="text/javascript" src="js/hardinfo2.js"></script>
 <script type="text/javascript" src="/js/chart.umd.js" integrity="sha256-dEAdc43T4D7l37O2hBIQ/ixOrYqWDEARykugt4qf2PM="></script>
-<script type="text/javascript" src="/js/chartjs-plugin-datalabels.js" integrity="sha256-IMCPPZxtLvdt9tam8RJ8ABMzn+Mq3SQiInbDmMYwjDg="></script>
 </head>
 <body>
+  <div class="topnav" id="myTopnav">
+    <a href="#" name="home" class="navlist active">
+      <font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font></a>
+    <a href="#" name="news" class="navlist">News</a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Bench Graphs <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-content">
+        <a href="#" name="bgnqueens" class="navlist">N-Queens</a>
+        <a href="#" name="bgnet" class="navlist">Internal Network Speed</a>
+      </div>
+    </div>
+    
+    <div class="dropdown">
+      <button class="dropbtn">Bench Stats <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-content">
+        <a href="#" name="bsnqueens" class="navlist">N-Queens</a>
+        <a href="#" name="bsnet" class="navlist">Internal Network Speed</a>
+      </div>
+    </div>
+    
+    <a href="#" name="benchmarkcompare" class="navlist">Bench Compare</a>
+    <a href="#" name="userguide" class="navlist">UserGuide</a>
+    <a href="#" name="history" class="navlist">History</a>
+    <a href="#" name="about" class="navlist">About</a>
+    <a href="#bars" class="icon">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+<div id="Page-home">
 <div>
-  <img width=15% src="/img/hardinfo2_logo.png">
-  <img width=50% src="/img/hardinfo2_text.png">
-  <img width=15% src="/img/tux.png">
+  <img width=10% src="/img/hardinfo2_logo.png">
+  <img width=40% src="/img/hardinfo2_text.png">
+  <img width=10% src="/img/tux.png">
 </div>
 
 <div class="slideshow-container">
@@ -37,7 +69,7 @@
     <img src="/img/hardinfo2.png" width=75%>
   </div>
 </div>
-<div style="text-align:center">
+<div>
   <span class="dot"></span>
   <span class="dot"></span>
   <span class="dot"></span>
@@ -52,9 +84,6 @@
 Many has helped testing and develop code, made art/graphics and written<br>
 translations for hardinfo2 open source project GPL2+<br>
 <br>
-Now, finally released after more than 10 years with no releases.<br>
-Has online benchmark and some fixes/updates from the last 10 years.<br>
-<br>
 <b>Developers, Translaters, Graphical Designers, etc. are Welcome</b><br>
 - There is so much fun we can do. Program is written in C. has lot of kernel access,<br>
 multi tasking and the webserver is a LAMP (Linux Apache2 MariaDB PHP) with<br>
@@ -63,18 +92,32 @@ Lots of fun technologies to add on to. Interested?<br>
 <br>
 - Please join Github Discussion. Get Source from GitHub or Download Prebuilds.<br>
 <br>
-<table><tr>
-<td><a href="https://github.com/hardinfo2/hardinfo2/discussions"><img height=48 src="img/discuss.png"></a></td>
-<td><a href="https://github.com/hardinfo2/hardinfo2"><img height=40 src="img/github.png"></a></td>
-<td><a href="/github/?latest_prerelease"><img height=45 src="img/download.png"></a></td>
-</tr></table>
+<div align=center>
+<a href="https://github.com/hardinfo2/hardinfo2/discussions"><img height=48 src="/img/discuss.png"></a>
+<a href="https://github.com/hardinfo2/hardinfo2"><img height=40 src="/img/github.png"></a>
+<a href="/github/?latest_prerelease"><img height=45 src="/img/download.png"></a>
+</div>
+</article>
+</div>
+
+
+<div id="Page-news" class="notactive">
+<article>
+<h2>Hardinfo2 has been Released.</h2>
+<b>Latest GitHub Release News:</b><br>
+<div id="githubnews"><br></div>
+<br>    
+<b>Other news:</b><br>
+New webpage for hardinfo2 (WIP - Want to help let us know...)<br>
 <br>
+We are working on releasing the program in all distros.<br>
 <br>
 <table width=100%>
 <tr><td bgcolor=#80C0FF colspan=3 align=center><b>Status for Distro branches</td></tr>
 <tr><td bgcolor=#60A0FF><b>Distro Branch</td><td bgcolor=#60A0FF><b>In Distro</td><td bgcolor=#60A0FF><b>Build from Source</td></tr>
 <tr><td>Fedora</td><td>38 -></td><td>23 -></td></tr>
-<tr><td>Centos/Redhat/Alma/Rocky</td><td>7 -> </td><td>(6) 7 -></td></tr>
+<tr><td>Centos/Redhat</td><td>7 -> </td><td>(6) 7 -></td></tr>
+<tr><td>Alma/Rocky/Oracle</td><td>7 -> </td><td>(6) 7 -></td></tr>
 <tr><td>SUSE/OpenSUSE</td><td>WIP</td><td>YES</td></tr>
 <tr><td>Debian++</td><td>WIP</td><td>(7) 8 -></td></tr>
 <tr><td>Ubuntu/Mint/PopOS++</td><td>WIP</td><td>16 -></td></tr>
@@ -83,15 +126,54 @@ Lots of fun technologies to add on to. Interested?<br>
 </table>
 PS: Numbers in () are working right now but might be unsupported in future releases.
 <br>
-<h2 align=center>Results from <font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font> database</h2>
-
-<div><canvas id="chart1" height=300></canvas></div>
-
-<div id="htmltables"></div>
-
-<div><canvas id="chart2" height=300></canvas></div>
-<div><canvas id="chart3" height=300></canvas></div>
 </article>
+</div>
+</div>
 
+<div id="Page-bgnqueens" class="notactive">
+  <div><canvas id="chart1"></canvas></div>
+</div>
+
+<div id="Page-bgnet" class="notactive">
+  <div><canvas id="chart3"></canvas></div>
+</div>
+
+<div id="Page-bsnqueens" class="notactive">
+  <div id="htmltables1"></div>
+</div>
+
+<div id="Page-bsnet" class="notactive">
+  <div id="htmltables2"></div>
+</div>
+
+
+<div id="Page-benchmarkcompare" class="notactive">
+  <div><canvas id="chart2"></canvas></div>
+</div>
+
+<div id="Page-userguide" class="notactive">
+<h2>Hardinfo2 User Guide</h2>
+<article>
+  <b>Frequently Asked Questions</b><br>
+  <br>
+  <br>
+  <b>Command Line Interface</b><br>
+  <br>
+  <br>
+</article>
+</div>
+
+<div id="Page-history" class="notactive">
+<h2>New History Page</h2>
+<article>We plan on making a history page for when Linux was young - This program is from that time and has evolved along side the Kernel. Please submit your input, pictures, stories, etc. on github discussion.
+</article>
+</div>
+
+<div id="Page-about" class="notactive">
+  <h2>Credits</h2>
+  hardinfo2 team members
+</div>
+
+<p align=left><i><font color=gray size=2>Copyright hardinfo2.org, Written by hwspeedy, 2024-</font></i></p>
 </body>
 </html>

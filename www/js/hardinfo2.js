@@ -1,5 +1,4 @@
-//Just an example - using vanilla js
-
+//Copyright hardinfo2 2024, written by hwspeedy
 //Showing a chart.js graph
 function draw_chart(graph,name) {
     var ctx = document.getElementById(name).getContext('2d');
@@ -29,12 +28,49 @@ function showSlides() {
 }
 
 
-//Fetching data - Can be improved...
+function toggleMenu() {
+    event.preventDefault();
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+	x.className += " responsive";
+    } else {
+	x.className = "topnav";
+    }
+}
+
+function showPage() {
+    console.log("showPage " + this.name);
+    //
+    event.preventDefault();
+    let navlist = document.querySelectorAll('.navlist');
+    for (let x = 0; x < navlist.length; x++) {
+	if (navlist[x] == this) {
+	    navlist[x].classList.add('active');
+	    document.getElementById("Page-" + navlist[x].name).style.display="block";
+	} else {
+	    navlist[x].classList.remove('active');
+	    document.getElementById("Page-" + navlist[x].name).style.display="none";
+	}
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    var elements=document.getElementsByClassName("icon");
+    for (var i = 0; i < elements.length; i++) {
+	elements[i].addEventListener('click', toggleMenu, false);
+    }
+
+    let navlist = document.querySelectorAll('.navlist');
+    for (let i = 0; i < navlist.length; i++) {
+	e=navlist[i];
+	navlist[i].addEventListener('click', showPage, false);
+    }
+
     fetch('/api/gethtmltables')
 	.then((response) => response.text())
         .then((text) => {
-	    htmltables.innerHTML=text;
+	    htmltables1.innerHTML=text;
+	    htmltables2.innerHTML=text;
 	});
     fetch('/api/getbenchmarkchart?BT=CPU+N-Queens')
 	.then((response) => response.text())

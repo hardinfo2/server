@@ -46,6 +46,8 @@ function showPage() {
     event.preventDefault();
     let navlist = document.querySelectorAll('.navlist');
     for (let x = 0; x < navlist.length; x++) {
+        //if(navlist[x].name.substring(1,2) === "bs") navlist[x].name="bsstat";
+	console.log(navlist[x].name);
 	if (navlist[x] == this) {
 	    navlist[x].classList.add('active');
 	    document.getElementById("Page-" + navlist[x].name).style.display="block";
@@ -56,11 +58,87 @@ function showPage() {
     }
 }
 
+function html_table(bmtypes,bmval,htmltable) {
+    text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=2 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
+    for(var i=0;i<bmval.length;i++){
+	text=text+"<tr><td>"+bmval[i][0]+"</td><td align=right>"+parseFloat(bmval[i][1]).toFixed(2)+"</td></tr>";
+    }
+    text=text+"</table>";
+    htmltable.innerHTML=text;
+}
+function create_tables(bm) {
+    var text="";
+    const bmval=new Array(15);
+    const bmtypes=new Array();
+    //Create top nav menu
+    //Json: 0:cpu,1:bmtype,2:value
+    for(var i=0; i<bm.length; i++){
+	if(! bmtypes.includes(bm[i][1].toString()) ) {
+	    bmtypes.push(bm[i][1].toString());
+            t=bmtypes.indexOf(bm[i][1].toString());
+	    bmval[t]=new Array();
+        } else {
+	    t=bmtypes.indexOf(bm[i][1].toString());
+	}
+        bmval[t].push( [bm[i][0],bm[i][2]] );
+    }
+    bmtypes.sort();
+    for(var i=0; i<bmtypes.length; i++){
+	text = text + '<a href="#" name="bs'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';
+    }
+    benchstat.innerHTML=text;
+    let navlist = document.querySelectorAll('.navlist');
+    for (let i = 0; i < navlist.length; i++) {
+	e=navlist[i];
+	navlist[i].addEventListener('click', showPage, false);
+    }
+    //Create html tables
+    if(bmtypes.length>0) bmval[0].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>1) bmval[1].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>2) bmval[2].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>3) bmval[3].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>4) bmval[4].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>5) bmval[5].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>6) bmval[6].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>7) bmval[7].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>8) bmval[8].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>9) bmval[9].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>10) bmval[10].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>11) bmval[11].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>12) bmval[12].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>13) bmval[13].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>14) bmval[14].sort((a,b)=>b[1]-a[1]);
+    if(bmtypes.length>15) bmval[15].sort((a,b)=>b[1]-a[1]);
+    html_table(bmtypes[0],bmval[0],htmltables0);
+    html_table(bmtypes[1],bmval[1],htmltables1);
+    html_table(bmtypes[2],bmval[2],htmltables2);
+    html_table(bmtypes[3],bmval[3],htmltables3);
+    html_table(bmtypes[4],bmval[4],htmltables4);
+    html_table(bmtypes[5],bmval[5],htmltables5);
+    html_table(bmtypes[6],bmval[6],htmltables6);
+    html_table(bmtypes[7],bmval[7],htmltables7);
+    html_table(bmtypes[8],bmval[8],htmltables8);
+    html_table(bmtypes[9],bmval[9],htmltables9);
+    html_table(bmtypes[10],bmval[10],htmltables10);
+    html_table(bmtypes[11],bmval[11],htmltables11);
+    html_table(bmtypes[12],bmval[12],htmltables12);
+    html_table(bmtypes[13],bmval[13],htmltables13);
+    html_table(bmtypes[14],bmval[14],htmltables14);
+    html_table(bmtypes[15],bmval[15],htmltables15);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/getbenchmarks')
+	.then((response) => response.text())
+        .then((text) => {
+	    create_tables(JSON.parse(text));
+	});
+
     var elements=document.getElementsByClassName("icon");
     for (var i = 0; i < elements.length; i++) {
 	elements[i].addEventListener('click', toggleMenu, false);
     }
+
 
     let navlist = document.querySelectorAll('.navlist');
     for (let i = 0; i < navlist.length; i++) {
@@ -77,12 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	.then((response) => response.text())
         .then((text) => {
 	    githubcredits.innerHTML=text;
-	});
-    fetch('/api/gethtmltables')
-	.then((response) => response.text())
-        .then((text) => {
-	    htmltables1.innerHTML=text;
-	    htmltables2.innerHTML=text;
 	});
     fetch('/api/getbenchmarkchart?BT=CPU+N-Queens')
 	.then((response) => response.text())

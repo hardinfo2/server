@@ -19,10 +19,7 @@
 
     <div class="dropdown">
       <button class="dropbtn">Bench Graphs <i class="fa fa-caret-down"></i></button>
-      <div class="dropdown-content">
-        <a href="#" name="bgnqueens" class="navlist">N-Queens</a>
-        <a href="#" name="bgnet" class="navlist">Internal Network Speed</a>
-      </div>
+      <div class="dropdown-content" id="benchgraph"></div>
     </div>
     
     <div class="dropdown">
@@ -128,97 +125,43 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 </div>
 </div>
 
-<div id="Page-bgnqueens" class="notactivegraph">
-  <canvas id="chart1"></canvas>
-</div>
-<div id="Page-bgnet" class="notactivegraph">
-  <canvas id="chart3"></canvas>
-</div>
+<div id="Page-bg0" class="notactivegraph"><canvas id="chart0"></canvas></div>
+<div id="Page-bg1" class="notactivegraph"><canvas id="chart1"></canvas></div>
+<div id="Page-bg2" class="notactivegraph"><canvas id="chart2"></canvas></div>
+<div id="Page-bg3" class="notactivegraph"><canvas id="chart3"></canvas></div>
+<div id="Page-bg4" class="notactivegraph"><canvas id="chart4"></canvas></div>
+<div id="Page-bg5" class="notactivegraph"><canvas id="chart5"></canvas></div>
+<div id="Page-bg6" class="notactivegraph"><canvas id="chart6"></canvas></div>
+<div id="Page-bg7" class="notactivegraph"><canvas id="chart7"></canvas></div>
+<div id="Page-bg8" class="notactivegraph"><canvas id="chart8"></canvas></div>
+<div id="Page-bg9" class="notactivegraph"><canvas id="chart9"></canvas></div>
+<div id="Page-bg10" class="notactivegraph"><canvas id="chart10"></canvas></div>
+<div id="Page-bg11" class="notactivegraph"><canvas id="chart11"></canvas></div>
+<div id="Page-bg12" class="notactivegraph"><canvas id="chart12"></canvas></div>
+<div id="Page-bg13" class="notactivegraph"><canvas id="chart13"></canvas></div>
+<div id="Page-bg14" class="notactivegraph"><canvas id="chart14"></canvas></div>
+<div id="Page-bg15" class="notactivegraph"><canvas id="chart15"></canvas></div>
 
-<div id="Page-bs0" class="notactive">
-<article>
-  <div id="htmltables0"></div>
-</article>
-</div>
-<div id="Page-bs1" class="notactive">
-<article>
-  <div id="htmltables1"></div>
-</article>
-</div>
-<div id="Page-bs2" class="notactive">
-<article>
-  <div id="htmltables2"></div>
-</article>
-</div>
-<div id="Page-bs3" class="notactive">
-<article>
-  <div id="htmltables3"></div>
-</article>
-</div>
-<div id="Page-bs4" class="notactive">
-<article>
-  <div id="htmltables4"></div>
-</article>
-</div>
-<div id="Page-bs5" class="notactive">
-<article>
-  <div id="htmltables5"></div>
-</article>
-</div>
-<div id="Page-bs6" class="notactive">
-<article>
-  <div id="htmltables6"></div>
-</article>
-</div>
-<div id="Page-bs7" class="notactive">
-<article>
-  <div id="htmltables7"></div>
-</article>
-</div>
-<div id="Page-bs8" class="notactive">
-<article>
-  <div id="htmltables8"></div>
-</article>
-</div>
-<div id="Page-bs9" class="notactive">
-<article>
-  <div id="htmltables9"></div>
-</article>
-</div>
-<div id="Page-bs10" class="notactive">
-<article>
-  <div id="htmltables10"></div>
-</article>
-</div>
-<div id="Page-bs11" class="notactive">
-<article>
-  <div id="htmltables11"></div>
-</article>
-</div>
-<div id="Page-bs12" class="notactive">
-<article>
-  <div id="htmltables12"></div>
-</article>
-</div>
-<div id="Page-bs13" class="notactive">
-<article>
-  <div id="htmltables13"></div>
-</article>
-</div>
-<div id="Page-bs14" class="notactive">
-<article>
-  <div id="htmltables14"></div>
-</article>
-</div>
-<div id="Page-bs15" class="notactive">
-<article>
-  <div id="htmltables15"></div>
-</article>
-</div>
+<div id="Page-bs0" class="notactive"><article><div id="htmltables0"></div></article></div>
+<div id="Page-bs1" class="notactive"><article><div id="htmltables1"></div></article></div>
+<div id="Page-bs2" class="notactive"><article><div id="htmltables2"></div></article></div>
+<div id="Page-bs3" class="notactive"><article><div id="htmltables3"></div></article></div>
+<div id="Page-bs4" class="notactive"><article><div id="htmltables4"></div></article></div>
+<div id="Page-bs5" class="notactive"><article><div id="htmltables5"></div></article></div>
+<div id="Page-bs6" class="notactive"><article><div id="htmltables6"></div></article></div>
+<div id="Page-bs7" class="notactive"><article><div id="htmltables7"></div></article></div>
+<div id="Page-bs8" class="notactive"><article><div id="htmltables8"></div></article></div>
+<div id="Page-bs9" class="notactive"><article><div id="htmltables9"></div></article></div>
+<div id="Page-bs10" class="notactive"><article><div id="htmltables10"></div></article></div>
+<div id="Page-bs11" class="notactive"><article><div id="htmltables11"></div></article></div>
+<div id="Page-bs12" class="notactive"><article><div id="htmltables12"></div></article></div>
+<div id="Page-bs13" class="notactive"><article><div id="htmltables13"></div></article></div>
+<div id="Page-bs14" class="notactive"><article><div id="htmltables14"></div></article></div>
+<div id="Page-bs15" class="notactive"><article><div id="htmltables15"></div></article></div>
 
 
 <div id="Page-benchmarkcompare" class="notactive">
-  <canvas id="chart2"></canvas>
+  <canvas id="chartcomp"></canvas>
 </div>
 
 <div id="Page-userguide" class="notactive">

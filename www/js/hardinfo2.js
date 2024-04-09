@@ -44,6 +44,9 @@ function showPage() {
     console.log("showPage " + this.name);
     //
     event.preventDefault();
+    var topnav=document.querySelector('#myTopnav');
+    if(event.target.tagName === 'A') topnav.classList.remove('responsive');
+    //
     let navlist = document.querySelectorAll('.navlist');
     for (let x = 0; x < navlist.length; x++) {
         //if(navlist[x].name.substring(1,2) === "bs") navlist[x].name="bsstat";
@@ -68,6 +71,7 @@ function html_table(bmtypes,bmval,htmltable) {
 }
 function create_tables(bm) {
     var text="";
+    var textg="";
     const bmval=new Array(15);
     const bmtypes=new Array();
     //Create top nav menu
@@ -85,8 +89,10 @@ function create_tables(bm) {
     bmtypes.sort();
     for(var i=0; i<bmtypes.length; i++){
 	text = text + '<a href="#" name="bs'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';
+	textg = textg + '<a href="#" name="bg'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';
     }
     benchstat.innerHTML=text;
+    benchgraph.innerHTML=textg;
     let navlist = document.querySelectorAll('.navlist');
     for (let i = 0; i < navlist.length; i++) {
 	e=navlist[i];
@@ -109,22 +115,22 @@ function create_tables(bm) {
     if(bmtypes.length>13) bmval[13].sort((a,b)=>b[1]-a[1]);
     if(bmtypes.length>14) bmval[14].sort((a,b)=>b[1]-a[1]);
     if(bmtypes.length>15) bmval[15].sort((a,b)=>b[1]-a[1]);
-    html_table(bmtypes[0],bmval[0],htmltables0);
-    html_table(bmtypes[1],bmval[1],htmltables1);
-    html_table(bmtypes[2],bmval[2],htmltables2);
-    html_table(bmtypes[3],bmval[3],htmltables3);
-    html_table(bmtypes[4],bmval[4],htmltables4);
-    html_table(bmtypes[5],bmval[5],htmltables5);
-    html_table(bmtypes[6],bmval[6],htmltables6);
-    html_table(bmtypes[7],bmval[7],htmltables7);
-    html_table(bmtypes[8],bmval[8],htmltables8);
-    html_table(bmtypes[9],bmval[9],htmltables9);
-    html_table(bmtypes[10],bmval[10],htmltables10);
-    html_table(bmtypes[11],bmval[11],htmltables11);
-    html_table(bmtypes[12],bmval[12],htmltables12);
-    html_table(bmtypes[13],bmval[13],htmltables13);
-    html_table(bmtypes[14],bmval[14],htmltables14);
-    html_table(bmtypes[15],bmval[15],htmltables15);
+    if(bmtypes.length>0) html_table(bmtypes[0],bmval[0],htmltables0);
+    if(bmtypes.length>1) html_table(bmtypes[1],bmval[1],htmltables1);
+    if(bmtypes.length>2) html_table(bmtypes[2],bmval[2],htmltables2);
+    if(bmtypes.length>3) html_table(bmtypes[3],bmval[3],htmltables3);
+    if(bmtypes.length>4) html_table(bmtypes[4],bmval[4],htmltables4);
+    if(bmtypes.length>5) html_table(bmtypes[5],bmval[5],htmltables5);
+    if(bmtypes.length>6) html_table(bmtypes[6],bmval[6],htmltables6);
+    if(bmtypes.length>7) html_table(bmtypes[7],bmval[7],htmltables7);
+    if(bmtypes.length>8) html_table(bmtypes[8],bmval[8],htmltables8);
+    if(bmtypes.length>9) html_table(bmtypes[9],bmval[9],htmltables9);
+    if(bmtypes.length>10) html_table(bmtypes[10],bmval[10],htmltables10);
+    if(bmtypes.length>11) html_table(bmtypes[11],bmval[11],htmltables11);
+    if(bmtypes.length>12) html_table(bmtypes[12],bmval[12],htmltables12);
+    if(bmtypes.length>13) html_table(bmtypes[13],bmval[13],htmltables13);
+    if(bmtypes.length>14) html_table(bmtypes[14],bmval[14],htmltables14);
+    if(bmtypes.length>15) html_table(bmtypes[15],bmval[15],htmltables15);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -156,21 +162,43 @@ document.addEventListener('DOMContentLoaded', function() {
         .then((text) => {
 	    githubcredits.innerHTML=text;
 	});
-    fetch('/api/getbenchmarkchart?BT=CPU+N-Queens')
+
+    //FIXME - Create graphs from getbenchmarks
+    fetch('/api/getbenchmarkchart?BT=CPU+Blowfish+(Multi-Core)')
+	.then((response) => response.text())
+        .then((text) => {
+	    draw_chart(JSON.parse(text),'chart0');
+	});    
+    fetch('/api/getbenchmarkchart?BT=CPU+Blowfish+(Multi-Thread)')
 	.then((response) => response.text())
         .then((text) => {
 	    draw_chart(JSON.parse(text),'chart1');
 	});    
-//    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Multi-thread)')
-    fetch('/api/getcomparechart?CPU1=AMD+Ryzen+9+7950X&CPU2=AMD+Ryzen+9+5950X&CPU3=AMD+EPYC+9354P')
+    fetch('/api/getbenchmarkchart?BT=CPU+N-Queens')
 	.then((response) => response.text())
         .then((text) => {
-	    draw_chart(JSON.parse(text),'chart2');
-	});    
+	    draw_chart(JSON.parse(text),'chart5');
+	});
     fetch('/api/getbenchmarkchart?BT=Internal+Network+Speed')
 	.then((response) => response.text())
         .then((text) => {
-	    draw_chart(JSON.parse(text),'chart3');
+	    draw_chart(JSON.parse(text),'chart10');
+	});
+    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Multi-thread)')
+	.then((response) => response.text())
+        .then((text) => {
+	    draw_chart(JSON.parse(text),'chart11');
+	});
+    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Single-thread)')
+	.then((response) => response.text())
+        .then((text) => {
+	    draw_chart(JSON.parse(text),'chart12');
+	});
+
+    fetch('/api/getcomparechart?CPU1=AMD+Ryzen+9+7950X&CPU2=AMD+Ryzen+9+5950X&CPU3=AMD+EPYC+9354P')
+	.then((response) => response.text())
+        .then((text) => {
+	    draw_chart(JSON.parse(text),'chartcomp');
 	});
     showSlides();
   },false);

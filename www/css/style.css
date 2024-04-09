@@ -72,6 +72,10 @@ body {margin:0;font-family:Arial}
     display: block;
 }
 
+.notactivegraph {
+    height: 3000px;
+    display: none;
+}
 .notactive {
     display: none;
 }

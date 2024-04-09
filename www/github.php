@@ -1,4 +1,7 @@
 <?php
+//Copyright hardinfo2.org, written by hwspeedy
+//License: GPL2+
+
 $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
 $r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600 from settings where name='github-refresh'"));
 
@@ -33,12 +36,26 @@ $releases = json_decode($releasetxt);
 
 $action="";
 if(isset($_GET['latest'])) $action="latest";
+if(isset($_GET['release_info'])) $action="release_info";
 if(isset($_GET['latest_release'])) $action="latest_release";
 if(isset($_GET['latest_prerelease'])) $action="latest_prerelease";
-#
 if(isset($_GET['latest_git_release'])) $action="latest_git_release";
 
 $url="";
+
+if($action=="release_info"){
+    $release_info=$releases[0]->body;
+    $release_info=str_replace("-----------\r\n","<hr>",$release_info);
+    $release_info=str_replace("**\r\n","</b><br>",$release_info);
+    $release_info=str_replace("**","<b>",$release_info);
+    $release_info=str_replace("\r\n","<br>",$release_info);
+    $release_split=explode("Updates from",$release_info);
+    $release_info=$release_split[0]."Updates from".$release_split[1];
+    $release_ver=$releases[0]->name;
+    $release_ver=str_replace("v","",$release_ver);
+    echo "<b><font color=blue>Version: ".$release_ver."</font></b><br><br>".$release_info;
+    exit(0);
+}
 
 //Redirect to latest release/prerelease
 if($action=="latest"){

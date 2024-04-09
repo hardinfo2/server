@@ -1,4 +1,6 @@
-//Copyright hardinfo2 2024, written by hwspeedy
+//Copyright hardinfo2 project 2024, written by hwspeedy
+//License: GPL2+
+
 //Showing a chart.js graph
 function draw_chart(graph,name) {
     var ctx = document.getElementById(name).getContext('2d');
@@ -66,6 +68,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	navlist[i].addEventListener('click', showPage, false);
     }
 
+    fetch('/github/?release_info')
+	.then((response) => response.text())
+        .then((text) => {
+	    githubnews.innerHTML=text;
+	});
     fetch('/api/gethtmltables')
 	.then((response) => response.text())
         .then((text) => {

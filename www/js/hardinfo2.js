@@ -73,6 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .then((text) => {
 	    githubnews.innerHTML=text;
 	});
+    fetch('/credits.ids')
+	.then((response) => response.text())
+        .then((text) => {
+	    githubcredits.innerHTML=text;
+	});
     fetch('/api/gethtmltables')
 	.then((response) => response.text())
         .then((text) => {

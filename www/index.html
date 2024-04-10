@@ -172,6 +172,24 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 <b>Frequently Asked Questions</b><br>
 <br><br>
 <b>Command Line Interface</b><br>
+The hardinfo2 program also has a Commane Line Interface, for using in terminals. This can be usefull for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a groups benchmarks, etc.<br>
+<br>
+<b>man hardinfo2</b> shows the following CLI options:
+<table>
+<tr><td>-h, --help</td><td>Show help options</td></tr>
+<tr><td nowrap>-r, --generate-report</td><td>creates a report and prints to standard output</td></tr>
+<tr><td>-f, --report-format</td><td>chooses a report format (text, html)</td></tr>
+<tr><td>-g, --result-format</td><td>chooses a result format (short, conf, shell)</td></tr>
+<tr><td>-b, --run-benchmark</td><td>run a specific benchmark eg. -b 'FPU FFT'  (Default all benchmarks runs when generate report)</td></tr>
+<tr><td>-s, --skip-benchmark</td><td>Disables all benchmark runs.</td></tr>
+<tr><td>-u, --user-note</td><td>adds a user note to data send to server. When added eg. -u 1 synchronization is activated.</td></tr>
+<tr><td>-v, --version</td><td>shows program version and quit</td></tr>
+<tr><td><br>EXAMPLES</td><td><br>examples of CLI command usage:</td></tr>
+<tr><td>hardinfo2 -b 'FPU FFT'</td><td>runs only FPU FFT benchmark</td></tr>
+<tr><td>hardinfo2 -u 1</td><td>enable updates at startup and starts gui (can also be set in gui)</td></tr>
+<tr><td nowrap>hardinfo2 -u SBC-DK -r</td><td>updates data from server, generate CLI report and sends benchmark with user-note</td></tr>
+<tr><td>hardinfo2 -r</td><td>generates CLI report</td></tr>
+</table>
 <br><br>
 </article>
 </div>

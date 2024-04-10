@@ -1,11 +1,52 @@
 //Copyright hardinfo2 project 2024, written by hwspeedy
 //License: GPL2+
 
-//Showing a chart.js graph
+//Showing a chart.js graph DEPRECATED
 function draw_chart(graph,name) {
     var ctx = document.getElementById(name).getContext('2d');
     if(window.hasOwnProperty(name)) window[name].destroy();
     document.getElementById(name).height=graph.height;
+    window[name] = new Chart(ctx, graph);
+};
+
+//Showing a chart.js from bmval
+function create_chart(bmtype,bmval,name) {
+    var cpus = new Array();
+    var marks = new Array();
+    for(var i=0; i<bmval.length; i++){
+	cpus.push(bmval[i][0]);
+	marks.push(bmval[i][1]);
+    }
+    var color="red";
+    if(bmtype>="CPU Crypto") color="orange";
+    if(bmtype>="FPU FFT") color="magenta";
+    if(bmtype>="GPU") color="brown";
+    if(bmtype>="Internal") color="lightblue";
+    if(bmtype>="SysBench") color="green";
+    graph={type:"bar",
+	   height: ((i+1)*24),
+	   data: {labels: cpus,
+		  datasets: [{
+		      borderColor: color,
+		      backgroundColor: color,
+		      label: bmtype,
+		      data: marks,
+		  }]
+		 },
+
+	   "options": {
+	       maintainAspectRatio:false,
+	       indexAxis:"y",
+	       responsive: true,
+               scales: {x:{type:"logarithmic", y:{type:"category"}} }
+	   }
+	  };
+    var ctx = document.getElementById(name).getContext('2d');
+    if(window.hasOwnProperty(name)) window[name].destroy();
+    //set Height
+    document.getElementById("Page-" + name).style.height=graph.height+"px";
+    document.getElementById(name).style.height=graph.height+"px";
+    //create Chart
     window[name] = new Chart(ctx, graph);
 };
 
@@ -41,16 +82,13 @@ function toggleMenu() {
 }
 
 function showPage() {
-    console.log("showPage " + this.name);
-    //
+    //console.log("showPage " + this.name);
     event.preventDefault();
     var topnav=document.querySelector('#myTopnav');
     if(event.target.tagName === 'A') topnav.classList.remove('responsive');
     //
     let navlist = document.querySelectorAll('.navlist');
     for (let x = 0; x < navlist.length; x++) {
-        //if(navlist[x].name.substring(1,2) === "bs") navlist[x].name="bsstat";
-	console.log(navlist[x].name);
 	if (navlist[x] == this) {
 	    navlist[x].classList.add('active');
 	    document.getElementById("Page-" + navlist[x].name).style.display="block";
@@ -131,6 +169,23 @@ function create_tables(bm) {
     if(bmtypes.length>13) html_table(bmtypes[13],bmval[13],htmltables13);
     if(bmtypes.length>14) html_table(bmtypes[14],bmval[14],htmltables14);
     if(bmtypes.length>15) html_table(bmtypes[15],bmval[15],htmltables15);
+    //create graphs
+    if(bmtypes.length>0) create_chart(bmtypes[0],bmval[0],'bg0');
+    if(bmtypes.length>1) create_chart(bmtypes[1],bmval[1],'bg1');
+    if(bmtypes.length>2) create_chart(bmtypes[2],bmval[2],'bg2');
+    if(bmtypes.length>3) create_chart(bmtypes[3],bmval[3],'bg3');
+    if(bmtypes.length>4) create_chart(bmtypes[4],bmval[4],'bg4');
+    if(bmtypes.length>5) create_chart(bmtypes[5],bmval[5],'bg5');
+    if(bmtypes.length>6) create_chart(bmtypes[6],bmval[6],'bg6');
+    if(bmtypes.length>7) create_chart(bmtypes[7],bmval[7],'bg7');
+    if(bmtypes.length>8) create_chart(bmtypes[8],bmval[8],'bg8');
+    if(bmtypes.length>9) create_chart(bmtypes[9],bmval[9],'bg9');
+    if(bmtypes.length>10) create_chart(bmtypes[10],bmval[10],'bg10');
+    if(bmtypes.length>11) create_chart(bmtypes[11],bmval[11],'bg11');
+    if(bmtypes.length>12) create_chart(bmtypes[12],bmval[12],'bg12');
+    if(bmtypes.length>13) create_chart(bmtypes[13],bmval[13],'bg13');
+    if(bmtypes.length>14) create_chart(bmtypes[14],bmval[14],'bg14');
+    if(bmtypes.length>15) create_chart(bmtypes[15],bmval[15],'bg15');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -144,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
     for (var i = 0; i < elements.length; i++) {
 	elements[i].addEventListener('click', toggleMenu, false);
     }
-
 
     let navlist = document.querySelectorAll('.navlist');
     for (let i = 0; i < navlist.length; i++) {
@@ -161,38 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	.then((response) => response.text())
         .then((text) => {
 	    githubcredits.innerHTML=text;
-	});
-
-    //FIXME - Create graphs from getbenchmarks
-    fetch('/api/getbenchmarkchart?BT=CPU+Blowfish+(Multi-Core)')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chart0');
-	});    
-    fetch('/api/getbenchmarkchart?BT=CPU+Blowfish+(Multi-Thread)')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chart1');
-	});    
-    fetch('/api/getbenchmarkchart?BT=CPU+N-Queens')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chart5');
-	});
-    fetch('/api/getbenchmarkchart?BT=Internal+Network+Speed')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chart10');
-	});
-    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Multi-thread)')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chart11');
-	});
-    fetch('/api/getbenchmarkchart?BT=SysBench+CPU+(Single-thread)')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chart12');
 	});
 
     fetch('/api/getcomparechart?CPU1=AMD+Ryzen+9+7950X&CPU2=AMD+Ryzen+9+5950X&CPU3=AMD+EPYC+9354P')

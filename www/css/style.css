@@ -1,3 +1,6 @@
+/*Copyright hardinfo2 project, written by hwspeedy, 2024*/
+/*License: GPL2+*/
+
 body {margin:0;font-family:Arial}
 
 .topnav {
@@ -72,10 +75,6 @@ body {margin:0;font-family:Arial}
     display: block;
 }
 
-.notactivegraph {
-    height: 3000px;
-    display: none;
-}
 .notactive {
     display: none;
 }

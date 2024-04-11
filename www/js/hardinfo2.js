@@ -1,14 +1,6 @@
 //Copyright hardinfo2 project 2024, written by hwspeedy
 //License: GPL2+
 
-//Showing a chart.js graph DEPRECATED
-function draw_chart(graph,name) {
-    var ctx = document.getElementById(name).getContext('2d');
-    if(window.hasOwnProperty(name)) window[name].destroy();
-    document.getElementById(name).height=graph.height;
-    window[name] = new Chart(ctx, graph);
-};
-
 //Showing a chart.js from bmval
 function create_chart(bmtype,bmval,name) {
     var cpus = new Array();
@@ -57,7 +49,7 @@ function create_chart_compare() {
     var bc1=document.getElementById("bc1").value;
     var bc2=document.getElementById("bc2").value;
     var bc3=document.getElementById("bc3").value;
-    console.log("Updating Compare "+bc1+","+bc2+","+bc3);
+    //console.log("Updating Compare "+bc1+","+bc2+","+bc3);
     var cpu1 = new Array();
     var cpu2 = new Array();
     var cpu3 = new Array();
@@ -106,7 +98,6 @@ function create_chart_compare() {
 	   data: {labels: bmtypesavg,
 		  datasets: datas
 		 },
-
 	   "options": {
 	       maintainAspectRatio:false,
 	       indexAxis:"y",
@@ -114,13 +105,14 @@ function create_chart_compare() {
                scales: {x:{min:minval, max:maxval}}*/
 	   }
 	  };
-    var ctx = document.getElementById("benchmarkcompare").getContext('2d');
-    if(window.hasOwnProperty("benchmarkcompare")) window["benchmarkcompare"].destroy();
+    var ctx = document.getElementById("bcchart").getContext('2d');
+    if(window.hasOwnProperty("bcchart")) window["bcchart"].destroy();
     //set Height
-    document.getElementById("Page-benchmarkcompare").style.height=(graph.height+document.getElementById("benchcompare").clientHeight)+"px";
-    document.getElementById("benchmarkcompare").style.height=graph.height+"px";
+    document.getElementById("bcchart").style.height=graph.height+"px";
+    document.getElementById("bcchartdiv").style.height=(graph.height)+"px";
+    document.getElementById("Page-benchmarkcompare").style.height=(graph.height+72)+"px";
     //create Chart
-    window["benchmarkcompare"] = new Chart(ctx, graph);
+    window["bcchart"] = new Chart(ctx, graph);
 };
 
 
@@ -278,7 +270,7 @@ function create_tables_graphs(bm) {
 	}
 	text=text+"</select> ";
     }
-    benchcompare.innerHTML=text;
+    bcsel.innerHTML=text;
     //save calculated data globally
     window["bmtypes"]=bmtypes;
     window["bmcpus"]=bmcpus;
@@ -286,9 +278,9 @@ function create_tables_graphs(bm) {
     //create graph compare
     create_chart_compare();
     //event for selecting
-    document.getElementById("bc1").addEventListener('click', create_chart_compare, false);
-    document.getElementById("bc2").addEventListener('click', create_chart_compare, false);
-    document.getElementById("bc3").addEventListener('click', create_chart_compare, false);
+    document.getElementById("bc1").addEventListener('change', create_chart_compare, false);
+    document.getElementById("bc2").addEventListener('change', create_chart_compare, false);
+    document.getElementById("bc3").addEventListener('change', create_chart_compare, false);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -323,4 +315,3 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
     showSlides();
   },false);
-

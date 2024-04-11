@@ -8,26 +8,30 @@
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <link rel="stylesheet" href="/css/default.css">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<script type="text/javascript" src="js/hardinfo2.js"></script>
+<script type="text/javascript" src="/js/translate.js"></script>
+<script type="text/javascript" src="/js/hardinfo2.js"></script>
 <script type="text/javascript" src="/js/chart.umd.js" integrity="sha256-dEAdc43T4D7l37O2hBIQ/ixOrYqWDEARykugt4qf2PM="></script>
 </head>
 <body>
 <div class="topnav" id="myTopnav">
   <a href="#" name="home" class="navlist active">
     <font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font></a>
-  <a href="#" name="news" class="navlist">News</a>
+  <a href="#" name="news" id="news" class="navlist">News</a>
   <div class="dropdown">
-    <button class="dropbtn">Bench Graphs <i class="fa fa-caret-down"></i></button>
+    <button class="dropbtn" id="bg">Bench Graphs <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-content" id="benchgraph"></div>
   </div>
   <div class="dropdown">
-    <button class="dropbtn">Bench Stats <i class="fa fa-caret-down"></i></button>
+    <button class="dropbtn" id="bs">Bench Stats <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-content" id="benchstat"></div>
   </div>
-  <a href="#" name="benchmarkcompare" class="navlist">Bench Compare</a>
-  <a href="#" name="userguide" class="navlist">UserGuide</a>
-  <a href="#" name="history" class="navlist">History</a>
-  <a href="#" name="about" class="navlist">About</a>
+  <a href="#" id="bc" name="benchmarkcompare" class="navlist">Bench Compare</a>
+  <a href="#" id="userguide" name="userguide" class="navlist">UserGuide</a>
+  <a href="#" id="history" name="history" class="navlist">History</a>
+  <a href="#" id="about" name="about" class="navlist">About</a>
+<!--<a href="#" name="language">
+    <select id="language"><option value='en'>English</option><option value='da'>Dansk</option></select>
+  </a>-->
   <a href="#bars" class="icon">
     <i class="fa fa-bars"></i>
   </a>
@@ -180,7 +184,7 @@ A) Just press the Synchronize button - It will update all information and benchm
 <br><br>
 <b>Command Line Interface</b><br>
 <br>
-The hardinfo2 program also has a Command Line Interface, for using in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br>
+The hardinfo2 program also has a Command Line Interface, for use in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br>
 <br>
 <b>man hardinfo2</b> shows the following CLI options:
 <table>

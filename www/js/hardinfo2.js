@@ -1,6 +1,14 @@
 //Copyright hardinfo2 project 2024, written by hwspeedy
 //License: GPL2+
 
+
+function changeLanguage(){
+    console.log("Changing language to " + document.getElementById("language").value);
+    for(var i=0; i<window["translate"].length; i++){
+	if(window["translate"][i][1]===document.getElementById("language").value) document.getElementById(window["translate"][i][0]).textContent=window["translate"][i][2];
+    }
+}
+
 //Showing a chart.js from bmval
 function create_chart(bmtype,bmval,name) {
     var cpus = new Array();
@@ -69,32 +77,48 @@ function create_chart_compare() {
     //procent
     avg1=0;avg2=0;avg3=0;
     for(var i=0; i<window["bmtypes"].length; i++){
-        if(bc1>0) b100=cpu1[i]; else
-            if(bc2>0) b100=cpu2[i]; else
-	        if(bc3>0) b100=cpu3[i];
-	cpu1[i]=100;
-	cpu2[i]=(100*cpu2[i])/b100;
-	cpu3[i]=(100*cpu3[i])/b100;
+	if(bcount>1){
+            if(bc1>=0) {b=1;b100=cpu1[i];} else
+		if(bc2>=0) {b=2;b100=cpu2[i];} else
+	            if(bc3>=0) {b=3;b100=cpu3[i];}
+	  cpu1[i]=(100*cpu1[i])/b100;
+	  cpu2[i]=(100*cpu2[i])/b100;
+	  cpu3[i]=(100*cpu3[i])/b100;
+	}
 	//min/max
-	if(cpu2[i]>maxval) maxval=cpu2[i];
-	if(cpu3[i]>maxval) maxval=cpu3[i];
-	if(cpu2[i]<minval) minval=cpu2[i];
-	if(cpu3[i]<minval) minval=cpu3[i];
+	if(bc2>=0) if(cpu2[i]>maxval) maxval=cpu2[i];
+	if(bc3>=0) if(cpu3[i]>maxval) maxval=cpu3[i];
+	if(bc2>=0) if(cpu2[i]<minval) minval=cpu2[i];
+	if(bc3>=0) if(cpu3[i]<minval) minval=cpu3[i];
 	//avg with Fix for missing values
-	if((bc1>0) && !cpu1[i]>0) {avg1+=100;}else{avg1+=cpu1[i];}
-	if((bc2>0) && !cpu2[i]>0) {avg2+=100;}else{avg2+=cpu2[i];}
-	if((bc3>0) && !cpu3[i]>0) {avg3+=100;}else{avg3+=cpu3[i];}
+	if((bc1>=0) && !cpu1[i]>0) {avg1+=100;}else{avg1+=cpu1[i];}
+	if((bc2>=0) && !cpu2[i]>0) {avg2+=100;}else{avg2+=cpu2[i];}
+	if((bc3>=0) && !cpu3[i]>0) {avg3+=100;}else{avg3+=cpu3[i];}
     }
     //add system average
-    cpu1.push(100);
-    cpu2.push((avg2*100)/avg1);
-    cpu3.push((avg3*100)/avg1);
+    if(b==1){
+      cpu1.push((avg1*100)/avg1);
+      cpu2.push((avg2*100)/avg1);
+      cpu3.push((avg3*100)/avg1);
+    }
+    if(b==2){
+      cpu1.push((avg1*100)/avg2);
+      cpu2.push((avg2*100)/avg2);
+      cpu3.push((avg3*100)/avg2);
+    }
+    if(b==3){
+      cpu1.push((avg1*100)/avg3);
+      cpu2.push((avg2*100)/avg3);
+      cpu3.push((avg3*100)/avg3);
+    }
     //add data
     if(bc1>=0) datas.push({ borderColor: "red", backgroundColor: "red", label: window["bmcpus"][bc1], data: cpu1});
     if(bc2>=0) datas.push({ borderColor: "blue", backgroundColor: "blue", label: window["bmcpus"][bc2], data: cpu2});
     if(bc3>=0) datas.push({ borderColor: "green", backgroundColor: "green", label: window["bmcpus"][bc3], data: cpu3});
+    h=bcount*bmtypesavg.length*16;
+    if(bcount<=1) h=bmtypesavg.length*24;
     graph={type:"bar",
-	   height: (bcount*bmtypesavg.length*16),
+	   height: h,
 	   data: {labels: bmtypesavg,
 		  datasets: datas
 		 },
@@ -289,6 +313,9 @@ document.addEventListener('DOMContentLoaded', function() {
     for (var i = 0; i < elements.length; i++) {
 	elements[i].addEventListener('click', toggleMenu, false);
     }
+    //language
+    if(document.getElementById("language"))
+	document.getElementById("language").addEventListener('change', changeLanguage, false);
     //Added for navigation if no benchmarks are received
     let navlist = document.querySelectorAll('.navlist');
     for (let i = 0; i < navlist.length; i++) {

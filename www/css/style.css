@@ -66,6 +66,10 @@ body {margin:0;font-family:Arial}
     color: white;
 }
 
+#langugage {
+    float: right;
+}
+
 .dropdown-content a:hover {
     background-color: #ddd;
     color: black;

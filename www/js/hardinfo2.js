@@ -50,6 +50,79 @@ function create_chart(bmtype,bmval,name) {
     window[name] = new Chart(ctx, graph);
 };
 
+//Showing a chart.js for compare of cpus
+function create_chart_compare() {
+    var minval=100;
+    var maxval=100;
+    var bc1=document.getElementById("bc1").value;
+    var bc2=document.getElementById("bc2").value;
+    var bc3=document.getElementById("bc3").value;
+    console.log("Updating Compare "+bc1+","+bc2+","+bc3);
+    var cpu1 = new Array();
+    var cpu2 = new Array();
+    var cpu3 = new Array();
+    var bcount=(bc1>=0?1:0)+(bc2>=0?1:0)+(bc3>=0?1:0);
+    var datas=new Array();
+    var bmtypesavg=new Array();
+    //Find data and add from bmtypes index
+    for(var i=0; i<window["bmtypes"].length; i++){
+	bmtypesavg.push(window["bmtypes"][i]);
+        if(window["bmval"][i]) for(var j=0; j<window["bmval"][i].length; j++){
+	    if(window["bmval"][i][j][0]===window["bmcpus"][bc1]) cpu1.push(window["bmval"][i][j][1]);
+	    if(window["bmval"][i][j][0]===window["bmcpus"][bc2]) cpu2.push(window["bmval"][i][j][1]);
+	    if(window["bmval"][i][j][0]===window["bmcpus"][bc3]) cpu3.push(window["bmval"][i][j][1]);
+	}
+    }
+    bmtypesavg.push("Average");
+    //procent
+    avg1=0;avg2=0;avg3=0;
+    for(var i=0; i<window["bmtypes"].length; i++){
+        if(bc1>0) b100=cpu1[i]; else
+            if(bc2>0) b100=cpu2[i]; else
+	        if(bc3>0) b100=cpu3[i];
+	cpu1[i]=100;
+	cpu2[i]=(100*cpu2[i])/b100;
+	cpu3[i]=(100*cpu3[i])/b100;
+	//min/max
+	if(cpu2[i]>maxval) maxval=cpu2[i];
+	if(cpu3[i]>maxval) maxval=cpu3[i];
+	if(cpu2[i]<minval) minval=cpu2[i];
+	if(cpu3[i]<minval) minval=cpu3[i];
+	//avg with Fix for missing values
+	if((bc1>0) && !cpu1[i]>0) {avg1+=100;}else{avg1+=cpu1[i];}
+	if((bc2>0) && !cpu2[i]>0) {avg2+=100;}else{avg2+=cpu2[i];}
+	if((bc3>0) && !cpu3[i]>0) {avg3+=100;}else{avg3+=cpu3[i];}
+    }
+    //add system average
+    cpu1.push(100);
+    cpu2.push((avg2*100)/avg1);
+    cpu3.push((avg3*100)/avg1);
+    //add data
+    if(bc1>=0) datas.push({ borderColor: "red", backgroundColor: "red", label: window["bmcpus"][bc1], data: cpu1});
+    if(bc2>=0) datas.push({ borderColor: "blue", backgroundColor: "blue", label: window["bmcpus"][bc2], data: cpu2});
+    if(bc3>=0) datas.push({ borderColor: "green", backgroundColor: "green", label: window["bmcpus"][bc3], data: cpu3});
+    graph={type:"bar",
+	   height: (bcount*bmtypesavg.length*16),
+	   data: {labels: bmtypesavg,
+		  datasets: datas
+		 },
+
+	   "options": {
+	       maintainAspectRatio:false,
+	       indexAxis:"y",
+	       responsive: true/*,
+               scales: {x:{min:minval, max:maxval}}*/
+	   }
+	  };
+    var ctx = document.getElementById("benchmarkcompare").getContext('2d');
+    if(window.hasOwnProperty("benchmarkcompare")) window["benchmarkcompare"].destroy();
+    //set Height
+    document.getElementById("Page-benchmarkcompare").style.height=(graph.height+document.getElementById("benchcompare").clientHeight)+"px";
+    document.getElementById("benchmarkcompare").style.height=graph.height+"px";
+    //create Chart
+    window["benchmarkcompare"] = new Chart(ctx, graph);
+};
+
 
 let slideIndex = 0;
 
@@ -107,14 +180,18 @@ function html_table(bmtypes,bmval,htmltable) {
     text=text+"</table>";
     htmltable.innerHTML=text;
 }
-function create_tables(bm) {
+function create_tables_graphs(bm) {
     var text="";
     var textg="";
     const bmval=new Array(15);
     const bmtypes=new Array();
+    const bmcpus=new Array();
     //Create top nav menu
     //Json: 0:cpu,1:bmtype,2:value
     for(var i=0; i<bm.length; i++){
+	if(! bmcpus.includes(bm[i][0].toString()) ) {
+	    bmcpus.push(bm[i][0].toString());
+	}
 	if(! bmtypes.includes(bm[i][1].toString()) ) {
 	    bmtypes.push(bm[i][1].toString());
             t=bmtypes.indexOf(bm[i][1].toString());
@@ -125,6 +202,7 @@ function create_tables(bm) {
         bmval[t].push( [bm[i][0],bm[i][2]] );
     }
     bmtypes.sort();
+    bmcpus.sort();
     for(var i=0; i<bmtypes.length; i++){
 	text = text + '<a href="#" name="bs'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';
 	textg = textg + '<a href="#" name="bg'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';
@@ -186,41 +264,62 @@ function create_tables(bm) {
     if(bmtypes.length>13) create_chart(bmtypes[13],bmval[13],'bg13');
     if(bmtypes.length>14) create_chart(bmtypes[14],bmval[14],'bg14');
     if(bmtypes.length>15) create_chart(bmtypes[15],bmval[15],'bg15');
+    //create selectors for benchmark compare
+    text="";
+    for (let i = 1; i <= 3; i++) {
+	text=text+"<select name=\"bc"+i+"\" id=\"bc"+i+"\">";
+	text=text+"<option value=-1>Please Select</option>";
+        for(var t=0; t<bmcpus.length; t++){
+	    text=text+"<option ";
+	    if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 7950X") text=text+"selected ";
+	    if(i==2 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
+	    if(i==3 && bmcpus[t].toString()==="AMD EPYC 9354P") text=text+"selected ";
+	    text=text+"value="+t+">"+bmcpus[t].toString()+"</option>";
+	}
+	text=text+"</select> ";
+    }
+    benchcompare.innerHTML=text;
+    //save calculated data globally
+    window["bmtypes"]=bmtypes;
+    window["bmcpus"]=bmcpus;
+    window["bmval"]=bmval;
+    //create graph compare
+    create_chart_compare();
+    //event for selecting
+    document.getElementById("bc1").addEventListener('click', create_chart_compare, false);
+    document.getElementById("bc2").addEventListener('click', create_chart_compare, false);
+    document.getElementById("bc3").addEventListener('click', create_chart_compare, false);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/getbenchmarks')
-	.then((response) => response.text())
-        .then((text) => {
-	    create_tables(JSON.parse(text));
-	});
-
+    //hamburger icon
     var elements=document.getElementsByClassName("icon");
     for (var i = 0; i < elements.length; i++) {
 	elements[i].addEventListener('click', toggleMenu, false);
     }
-
+    //Added for navigation if no benchmarks are received
     let navlist = document.querySelectorAll('.navlist');
     for (let i = 0; i < navlist.length; i++) {
 	e=navlist[i];
 	navlist[i].addEventListener('click', showPage, false);
     }
-
+    //get benchmark data
+    fetch('/api/getbenchmarks')
+	.then((response) => response.text())
+        .then((text) => {
+	    create_tables_graphs(JSON.parse(text));
+	});
+    //get github release info
     fetch('/github/?release_info')
 	.then((response) => response.text())
         .then((text) => {
 	    githubnews.innerHTML=text;
 	});
+    //get credits
     fetch('/credits.ids')
 	.then((response) => response.text())
         .then((text) => {
 	    githubcredits.innerHTML=text;
-	});
-
-    fetch('/api/getcomparechart?CPU1=AMD+Ryzen+9+7950X&CPU2=AMD+Ryzen+9+5950X&CPU3=AMD+EPYC+9354P')
-	.then((response) => response.text())
-        .then((text) => {
-	    draw_chart(JSON.parse(text),'chartcomp');
 	});
     showSlides();
   },false);

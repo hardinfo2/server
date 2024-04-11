@@ -34,7 +34,7 @@ function create_chart(bmtype,bmval,name) {
 		  }]
 		 },
 
-	   "options": {
+	   options: {
 	       maintainAspectRatio:false,
 	       indexAxis:"y",
 	       responsive: true,
@@ -122,13 +122,14 @@ function create_chart_compare() {
 	   data: {labels: bmtypesavg,
 		  datasets: datas
 		 },
-	   "options": {
+	   options: {
 	       maintainAspectRatio:false,
 	       indexAxis:"y",
-	       responsive: true/*,
-               scales: {x:{min:minval, max:maxval}}*/
+	       responsive: true,
+               scales: {x:{/*min:minval, max:maxval,*/ type:"logarithmic"} }
 	   }
 	  };
+    if(bcount>1) graph.options.scales.x.type="linear";
     var ctx = document.getElementById("bcchart").getContext('2d');
     if(window.hasOwnProperty("bcchart")) window["bcchart"].destroy();
     //set Height

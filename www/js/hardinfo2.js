@@ -58,9 +58,9 @@ function create_chart_compare() {
     var bc2=document.getElementById("bc2").value;
     var bc3=document.getElementById("bc3").value;
     //console.log("Updating Compare "+bc1+","+bc2+","+bc3);
-    var cpu1 = new Array();
-    var cpu2 = new Array();
-    var cpu3 = new Array();
+    var cpu1 = new Array(window["bmtypes"].length);
+    var cpu2 = new Array(window["bmtypes"].length);
+    var cpu3 = new Array(window["bmtypes"].length);
     var bcount=(bc1>=0?1:0)+(bc2>=0?1:0)+(bc3>=0?1:0);
     var datas=new Array();
     var bmtypesavg=new Array();
@@ -68,14 +68,14 @@ function create_chart_compare() {
     for(var i=0; i<window["bmtypes"].length; i++){
 	bmtypesavg.push(window["bmtypes"][i]);
         if(window["bmval"][i]) for(var j=0; j<window["bmval"][i].length; j++){
-	    if(window["bmval"][i][j][0]===window["bmcpus"][bc1]) cpu1.push(window["bmval"][i][j][1]);
-	    if(window["bmval"][i][j][0]===window["bmcpus"][bc2]) cpu2.push(window["bmval"][i][j][1]);
-	    if(window["bmval"][i][j][0]===window["bmcpus"][bc3]) cpu3.push(window["bmval"][i][j][1]);
+	    if(window["bmval"][i][j][0]===window["bmcpus"][bc1]) cpu1[i]=window["bmval"][i][j][1];
+	    if(window["bmval"][i][j][0]===window["bmcpus"][bc2]) cpu2[i]=window["bmval"][i][j][1];
+	    if(window["bmval"][i][j][0]===window["bmcpus"][bc3]) cpu3[i]=window["bmval"][i][j][1];
 	}
     }
     bmtypesavg.push("Average");
     //procent
-    avg1=0;avg2=0;avg3=0;
+    avg1=0;avg2=0;avg3=0;b=0;
     for(var i=0; i<window["bmtypes"].length; i++){
 	if(bcount>1){
             if(bc1>=0) {b=1;b100=cpu1[i];} else
@@ -204,6 +204,7 @@ function create_tables_graphs(bm) {
     const bmcpus=new Array();
     //Create top nav menu
     //Json: 0:cpu,1:bmtype,2:value
+    //find bm types, cpus
     for(var i=0; i<bm.length; i++){
 	if(! bmcpus.includes(bm[i][0].toString()) ) {
 	    bmcpus.push(bm[i][0].toString());
@@ -211,14 +212,20 @@ function create_tables_graphs(bm) {
 	if(! bmtypes.includes(bm[i][1].toString()) ) {
 	    bmtypes.push(bm[i][1].toString());
             t=bmtypes.indexOf(bm[i][1].toString());
-	    bmval[t]=new Array();
-        } else {
-	    t=bmtypes.indexOf(bm[i][1].toString());
-	}
-        bmval[t].push( [bm[i][0],bm[i][2]] );
+        }
     }
     bmtypes.sort();
     bmcpus.sort();
+    //create data array for types
+    for(var i=0; i<bmtypes.length; i++){
+	bmval[i]=new Array();
+    }
+    //fill data
+    for(var i=0; i<bm.length; i++){
+       t=bmtypes.indexOf(bm[i][1].toString());
+       bmval[t].push( [bm[i][0],bm[i][2]] );
+    }
+    //create navtop
     for(var i=0; i<bmtypes.length; i++){
 	text = text + '<a href="#" name="bs'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';
 	textg = textg + '<a href="#" name="bg'+i+'" class="navlist">'+bmtypes[i].toString()+'</a>';

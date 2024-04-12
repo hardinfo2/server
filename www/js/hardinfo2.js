@@ -4,6 +4,7 @@
 
 function changeLanguage(){
     console.log("Changing language to " + document.getElementById("language").value);
+    event.preventDefault();
     for(var i=0; i<window["translate"].length; i++){
 	if(window["translate"][i][1]===document.getElementById("language").value) document.getElementById(window["translate"][i][0]).innerHTML=window["translate"][i][2];
     }
@@ -321,15 +322,17 @@ document.addEventListener('DOMContentLoaded', function() {
     for (var i = 0; i < elements.length; i++) {
 	elements[i].addEventListener('click', toggleMenu, false);
     }
-    //language
-    if(document.getElementById("language"))
-	document.getElementById("language").addEventListener('change', changeLanguage, false);
     //Added for navigation if no benchmarks are received
     let navlist = document.querySelectorAll('.navlist');
     for (let i = 0; i < navlist.length; i++) {
 	e=navlist[i];
 	navlist[i].addEventListener('click', showPage, false);
     }
+    //language
+    if(document.getElementById("language"))
+	document.getElementById("language").addEventListener('change', changeLanguage, false);
+    if(document.getElementById("language"))
+	document.getElementById("language").addEventListener('click', function() {event.preventDefault();}, false);
     //get benchmark data
     fetch('/api/getbenchmarks')
 	.then((response) => response.text())

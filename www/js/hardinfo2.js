@@ -135,7 +135,7 @@ function create_chart_compare() {
     //set Height
     document.getElementById("bcchart").style.height=graph.height+"px";
     document.getElementById("bcchartdiv").style.height=(graph.height)+"px";
-    document.getElementById("Page-benchmarkcompare").style.height=(graph.height+72)+"px";
+    document.getElementById("Page-benchmarkcompare").style.height=(graph.height+100)+"px";
     //create Chart
     window["bcchart"] = new Chart(ctx, graph);
 };
@@ -295,14 +295,14 @@ function create_tables_graphs(bm) {
 	text=text+"<option value=-1>Please Select</option>";
         for(var t=0; t<bmcpus.length; t++){
 	    text=text+"<option ";
-	    if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 7950X") text=text+"selected ";
-	    if(i==2 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
-	    if(i==3 && bmcpus[t].toString()==="AMD EPYC 9354P") text=text+"selected ";
+	    if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
+	    if(i==2 && bmcpus[t].toString()==="AMD Ryzen 9 7950X") text=text+"selected ";
+	    //if(i==3 && bmcpus[t].toString()==="AMD EPYC 9354P") text=text+"selected ";
 	    text=text+"value="+t+">"+bmcpus[t].toString()+"</option>";
 	}
 	text=text+"</select> ";
     }
-    bcsel.innerHTML=text;
+    bcsel.innerHTML=text+"<br><font size='2'>Select 1: Shows numbers of cpu type instead of % compare</font>";
     //save calculated data globally
     window["bmtypes"]=bmtypes;
     window["bmcpus"]=bmcpus;

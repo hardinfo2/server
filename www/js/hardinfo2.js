@@ -5,7 +5,7 @@
 function changeLanguage(){
     console.log("Changing language to " + document.getElementById("language").value);
     for(var i=0; i<window["translate"].length; i++){
-	if(window["translate"][i][1]===document.getElementById("language").value) document.getElementById(window["translate"][i][0]).textContent=window["translate"][i][2];
+	if(window["translate"][i][1]===document.getElementById("language").value) document.getElementById(window["translate"][i][0]).innerHTML=window["translate"][i][2];
     }
 }
 

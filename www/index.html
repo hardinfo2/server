@@ -174,21 +174,21 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 <div id="Page-userguide" class="notactive">
 <h2><b><font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font> User Guide</b></h2>
 <article>
-<b>Frequently Asked Questions</b><br>
+<h2>Frequently Asked Questions</h2>
+<dl>
+<dt><b>Is hardinfo2 just a GUI interface for information that can be read from kernel?</b></dt>
+<dd>No, it is correct that many informations can be found from kernel, but hardinfo2 does not just collect all these into a nice interface (GUI+CLI) but also adds extra information from blobs and internal tables and routines.</dd>
+<dt><br></dt>
+<dt><b>How do I run all benchmarks?</b></dt>
+<dd>Just press the Synchronize button - It will update all information and benchmarsk</dd>
+<dt><br></dt>
+<dt><b>How do I set the program to dark mode?</b></dt>
+<dd>emacs ~/.config/gtk-3.0/settings.ini - add:</dd> 
+<dd>[Settings]<dd>
+<dd>gtk-application-prefer-dark-theme=1</dd>
+</dl>
 <br>
-Q) Is hardinfo2 just a GUI interface for information that can be read from kernel?<br>
-A) No, it is correct that many informations can be found from kernel, but hardinfo2 does not just collect all these into a nice interface (GUI+CLI) but also adds extra information from blobs and internal tables and routines.<br>
-<br>
-Q) How do I run all benchmarks?<br>
-A) Just press the Synchronize button - It will update all information and benchmarks<br>
-<br>
-Q) How do I set the program to dark mode?<br>
-A) emacs ~/.config/gtk-3.0/settings.ini - add:<br>
- &nbsp; &nbsp;  &nbsp;[Settings]<br>
- &nbsp; &nbsp;  &nbsp;gtk-application-prefer-dark-theme=1<br>
-<br><br>
-<b>Command Line Interface</b><br>
-<br>
+<h2>Command Line Interface</h2>
 The hardinfo2 program also has a Command Line Interface, for use in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br>
 <br>
 <b>man hardinfo2</b> shows the following CLI options:

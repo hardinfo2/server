@@ -303,7 +303,7 @@ function create_tables_graphs(bm) {
 	}
 	text=text+"</select> ";
     }
-    bcsel.innerHTML=text+"<br><font size='2'>Select 1: Shows numbers of cpu type instead of % compare</font>";
+    bcsel.innerHTML=text+"<br><font size='2'>Select 1: Shows numbers for cpu type instead of % compare</font>";
     //save calculated data globally
     window["bmtypes"]=bmtypes;
     window["bmcpus"]=bmcpus;

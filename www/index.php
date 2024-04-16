@@ -10,12 +10,14 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       $j=json_decode(file_get_contents("php://input"),true,3);
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
       if(0){
-         $q=$mysqli->prepare("update settings set value=? where name='lastdata'");
+         $q=$mysqli->prepare("INSERT INTO settings (SELECT CONCAT('lastdata',VALUE+1),? FROM settings WHERE NAME='lastdatanumber');");
 	 $post=file_get_contents("php://input");
          $q->bind_param('b',$post);
          $q->send_long_data(0,$post);
          $q->execute();
 	 $q->close();
+	 //increase value
+         $mysqli->query("update settings set value=value+1 WHERE NAME='lastdatanumber';");
       }
       $url=$_SERVER['SCRIPT_URI']."?".$_SERVER['QUERY_STRING'];
       foreach($j as $k=>$v){

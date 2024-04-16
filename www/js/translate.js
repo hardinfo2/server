@@ -9,7 +9,7 @@ window["translate"].push(["news","en","News"],["news","da","Nyhed"],["news","jp"
 
 window["translate"].push(["bg","en","Bench Graphs <i class='fa fa-caret-down'></i>"],["bg","da","Bench Graf <i class='fa fa-caret-down'></i>"],["bg","jp","\u30d9\u30f3\u30c1\u30b0\u30e9\u30d5 <i class='fa fa-caret-down'></i>"],["bg","es","Banco Gr\u00e1ficos <i class='fa fa-caret-down'></i>"],["bg","cn","&nbsp;\u57fa\u6e96\u5716&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["bg","de","Bankgraf <i class='fa fa-caret-down'></i>"]);
 
-window["translate"].push(["bs","en","Bench Stats <i class='fa fa-caret-down'></i>"],["bs","da","Bench Tal <i class='fa fa-caret-down'></i>"],["bs","jp","\u30d9\u30f3\u30c1\u7d71\u8a08 <i class='fa fa-caret-down'></i>"],["bs","es","Banco n\u00famero<i class='fa fa-caret-down'></i>"],["bs","cn","&nbsp;\u57fa\u6e96\u7d71\u8a08&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["bs","de","Bankstatistik <i class='fa fa-caret-down'></i>"]);
+window["translate"].push(["bs","en","Bench Stats <i class='fa fa-caret-down'></i>"],["bs","da","Bench Tal <i class='fa fa-caret-down'></i>"],["bs","jp","\u30d9\u30f3\u30c1\u7d71\u8a08 <i class='fa fa-caret-down'></i>"],["bs","es","Banco n\u00famero <i class='fa fa-caret-down'></i>"],["bs","cn","&nbsp;\u57fa\u6e96\u7d71\u8a08&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["bs","de","Bankstatistik <i class='fa fa-caret-down'></i>"]);
 
 window["translate"].push(["bc","en","Bench Compare"],["bc","da","Bench Sammenlign"],["bc","jp","\u30d9\u30f3\u30c1\u306e\u6bd4\u8f03"],["bc","es","Banco Comparar"],["bc","cn","&nbsp;\u57fa\u6e96\u6bd4\u8f03&nbsp;"],["bc","de","Bank Vergleich"]);
 

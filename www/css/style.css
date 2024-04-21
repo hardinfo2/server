@@ -1,7 +1,32 @@
 /*Copyright hardinfo2 project, written by hwspeedy, 2024*/
 /*License: GPL2+*/
 
-body {margin:0;font-family:Arial}
+body {
+    margin:0;
+    background-image: url('/img/bg1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+canvas {
+    background: white;
+}
+.toplogo {
+    font-size: 70px;
+}
+.buttons button {
+    font-size: 22px;
+    border-radius: 8px;
+    background-color: #333;
+    color: white;
+    padding: 10px 10px;
+}
+.buttons button:hover {
+    font-size: 22px;
+    border-radius: 8px;
+    background-color: #bbb;
+    color: black;
+    padding: 10px 10px;
+}
 
 .topnav {
     overflow: hidden;

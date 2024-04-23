@@ -23,8 +23,8 @@ canvas {
 .buttons button:hover {
     font-size: 22px;
     border-radius: 8px;
-    background-color: #bbb;
-    color: black;
+    background-color: #555;
+    color: white;
     padding: 10px 10px;
 }
 

@@ -11,7 +11,10 @@ canvas {
     background: white;
 }
 .toplogo {
-    font-size: 70px;
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+    font-size: 60px;
 }
 .buttons button {
     font-size: 22px;

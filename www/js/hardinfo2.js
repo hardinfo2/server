@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(document.getElementById("language"))
 	document.getElementById("language").addEventListener('click', function() {event.preventDefault();}, false);
     //get benchmark data
-    fetch('/api/getbenchmarks')
+    fetch('/api/getbenchmarks?'+window.location.search.substr(1))
 	.then((response) => response.text())
         .then((text) => {
 	    create_tables_graphs(JSON.parse(text));

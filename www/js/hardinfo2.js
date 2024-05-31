@@ -328,6 +328,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	e=navlist[i];
 	navlist[i].addEventListener('click', showPage, false);
     }
+    let url=window.location.href;
+    if(url.includes("news")) {const event=new Event('click');navlist[1].dispatchEvent(event);}
+    if(url.includes("benchcompare")) {const event=new Event('click');navlist[2].dispatchEvent(event);}
+    if(url.includes("userguide")) {const event=new Event('click');navlist[3].dispatchEvent(event);}
+    if(url.includes("history")) {const event=new Event('click');navlist[4].dispatchEvent(event);}
+    if(url.includes("about")) {const event=new Event('click');navlist[5].dispatchEvent(event);}
     //language
     if(document.getElementById("language"))
 	document.getElementById("language").addEventListener('change', changeLanguage, false);

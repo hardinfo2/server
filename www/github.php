@@ -44,7 +44,21 @@ if(isset($_GET['latest_git_release'])) $action="latest_git_release";
 $url="";
 
 if($action=="release_info"){
-    $release_info=$releases[0]->body;
+    //latest release
+    $url="https://github.com/hardinfo2/hardinfo2/releases/latest";
+    $relver="Latest";
+    $release_info="Se <a href='https://github.com/hardinfo2/hardinfo2/releases/latest'>https://github.com/hardinfo2/hardinfo2/releases/latest</a><br>";
+    $n=0;
+    while(isset($releases[$n])){
+        if(!$releases[$n]->prerelease){
+            $url = $releases[$n]->html_url;
+	    $relver=$releases[$n]->name;
+            $release_info=$releases[$n]->body;
+	    $n=-2;
+        }
+        $n++;
+    }
+    //
     $release_info=str_replace("-----------\r\n","<hr>",$release_info);
     $release_info=str_replace("**\r\n","</b><br>",$release_info);
     $release_info=str_replace("**","<b>",$release_info);
@@ -54,7 +68,7 @@ if($action=="release_info"){
     $release_ver=$releases[0]->name;
     $release_ver=str_replace("v","",$release_ver);
     echo "<b><font color=blue>Version: ".$release_ver."</font></b><br><br>".$release_info;
-    echo "See complete change list at github release: <a href='".$releases[0]->html_url."'>".$release_ver."</a>";
+    echo "See complete change list at github release: <a href='".$url."'>".$relver."</a>";
     exit(0);
 }
 

@@ -1,4 +1,9 @@
 <?php
+//Redirect links
+if(in_array($_SERVER['SCRIPT_URL'],array("/history","/news","/benchcompare","/userguide","/about"))){
+  echo file_get_contents("/var/www/html/server/www/index.html");
+  exit(0);
+}
 
 //API Interface
 if($_SERVER['SCRIPT_URL']=="/benchmark.json"){

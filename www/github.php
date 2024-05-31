@@ -65,10 +65,10 @@ if($action=="release_info"){
     $release_info=str_replace("\r\n","<br>",$release_info);
     $release_split=explode("Updates from",$release_info);
     $release_info=$release_split[0]."Updates from".$release_split[1]."Updates from".$release_split[2]."Updates from".$release_split[3]."Updates from".$release_split[4];
-    $release_ver=$releases[0]->name;
-    $release_ver=str_replace("v","",$release_ver);
+    $release_ver=str_replace("v","",$relver);
+    //
     echo "<b><font color=blue>Version: ".$release_ver."</font></b><br><br>".$release_info;
-    echo "See complete change list at github release: <a href='".$url."'>".$relver."</a>";
+    echo "See complete change list at github release: <a href='".$url."'>".$release_ver."</a>";
     exit(0);
 }
 

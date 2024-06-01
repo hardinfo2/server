@@ -9,7 +9,8 @@ wget -O /var/www/html/server/www/kernel-module-icons.json https://raw.githubuser
 wget -O /var/www/html/server/www/sdcard.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/sdcard.ids
 wget -O /var/www/html/server/www/vendor.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/vendor.ids
 
-curl -s https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/shell/callbacks.c|grep \",|grep -v ardinfo|grep -v shell|grep -v NULL|grep -v FALSE|grep -v key_file|sed 's/",/<br>/g'|sed 's/"//g' >/var/www/html/server/www/credits.ids
+#create credits from github
+curl -s https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/shell/callbacks.c|grep \",|grep -v ardinfo|grep -v shell|grep -v NULL|grep -v FALSE|grep -v key_file |sed 's/",/<br>/g' |sed 's/"//g' |sed '/\:/ s/^/\<b>/' |sed '/\:/ s/$/\<\/b>/' >/var/www/html/server/www/credits.ids
 
 #backup to github - serverDB
 cd /var/www/html/serverDB

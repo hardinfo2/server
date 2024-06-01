@@ -59,6 +59,7 @@ if($action=="release_info"){
         $n++;
     }
     //
+    $release_info=preg_replace('"\b(https?://\S+)"', '<a target="_blank" href="$1">Link</a>', $release_info);
     $release_info=str_replace("-----------\r\n","<hr>",$release_info);
     $release_info=str_replace("**\r\n","</b><br>",$release_info);
     $release_info=str_replace("**","<b>",$release_info);

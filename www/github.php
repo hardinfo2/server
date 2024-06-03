@@ -36,12 +36,18 @@ $releases = json_decode($releasetxt);
 
 $action="";
 if(isset($_GET['latest'])) $action="latest";
+if(isset($_GET['credits'])) $action="credits";
 if(isset($_GET['release_info'])) $action="release_info";
 if(isset($_GET['latest_release'])) $action="latest_release";
 if(isset($_GET['latest_prerelease'])) $action="latest_prerelease";
 if(isset($_GET['latest_git_release'])) $action="latest_git_release";
 
 $url="";
+
+if($action=="credits"){
+    echo file_get_contents("/var/www/html/server/www/credits.ids");
+    exit(0);
+}
 
 if($action=="release_info"){
     //latest release

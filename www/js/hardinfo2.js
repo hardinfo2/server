@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	    githubnews.innerHTML=text;
 	});
     //get credits
-    fetch('/credits.ids')
+    fetch('/github/?credits')
 	.then((response) => response.text())
         .then((text) => {
 	    githubcredits.innerHTML=text;

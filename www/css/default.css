@@ -1,6 +1,6 @@
 body { text-align: center; padding: 20px; font: 20px Helvetica, sans-serif; color: #000; }
 @media (min-width: 768px){body{ padding-top: 10px; }}
-h1 { font-size: 50px; color:blue; }
+h1 { font-size: 24px; color:blue; }
 article { display: block; text-align: left; max-width: 800px; margin: 0 auto; }
 a { color: #dc8100; text-decoration: none; }
 a:hover { color: #333; text-decoration: none; }

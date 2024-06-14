@@ -16,6 +16,13 @@ canvas {
     margin: auto;
     font-size: 60px;
 }
+.topdesc {
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+    font-size: 16px;
+    padding: 0px;
+}
 .buttons button {
     font-size: 22px;
     border-radius: 8px;

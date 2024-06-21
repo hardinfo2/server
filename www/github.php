@@ -3,7 +3,7 @@
 //License: GPL2+
 
 $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
-$r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600 from settings where name='github-refresh'"));
+$r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600*24 from settings where name='github-refresh'"));
 
 if(1*$r[0]){ //refresh
 

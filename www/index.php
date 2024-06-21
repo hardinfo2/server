@@ -4,6 +4,10 @@ if(in_array($_SERVER['SCRIPT_URL'],array("/history","/news","/benchcompare","/us
   echo file_get_contents("/var/www/html/server/www/index.html");
   exit(0);
 }
+if(in_array($_SERVER['SCRIPT_URL'],array("/repology.svg"))){
+  require("/var/www/html/server/www/repology.php");
+  exit(0);
+}
 
 //API Interface
 if($_SERVER['SCRIPT_URL']=="/benchmark.json"){

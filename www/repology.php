@@ -6,6 +6,7 @@ header('Content-type: image/svg+xml');
 $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
 $r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600*24 from settings where name='repology-refresh'"));
 
+//Enable line below to always update, otherwise once per 24 hours
 //$r[0]=1;
 
 if(1*$r[0]){ //refresh
@@ -57,9 +58,13 @@ if(1*$r[0]){ //refresh
        if($t!==false) $t+=6;
     }
     ksort($p,SORT_STRING);
-    $ps=array();$x=0;$currentver=0;
+    $ps=array();$x=0;$currentver=0;$count=0;
     foreach ($p as $d=>$v){
+      if(($d!="ALT Linux p9")&&($d!="ALT Linux p10"))  //EOL
+      if(($d!="OpenMandriva 4.1")&&($d!="OpenMandriva 4.2")&&($d!="OpenMandriva 4.3"))  //EOL
+      if(($d!="Rosa 2014.1")&&($d!="Rosa 2016.1"))  //EOL
       if(($v[0]=="hardinfo2") || ($v[1][0]>=0)){ //use 2 to only show new community edition
+        $count++;
         $ps[$x++]=array($d,$v[1]);
 	$a=strpos($v[1],'.',0);
 	if($a!==false){
@@ -74,7 +79,7 @@ if(1*$r[0]){ //refresh
       }else unset($p[$d]);
     }
     $rows=3;
-    $col=intdiv(count($p)+$rows-1,$rows);
+    $col=intdiv($count+$rows-1,$rows);
     //create table
     $packagestatus="<table><tr><td colspan=".(2*$rows)." align=center>Package Status</td></tr>";
     for($x=0;$x<$col;$x++){

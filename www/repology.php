@@ -21,13 +21,13 @@ if(1*$r[0]){ //refresh
     ];
 
     $context = stream_context_create($opts);
-    $packagestatus1 = file_get_contents('https://repology.org/badge/vertical-allrepos/hardinfo.svg?columns=1&exclude_unsupported=1', false, $context);
+    //$packagestatus1 = file_get_contents('https://repology.org/badge/vertical-allrepos/hardinfo.svg?columns=1&exclude_unsupported=1', false, $context);
     //echo $packagestatus1;
     $packagestatus2 = file_get_contents('https://repology.org/badge/vertical-allrepos/hardinfo2.svg?columns=1&exclude_unsupported=1', false, $context);
     $p=array();
     $t=0;
     //strip data
-    $t=strpos($packagestatus1,'"end"',$t+1)+6;
+    /*$t=strpos($packagestatus1,'"end"',$t+1)+6;
     while($t !== false){
        $d=substr($packagestatus1,$t,strpos($packagestatus1,"<",$t)-$t);
        if($d[0]>'Z') $d[0]=strtoupper($d[0]);
@@ -40,7 +40,7 @@ if(1*$r[0]){ //refresh
        if($t!==false) $t+=6;
        if($t!==false) $t=strpos($packagestatus1,'"end"',$t+1);
        if($t!==false) $t+=6;
-    }
+    }*/
     $t=0;
     //strip data
     $t=strpos($packagestatus2,'"end"',$t+1)+6;

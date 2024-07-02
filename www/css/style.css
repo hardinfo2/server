@@ -1,6 +1,17 @@
 /*Copyright hardinfo2 project, written by hwspeedy, 2024*/
 /*License: GPL2+*/
 
+/*fa*/
+@font-face{font-family:'FontAwesome';src:url('/fonts/fontawesome-webfont.eot');src:url('/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),url('/fonts/fontawesome-webfont.woff2') format('woff2'),url('/fonts/fontawesome-webfont.woff') format('woff'),url('/fonts/fontawesome-webfont.ttf') format('truetype'),url('/fonts/fontawesome-webfont.svg?#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-lg{font-size:1.33333333em;line-height:.75em;vertical-align:-15%}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-fw{width:1.28571429em;text-align:center}.fa-ul{padding-left:0;margin-left:2.14285714em;list-style-type:none}.fa-ul>li{position:relative}.fa-li{position:absolute;left:-2.14285714em;width:2.14285714em;top:.14285714em;text-align:center}.fa-li.fa-lg{left:-1.85714286em}.fa-border{padding:.2em .25em .15em;border:solid .08em #eee;border-radius:.1em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left{margin-right:.3em}.fa.fa-pull-right{margin-left:.3em}.pull-right{float:right}.pull-left{float:left}.fa.pull-left{margin-right:.3em}.fa.pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}
+
+.fa-github:before{content:"\f09b"}
+.fa-download:before{content:"\f019"}
+.fa-bars:before{content:"\f0c9"}
+.fa-comments:before{content:"\f086"}
+.fa-caret-down:before{content:"\f0d7"}
+/**/
+
+
 body {
     margin:0;
     background-image: url('/img/bg2.jpg');
@@ -147,4 +158,46 @@ canvas {
 	width: 100%;
 	text-align: left;
     }
+}
+
+
+body { text-align: center; padding: 20px; font: 20px Helvetica, sans-serif; color: #000; }
+@media (min-width: 768px){body{ padding-top: 10px; }}
+h1 { font-size: 24px; color:blue; }
+article { display: block; text-align: left; max-width: 800px; margin: 0 auto; }
+a { color: #dc8100; text-decoration: none; }
+a:hover { color: #333; text-decoration: none; }
+#ip { color:gray; font-size:10px;}
+c { text-align:center;}
+
+* {box-sizing:border-box}
+
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+.mySlides {
+    display: none;
+}
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+.active, .dot:hover {
+    background-color: #717171;
+}
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
 }

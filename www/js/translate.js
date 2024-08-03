@@ -18,3 +18,12 @@ window["translate"].push(["userguide","en","User Guide"],["userguide","da","Manu
 window["translate"].push(["history","en","History"],["history","da","Historie"],["history","jp","\u6b74\u53f2"],["history","es","Historia"],["history","cn","&nbsp;\u6b77\u53f2&nbsp;"],["history","de","Geschichte"],["history","hu","Történet"]);
 
 window["translate"].push(["about","en","About"],["about","da","Om"],["about","jp","\u306b\u3064\u3044\u3066"],["about","es","Acerca"],["about","cn","&nbsp;\u95dc\u65bc&nbsp;&nbsp;"],["about","de","Um"],["about","hu","Közreműködők"]);
+
+//not used right now
+//window["translate"].push(["credits","en","Credits"],["credits","da","Om"],["credits","jp","\u306b\u3064\u3044\u3066"],["credits","es","Acerca"],["credits","cn","&nbsp;\u5b66\u5206&nbsp;&nbsp;"],["credits","de","Um"],["credits","hu","Közreműködők"]);
+
+//FIXME
+window["translate"].push(["appinfo","en","App Info&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["appinfo","da","App Info&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["appinfo","jp","\u30a2\u30d7\u30ea\u60c5\u5831&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["appinfo","es","App Info&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["appinfo","cn","&nbsp;\u5e94\u7528\u4fe1\u606f&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["appinfo","de","App Info&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"],["appinfo","hu","Közreműködők&nbsp; <i class='fa fa-caret-down'></i>&nbsp;"]);
+
+//hardinfo2 app
+window["translate"].push(["app","en","Hardinfo2"],["app","da","Hardinfo2"],["app","jp","Hardinfo2"],["app","es","Hardinfo2"],["app","cn","\u786c\u4ef6\u4fe1\u606f\u0032"],["app","de","Hardinfo2"],["app","hu","Hardinfo2"]);

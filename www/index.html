@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="topnav" id="myTopnav">
-  <a href="#" name="home" class="navlist active">
+  <a href="#" name="home" id="home" class="navlist active">
     <font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font></a>
   <a href="/news" name="news" id="news" class="navlist">News</a>
   <div class="dropdown">
@@ -28,9 +28,15 @@
     <div class="dropdown-content" id="benchstat"></div>
   </div>
   <a href="/benchcompare" id="bc" name="benchmarkcompare" class="navlist">Bench Compare</a>
-  <a href="/userguide" id="userguide" name="userguide" class="navlist">User Guide</a>
-  <a href="/history" id="history" name="history" class="navlist">History</a>
-  <a href="/about" id="about" name="about" class="navlist">About</a>
+  <div class="dropdown">
+    <button class="dropbtn" id="appinfo">App Info <i class="fa fa-caret-down"></i></button>
+    <div class="dropdown-content" id="appinfomenu">
+    <a href="/app" id="app" name="app" class="navlist">Hardinfo2</a>
+    <a href="/userguide" id="userguide" name="userguide" class="navlist">User Guide</a>
+    <a href="/history" id="history" name="history" class="navlist">History</a>
+    <a href="/about" id="about" name="about" class="navlist">About</a>
+    </div>
+  </div>
   <a href="#" name="language">
     <select id="language"><option value='cn'>Chinese</option><option value='da'>Danish</option><option value='en' selected>English</option><option value='de'>German</option><option value='hu'>Hungarian</option><option value='jp'>Japanese</option><option value='es'>Spanish</option></select>
   </a>
@@ -235,7 +241,7 @@ List of topics available: hardinfo2 -r -s -q|grep ^\-<br>
   2003 - Patrick Mochel, Mike Murphy - SysFS<br>
   2005 - Linus Torvalds - git<br>
   2008 - Jesse Barnes - Direct Rendering Manager (DRM)<br>
-  2008 - Thomas Dohmke, Chris Wanstrath, P.J. Hyett, Scott Chacon, GitHub<br>
+  2008 - Thomas Dohmke, Chris Wanstrath, P.J. Hyett, Scott Chacon - GitHub<br>
   2008 - Kristian H&oslash;gsberg - Wayland<br>
   2010 - Lennart Poettering - SystemD<br>
   2012 - Even Microsoft embraces FOSS<br>

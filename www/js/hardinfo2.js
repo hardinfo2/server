@@ -179,8 +179,13 @@ function showPage() {
     if(event.target.tagName === 'A') topnav.classList.remove('responsive');
     //
     let navlist = document.querySelectorAll('.navlist');
+    //
+    var obj=this;
+    if (obj == document.getElementById('app')) {obj=document.getElementById('home');}
+    //
     for (let x = 0; x < navlist.length; x++) {
-	if (navlist[x] == this) {
+        if (navlist[x] == document.getElementById('app')) {
+	} else if (navlist[x] == obj) {
 	    navlist[x].classList.add('active');
 	    document.getElementById("Page-" + navlist[x].name).style.display="block";
 	} else {
@@ -333,6 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(url.includes("benchcompare")) {const event=new Event('click');navlist[2].dispatchEvent(event);}
     if(url.includes("userguide")) {const event=new Event('click');navlist[3].dispatchEvent(event);}
     if(url.includes("history")) {const event=new Event('click');navlist[4].dispatchEvent(event);}
+    if(url.includes("credits")) {const event=new Event('click');navlist[5].dispatchEvent(event);}
     if(url.includes("about")) {const event=new Event('click');navlist[5].dispatchEvent(event);}
     //language
     if(document.getElementById("language"))

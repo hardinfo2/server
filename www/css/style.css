@@ -14,9 +14,9 @@
 
 body {
     margin:0;
-    background-image: url('/img/bg2.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: url('/img/bg.png');
+    background-repeat: repeat;
+    background-size: auto;
 }
 canvas {
     background: white;

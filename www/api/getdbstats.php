@@ -17,7 +17,7 @@ function show_table($q){
     echo "<font size='2'>Total: ".($q->num_rows)."</font><br><br>";
 }
 
-    $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable","")';
+    $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable",""),"Build Date:","")';
 
     echo "<h1>Last incoming benchmarks</h1>";
     $q=$mysqli->query('SELECT '.$BOARD.' ,cpu_name,if(instr(machine_type,"board"),"SBC",TRIM(machine_type)) MachineType,TRIM(linux_os) LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');

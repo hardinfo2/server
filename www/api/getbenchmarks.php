@@ -21,10 +21,10 @@
 
        case "OTHER": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where not instr(cpu_name,"AMD") and not instr(cpu_name,"Intel") and (left(machine_type,7)!="Virtual") group by cpu_name,benchmark_type order by res desc;'); break;
 
-       default: $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where (user_note="'.mysqli_real_escape_string($db,$_GET['u']).'") and (left(machine_type,7)!="Virtual") group by cpu_name,benchmark_type order by res desc;'); break;
+       default: $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where (user_note="'.mysqli_real_escape_string($db,$_GET['u']).'") and (left(machine_type,7)!="Virtual") and not instr(cpu_name,"Sample") group by cpu_name,benchmark_type order by res desc;'); break;
      }
   } else {
-     $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where left(machine_type,7)!="Virtual" group by cpu_name,benchmark_type order by res desc;');
+     $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where left(machine_type,7)!="Virtual" and not instr(cpu_name,"Sample") group by cpu_name,benchmark_type order by res desc;');
   }
   $r = $q->fetch_all();
 

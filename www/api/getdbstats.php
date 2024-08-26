@@ -57,10 +57,10 @@ function show_table($q){
 
 
     echo "<h1>GPU Renderer</h1><font size='2'>Percent most benchmarked</font><br>";
-    $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
+    $q=$mysqli->query('SELECT COUNT(*) FROM benchmark_result WHERE NOT ISNULL(opengl_renderer) and not instr(machine_type,"irtual");');
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT if(isnull(opengl_renderer) or instr(opengl_renderer,'llvmpipe'),'Software Renderer',opengl_renderer) GPU,round((count(*)*100)/".$total.",2) percent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND benchmark_type='CPU Blowfish (Single-thread)' GROUP BY GPU ORDER BY COUNT(*) DESC;");
+    $q=$mysqli->query('SELECT IF(INSTR(opengl_renderer,"llvmpipe") OR INSTR(opengl_renderer,"softpipe"),"Software",IF(INSTR(REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)",""),"("),LEFT(REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)",""),-1+LOCATE("(",REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)",""))),opengl_renderer)) GPU,round((count(*)*100)/'.$total.',1) percent FROM benchmark_result WHERE NOT ISNULL(opengl_renderer) and not instr(machine_type,"irtual") GROUP BY GPU order by percent DESC;');
     show_table($q);
 
     $mysqli->close();

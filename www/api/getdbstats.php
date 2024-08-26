@@ -24,49 +24,43 @@ function show_table($q){
     show_table($q);
 
 
-    echo "<h1>Distro - procent most benchmarked</h1>";
+    echo "<h1>Distro</h1><font size='2'>Percent most benchmarked</font><br>";
     $q=$mysqli->query('SELECT COUNT(*) cnt FROM benchmark_result WHERE (NOT ISNULL(linux_os)) AND linux_os<>"Unknown" AND benchmark_type="CPU Blowfish (Single-thread)"');
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query('SELECT IF(LEFT(linux_os,10)="Linux Mint","Mint",IF(LEFT(linux_os,3)="Red","RedHat",LEFT(linux_os,IF(LOCATE(" ",linux_os) - 1<0,99,LOCATE(" ",linux_os) - 1) ))) Distro, ROUND(COUNT(*)*100/'.$total.',1) procent FROM benchmark_result WHERE (NOT ISNULL(linux_os)) AND linux_os<>"Unknown" AND benchmark_type="CPU Blowfish (Single-thread)" GROUP BY Distro ORDER BY procent DESC;');
+    $q=$mysqli->query('SELECT IF(LEFT(linux_os,10)="Linux Mint","Mint",IF(LEFT(linux_os,3)="Red","RedHat",LEFT(linux_os,IF(LOCATE(" ",linux_os) - 1<0,99,LOCATE(" ",linux_os) - 1) ))) Distro, ROUND(COUNT(*)*100/'.$total.',1) percent FROM benchmark_result WHERE (NOT ISNULL(linux_os)) AND linux_os<>"Unknown" AND benchmark_type="CPU Blowfish (Single-thread)" GROUP BY Distro ORDER BY percent DESC;');
     show_table($q);
 
 
-    echo "<h1>Machine type - procent most benchmarked</h1>";
+    echo "<h1>Machine type</h1><font size='2'>Percent most benchmarked</font><br>";
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result;");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT machine_type, ROUND((COUNT(*)*100)/".$total.",1) procent FROM benchmark_result GROUP BY machine_type ORDER BY procent DESC;");
+    $q=$mysqli->query("SELECT machine_type, ROUND((COUNT(*)*100)/".$total.",1) percent FROM benchmark_result GROUP BY machine_type ORDER BY percent DESC;");
     show_table($q);
 
 
-    echo "<h1>Motherboard - procent most benchmarked</h1>";
+    echo "<h1>Motherboard</h1><font size='2'>Percent most benchmarked</font><br>";
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT ".$BOARD.", ROUND((COUNT(*)*100)/".$total.",1) procent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown') GROUP BY board ORDER BY procent DESC;");
+    $q=$mysqli->query("SELECT ".$BOARD.", ROUND((COUNT(*)*100)/".$total.",1) percent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown') GROUP BY board ORDER BY percent DESC;");
     show_table($q);
 
 
-    echo "<h1>CPU - procent most benchmarked</h1>";
+    echo "<h1>CPU</h1><font size='2'>Percent most benchmarked</font><br>";
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT cpu_name,round((count(*)*100)/".$total.",2) procent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND benchmark_type='CPU Blowfish (Single-thread)' GROUP BY cpu_name ORDER BY COUNT(*) DESC;");
+    $q=$mysqli->query("SELECT cpu_name,round((count(*)*100)/".$total.",2) percent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND benchmark_type='CPU Blowfish (Single-thread)' GROUP BY cpu_name ORDER BY COUNT(*) DESC;");
     show_table($q);
 
-/*    echo "<h1>GPU - procent most benchmarked</h1>";
-    $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
-    $r=$q->fetch_row();
-    $total=$r[0];
-    $q=$mysqli->query("SELECT gpu_desc,round((count(*)*100)/".$total.",2) procent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND benchmark_type='CPU Blowfish (Single-thread)' GROUP BY gpu_desc ORDER BY COUNT(*) DESC;");
-    show_table($q);*/
 
-    echo "<h1>GPU Renderer - procent most benchmarked</h1>";
+    echo "<h1>GPU Renderer</h1><font size='2'>Percent most benchmarked</font><br>";
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT if(isnull(opengl_renderer) or instr(opengl_renderer,'llvmpipe'),'Software Renderer',opengl_renderer) GPU,round((count(*)*100)/".$total.",2) procent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND benchmark_type='CPU Blowfish (Single-thread)' GROUP BY GPU ORDER BY COUNT(*) DESC;");
+    $q=$mysqli->query("SELECT if(isnull(opengl_renderer) or instr(opengl_renderer,'llvmpipe'),'Software Renderer',opengl_renderer) GPU,round((count(*)*100)/".$total.",2) percent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND benchmark_type='CPU Blowfish (Single-thread)' GROUP BY GPU ORDER BY COUNT(*) DESC;");
     show_table($q);
 
     $mysqli->close();

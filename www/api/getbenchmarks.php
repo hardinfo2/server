@@ -13,7 +13,7 @@
 
      case "WORKSERV": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where (instr(cpu_name,"XEON") or instr(cpu_name,"EPYC") or (machine_type="Workstation") or (machine_type="Server")) and (left(machine_type,7)!="Virtual") and pointer_bits=64 and not instr(benchmark_type,"OpenGL") group by cpu_name,benchmark_type order by res desc;'); break;
 
-     case "NOTEBOOK": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where (machine_type="Notebook" or machine_type="Laptop" or instr(cpu_name,"U")) and (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"OpenGL") and pointer_bits=64 group by cpu_name,benchmark_type order by res desc;'); break;
+     case "NOTEBOOK": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where (machine_type="Notebook" or machine_type="Laptop") and (left(machine_type,7)!="Virtual") and not instr(cpu_name,"XEON") and not instr(cpu_name,"EPYC") and pointer_bits=64 and not instr(benchmark_type,"OpenGL") and pointer_bits=64 group by cpu_name,benchmark_type order by res desc;'); break;
 
      case "INTEL": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where instr(cpu_name,"Intel") and (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"OpenGL") and pointer_bits=64 group by cpu_name,benchmark_type order by res desc;'); break;
 

@@ -9,6 +9,16 @@ function changeLanguage(){
 	if(window["translate"][i][1]===document.getElementById("language").value) document.getElementById(window["translate"][i][0]).innerHTML=window["translate"][i][2];
     }
 }
+function changeFilter(){
+    console.log("Changing filter to " + document.getElementById("filter").value);
+    event.preventDefault();
+    //get benchmark data
+    fetch('/api/getbenchmarks?u='+document.getElementById("filter").value)
+	.then((response) => response.text())
+        .then((text) => {
+	    create_tables_graphs(JSON.parse(text));
+	});
+}
 
 //Showing a chart.js from bmval
 function create_chart(bmtype,bmval,name) {
@@ -116,8 +126,8 @@ function create_chart_compare() {
     if(bc1>=0) datas.push({ borderColor: "red", backgroundColor: "red", label: window["bmcpus"][bc1], data: cpu1});
     if(bc2>=0) datas.push({ borderColor: "blue", backgroundColor: "blue", label: window["bmcpus"][bc2], data: cpu2});
     if(bc3>=0) datas.push({ borderColor: "green", backgroundColor: "green", label: window["bmcpus"][bc3], data: cpu3});
-    h=bcount*bmtypesavg.length*16;
-    if(bcount<=1) h=bmtypesavg.length*24;
+    h=bcount*(bmtypesavg.length+1)*16;
+    if(bcount<=1) h=(bmtypesavg.length+1)*16*(bcount+1);
     graph={type:"bar",
 	   height: h,
 	   data: {labels: bmtypesavg,
@@ -349,6 +359,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("language").addEventListener('change', changeLanguage, false);
     if(document.getElementById("language"))
 	document.getElementById("language").addEventListener('click', function() {event.preventDefault();}, false);
+    //filter
+    if(document.getElementById("filter"))
+	document.getElementById("filter").addEventListener('change', changeFilter, false);
+    if(document.getElementById("filter"))
+	document.getElementById("filter").addEventListener('click', function() {event.preventDefault();}, false);
     //get benchmark data
     fetch('/api/getbenchmarks?'+window.location.search.substr(1))
 	.then((response) => response.text())

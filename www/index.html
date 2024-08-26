@@ -28,6 +28,17 @@
     <div class="dropdown-content" id="benchstat"></div>
   </div>
   <a href="/benchcompare" id="bc" name="benchmarkcompare" class="navlist">Bench Compare</a>
+  <a href="#" name="filter">
+    <select id="filter"><option value='DESKTOP'>Desktop</option><option value='SBC'>SBC</option><option value='WORKSERV'>WorkServer</option><option value='NOTEBOOK'>Notebook</option>
+      <option value='32'>32bit</option>
+      <option disabled>----------</option>
+      <option value='INTEL'>Intel</option><option value='AMD'>AMD</option><option value='OTHER'>Other</option>
+<!--      <option disabled>----------</option>
+      <option value='TOP'>Top</option><option value='MID'>Mid</option><option value='BOT'>Bottom</option>-->
+      <option disabled>----------</option>
+      <option value='GPU'>GPU</option>
+    </select>
+  </a>
   <div class="dropdown">
     <button class="dropbtn" id="appinfo">App Info <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-content" id="appinfomenu">

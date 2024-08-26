@@ -355,6 +355,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then((text) => {
 	    create_tables_graphs(JSON.parse(text));
 	});
+    //get dbstats
+    fetch('/api/getdbstats')
+	.then((response) => response.text())
+        .then((text) => {
+	    dbstats.innerHTML=text;
+	});
     //get github release info
     fetch('/github/?release_info')
 	.then((response) => response.text())

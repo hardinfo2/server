@@ -17,8 +17,10 @@ function show_table($q){
     echo "<font size='2'>Total: ".($q->num_rows)."</font><br><br>";
 }
 
+    $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI")';
+
     echo "<h1>Last incoming benchmarks</h1>";
-    $q=$mysqli->query('SELECT board,cpu_name,if(instr(machine_type,"board"),"SBC",TRIM(machine_type)) MachineType,TRIM(linux_os) LinuxOS FROM benchmark_result WHERE FROM_UNIXTIME(TIMESTAMP)>SUBDATE(NOW(),INTERVAL 24 HOUR) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) ASC');
+    $q=$mysqli->query('SELECT '.$BOARD.' ,cpu_name,if(instr(machine_type,"board"),"SBC",TRIM(machine_type)) MachineType,TRIM(linux_os) LinuxOS FROM benchmark_result WHERE FROM_UNIXTIME(TIMESTAMP)>SUBDATE(NOW(),INTERVAL 24 HOUR) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) ASC');
     show_table($q);
 
 
@@ -42,7 +44,7 @@ function show_table($q){
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT board, ROUND((COUNT(*)*100)/".$total.",1) procent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown') GROUP BY board ORDER BY procent DESC;");
+    $q=$mysqli->query("SELECT ".$BOARD.", ROUND((COUNT(*)*100)/".$total.",1) procent FROM benchmark_result WHERE NOT INSTR(machine_type,'irtual') AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown') GROUP BY board ORDER BY procent DESC;");
     show_table($q);
 
 

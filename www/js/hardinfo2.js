@@ -327,15 +327,18 @@ function create_tables_graphs(bm) {
 		vars=getUrlVars();
 		if(vars["cpu1"] !== undefined){
 		    cpu1=vars["cpu1"];
-		    if(i==1 && cpu1.length>0 && bmcpus[t].indexOf(cpu1)>=0 && delimiter.includes(bmcpus[t].charAt(bmcpus[t].indexOf(cpu1)+cpu1.length))) text=text+"selected ";
+		    if(i==1 && cpu1.length>0 && bmcpus[t].toUpperCase().indexOf(cpu1.toUpperCase())>=0 &&
+		       delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu1.toUpperCase())+cpu1.length))) text=text+"selected ";
 		}
 		if(vars["cpu2"] !== undefined){
 		    cpu2=vars["cpu2"];
-		    if(i==2 && cpu2.length>0 && bmcpus[t].indexOf(cpu2)>=0 && delimiter.includes(bmcpus[t].charAt(bmcpus[t].indexOf(cpu2)+cpu2.length))) text=text+"selected ";
+		    if(i==2 && cpu2.length>0 && bmcpus[t].toUpperCase().indexOf(cpu2.toUpperCase())>=0 &&
+		       delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu2.toUpperCase())+cpu2.length))) text=text+"selected ";
 		}
 		if(vars["cpu3"] !== undefined){
 		    cpu3=vars["cpu3"];
-		    if(i==3 && cpu3.length>0 && bmcpus[t].indexOf(cpu3)>=0 && delimiter.includes(bmcpus[t].charAt(bmcpus[t].indexOf(cpu3)+cpu3.length)) ) text=text+"selected ";
+		    if(i==3 && cpu3.length>0 && bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())>=0 &&
+		       delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())+cpu3.length))) text=text+"selected ";
 		}
 	    }else{
 	        if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
@@ -372,34 +375,37 @@ document.addEventListener('DOMContentLoaded', function() {
 	e=navlist[i];
 	navlist[i].addEventListener('click', showPage, false);
     }
+    //setup filter
     let url=window.location.href;
-    if(url.includes("news")) {const event=new Event('click');navlist[1].dispatchEvent(event);}
     window["bclookup"]=0;
-    if(url.includes("benchcompare")) {
-	const event=new Event('click');navlist[2].dispatchEvent(event);
-	if(vars["cpu1"] !== undefined){
-	    document.getElementById("filter").value="ALL";
+    if(vars["cpu1"] !== undefined){
+        document.getElementById("filter").value="ALL";
+	changeFilter();
+	window["bclookup"]=1;
+	url="benchcompare";
+    } else if(vars["u"] !== undefined){
+	filters=["ALL","SBC","DESKTOP","WORKSERVER","32","NOTEBOOK","INTEL","AMD","OTHER"];
+	if(filters.includes(vars["u"])){
+	    document.getElementById("filter").value=vars["u"];
 	    changeFilter();
-	    window["bclookup"]=1;
-	} else if(vars["u"] !== undefined){
-	    filters=["ALL","SBC","DESKTOP","WORKSERVER","32","NOTEBOOK","INTEL","AMD","OTHER"];
-	    if(filters.includes(vars["u"])){
-	        document.getElementById("filter").value=vars["u"];
-		changeFilter();
-	    }else{ /*custom group*/
-                window["bclookup"]=2;//custom group
-		var opt = document.createElement('option');
-		opt.value = vars["u"];
-		opt.innerHTML = vars["u"];
-		document.getElementById("filter").appendChild(opt);
-	        document.getElementById("filter").value=vars["u"];
-		changeFilter();
-	    }
-	}else{
-            changeFilter();
+            url="benchcompare";
+	}else{ /*custom group*/
+            window["bclookup"]=2;//custom group
+	    var opt = document.createElement('option');
+	    opt.value = vars["u"];
+	    opt.innerHTML = vars["u"];
+	    document.getElementById("filter").appendChild(opt);
+	    document.getElementById("filter").value=vars["u"];
+	    changeFilter();
+	    url="benchcompare";
 	}
     }else{
         changeFilter();
+    }
+    //direct links
+    if(url.includes("news")) {const event=new Event('click');navlist[1].dispatchEvent(event);}
+    if(url.includes("benchcompare")) {
+	const event=new Event('click');navlist[2].dispatchEvent(event);
     }
     if(url.includes("app")) {const event=new Event('click');navlist[3].dispatchEvent(event);}
     if(url.includes("userguide")) {const event=new Event('click');navlist[4].dispatchEvent(event);}

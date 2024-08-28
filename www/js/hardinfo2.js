@@ -323,22 +323,25 @@ function create_tables_graphs(bm) {
         for(var t=0; t<bmcpus.length; t++){
 	    text=text+"<option ";
 	    if(window["bclookup"]){
-		delimiter=[' ','\0',')','/',','];
+		delimiter=[' ',')','/',','];
 		vars=getUrlVars();
 		if(vars["cpu1"] !== undefined){
 		    cpu1=vars["cpu1"];
 		    if(i==1 && cpu1.length>0 && bmcpus[t].toUpperCase().indexOf(cpu1.toUpperCase())>=0 &&
-		       delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu1.toUpperCase())+cpu1.length))) text=text+"selected ";
+		       (bmcpus[t].toUpperCase().indexOf(cpu1.toUpperCase())+cpu1.length>=bmcpus[t].length ||
+			delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu1.toUpperCase())+cpu1.length)))) text=text+"selected ";
 		}
 		if(vars["cpu2"] !== undefined){
 		    cpu2=vars["cpu2"];
 		    if(i==2 && cpu2.length>0 && bmcpus[t].toUpperCase().indexOf(cpu2.toUpperCase())>=0 &&
-		       delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu2.toUpperCase())+cpu2.length))) text=text+"selected ";
+		       (bmcpus[t].toUpperCase().indexOf(cpu2.toUpperCase())+cpu2.length>=bmcpus[t].length ||
+			delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu2.toUpperCase())+cpu2.length)))) text=text+"selected ";
 		}
 		if(vars["cpu3"] !== undefined){
 		    cpu3=vars["cpu3"];
 		    if(i==3 && cpu3.length>0 && bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())>=0 &&
-		       delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())+cpu3.length))) text=text+"selected ";
+		       (bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())+cpu3.length>=bmcpus[t].length ||
+			delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())+cpu3.length)))) text=text+"selected ";
 		}
 	    }else{
 	        if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";

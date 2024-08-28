@@ -204,8 +204,7 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 </dl>
 <br>
 <h2>Command Line Interface</h2>
-The hardinfo2 program also has a Command Line Interface, for use in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br>
-<br>
+The hardinfo2 program also has a Command Line Interface, for use in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br><br>
 <b>man hardinfo2</b> shows the following CLI options:
 <table>
 <tr><td>-h, --help</td><td>Show help options</td></tr>
@@ -222,12 +221,21 @@ The hardinfo2 program also has a Command Line Interface, for use in terminals. T
 <tr><td><br>EXAMPLES</td><td><br>examples of CLI command usage:</td></tr>
 <tr><td>hardinfo2 -b 'FPU FFT'</td><td>runs only FPU FFT benchmark</td></tr>
 <tr><td>hardinfo2 -u 1</td><td>enable updates at startup and starts gui (can also be set in gui)</td></tr>
-<tr><td nowrap>hardinfo2 -u SBC-DK -r</td><td>updates data from server, generate CLI report and sends benchmark with user-note</td></tr>
+<tr><td nowrap>hardinfo2 -u MyUniqueNote -r</td><td>updates data from server, generate CLI report and sends benchmark with user-note</td></tr>
 <tr><td>hardinfo2 -r</td><td>generates CLI report</td></tr>
-</table>
-<br>
+</table><br>
 Example of remote support issues: hardinfo2 -r -s -q|grep -A3 ^\-BIOS<br>
 List of topics available: hardinfo2 -r -s -q|grep ^\-<br>
+<br>
+<h2>Website tricks</h2>
+<b>You can call benchmarks directly:</b><br>
+<a href='https://hardinfo2.org/?cpu1=7950x'>https://hardinfo2.org/?cpu1=7950x</a><br>
+<a href='https://hardinfo2.org/?cpu1=rpi4&cpu2=rpi5&cpu3=5600'>https://hardinfo2.org/?cpu1=rpi4&cpu2=rpi5&cpu3=5600</a><br><br>
+<b>You can select filter group directly:</b><br>
+<a href='https://hardinfo2.org/?u=SBC'>https://hardinfo2.org/?u=SBC</a><br>
+groups: ALL,SBC,NOTEBOOK,DESKTOP,WORKSERVER,32,INTEL,AMD,OTHER,GPU<br><br>
+Or you can filter for your own custom group of benchmarks: (See above option -u)<br>
+<a href='https://hardinfo2.org/?u=MyUniqueNote'>https://hardinfo2.org/?u=MyUniqueNote</a><br>
 <br><br>
 </article>
 </div>

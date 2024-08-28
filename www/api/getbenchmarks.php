@@ -8,6 +8,8 @@
   switch($_GET['u']){
      case "SBC": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where machine_type="Single-board computer" and (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"OpenGL") group by cpu_name,benchmark_type order by res desc;'); break;
 
+     case "ALL": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where not instr(cpu_name,"Sample") and (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"OpenGL") group by cpu_name,benchmark_type order by res desc;'); break;
+
      case "":
      case "DESKTOP": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where machine_type="Desktop" and not instr(cpu_name,"XEON") and not instr(cpu_name,"EPYC") and not instr(cpu_name,"Sample") and not instr(cpu_name,"U") and /*not instr(cpu_name,"Celeron") and not instr(cpu_name,"Core 2") and*/ (left(machine_type,7)!="Virtual") and pointer_bits=64 and not instr(benchmark_type,"OpenGL") group by cpu_name,benchmark_type order by res desc;'); break;
 

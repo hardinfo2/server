@@ -176,6 +176,10 @@ c { text-align:center;}
     max-width: 1000px;
     position: relative;
     margin: auto;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
 }
 .mySlides {
     display: none;

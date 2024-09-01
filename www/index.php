@@ -33,8 +33,8 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
           $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,? );");
           $stmt->bind_param('sdsssssiiiiisssiiiisdiiisssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState']);
           $stmt->execute();
-          if(1 && $stmt->error){
-             $q=$mysqli->query("update settings set value=now() where name='lasterrortime'");
+          if(0 && $stmt->error){
+             $mysqli->query("update settings set value=now() where name='lasterrortime'");
              $q=$mysqli->prepare("update settings set value=? where name='lasterror'");
              $q->bind_param('b',$stmt->error);
              $q->send_long_data(0,$stmt->error);

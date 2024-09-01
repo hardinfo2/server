@@ -193,6 +193,13 @@ function toggleMenu() {
 function showPage() {
     //console.log("showPage " + this.name);
     event.preventDefault();
+    if(this.name=="dbstats"){//get dbstats
+      fetch('/api/getdbstats')
+	.then((response) => response.text())
+        .then((text) => {
+	    dbstats.innerHTML=text;
+	});
+    }
     var topnav=document.querySelector('#myTopnav');
     if(event.target.tagName === 'A') topnav.classList.remove('responsive');
     //
@@ -423,12 +430,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("filter").addEventListener('change', changeFilter, false);
     if(document.getElementById("filter"))
 	document.getElementById("filter").addEventListener('click', function() {event.preventDefault();}, false);
-    //get dbstats
-    fetch('/api/getdbstats')
-	.then((response) => response.text())
-        .then((text) => {
-	    dbstats.innerHTML=text;
-	});
     //get github release info
     fetch('/github/?release_info')
 	.then((response) => response.text())

@@ -60,7 +60,8 @@ function show_table($q){
     $q=$mysqli->query('SELECT COUNT(*) FROM benchmark_result WHERE NOT ISNULL(opengl_renderer) and not instr(machine_type,"irtual");');
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query('SELECT IF(INSTR(opengl_renderer,"llvmpipe") OR INSTR(opengl_renderer,"softpipe"),"Software",IF(INSTR(REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)",""),"("),LEFT(REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)",""),-1+LOCATE("(",REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)",""))),opengl_renderer)) GPU,round((count(*)*100)/'.$total.',1) percent FROM benchmark_result WHERE NOT ISNULL(opengl_renderer) and not instr(machine_type,"irtual") GROUP BY GPU order by percent DESC;');
+    $q=$mysqli->query('SELECT IF(INSTR(opengl_renderer,"llvmpipe") OR INSTR(opengl_renderer,"softpipe"),"Software",   LEFT(  REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)","")  , IF(LOCATE("(",  REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)","")  )<10,9999,LOCATE("(",  REPLACE(REPLACE(REPLACE(opengl_renderer, "(tm)",""),"(TM)",""),"(R)","")  )-2))) gpuname, ROUND((COUNT(*)*100)/'.$total.',1) percent FROM benchmark_result WHERE NOT ISNULL(opengl_renderer) and not instr(machine_type,"irtual") GROUP BY gpuname order by percent DESC;');
+
     show_table($q);
 
     $mysqli->close();

@@ -200,6 +200,20 @@ function showPage() {
 	    dbstats.innerHTML=text;
 	});
     }
+    if(this.name=="news"){//get github release info
+      fetch('/github/?release_info')
+	.then((response) => response.text())
+        .then((text) => {
+	    githubnews.innerHTML=text;
+	});
+    }
+    if((this.name=="about") || (this.name=="credits")){//get credits
+      fetch('/github/?credits')
+	.then((response) => response.text())
+        .then((text) => {
+	    githubcredits.innerHTML=text;
+	});
+    }
     var topnav=document.querySelector('#myTopnav');
     if(event.target.tagName === 'A') topnav.classList.remove('responsive');
     //
@@ -430,17 +444,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("filter").addEventListener('change', changeFilter, false);
     if(document.getElementById("filter"))
 	document.getElementById("filter").addEventListener('click', function() {event.preventDefault();}, false);
-    //get github release info
-    fetch('/github/?release_info')
-	.then((response) => response.text())
-        .then((text) => {
-	    githubnews.innerHTML=text;
-	});
-    //get credits
-    fetch('/github/?credits')
-	.then((response) => response.text())
-        .then((text) => {
-	    githubcredits.innerHTML=text;
-	});
     showSlides();
   },false);

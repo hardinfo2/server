@@ -11,7 +11,7 @@
      case "ALL": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where not instr(cpu_name,"Sample") and (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"GPU") group by cpu_name,benchmark_type order by res desc;'); break;
 
      case "":
-     case "DESKTOP": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where machine_type="Desktop" and not instr(cpu_name,"XEON") and not instr(cpu_name,"EPYC") and not instr(cpu_name,"Sample") and not instr(cpu_name,"U") and /*not instr(cpu_name,"Celeron") and not instr(cpu_name,"Core 2") and*/ (left(machine_type,7)!="Virtual") and pointer_bits=64 and not instr(benchmark_type,"GPU") group by cpu_name,benchmark_type order by res desc;'); break;
+     case "DESKTOP": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where instr(machine_type,"Desktop") and not instr(cpu_name,"XEON") and not instr(cpu_name,"EPYC") and not instr(cpu_name,"Sample") and not instr(cpu_name,"U") and /*not instr(cpu_name,"Celeron") and not instr(cpu_name,"Core 2") and*/ (left(machine_type,7)!="Virtual") and pointer_bits=64 and not instr(benchmark_type,"GPU") group by cpu_name,benchmark_type order by res desc;'); break;
 
      case "WORKSERV": $q = $db->query('SELECT cpu_name,benchmark_type,avg(benchmark_result) res FROM benchmark_result where (instr(cpu_name,"XEON") or instr(cpu_name,"EPYC") or (machine_type="Workstation") or (machine_type="Server")) and (left(machine_type,7)!="Virtual") and pointer_bits=64 and not instr(benchmark_type,"GPU") group by cpu_name,benchmark_type order by res desc;'); break;
 

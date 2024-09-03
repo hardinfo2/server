@@ -224,3 +224,16 @@ c { text-align:center;}
 .left {
     text-align: left;
 }
+
+.greentext {
+#    background-color: #ddd;
+    color: green;
+}
+.redtext {
+#    background-color: #ddd;
+    color: red;
+}
+.yellowtext {
+#    background-color: #ddd;
+    color: yellow;
+}

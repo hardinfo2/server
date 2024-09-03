@@ -251,6 +251,7 @@ function create_tables_graphs(bm) {
     const bmval=new Array(15);
     const bmtypes=new Array();
     const bmcpus=new Array();
+    const bmcomplete=new Array();
     //Create top nav menu
     //Json: 0:cpu,1:bmtype,2:value
     //find bm types, cpus
@@ -271,8 +272,19 @@ function create_tables_graphs(bm) {
     }
     //fill data
     for(var i=0; i<bm.length; i++){
-       t=bmtypes.indexOf(bm[i][1].toString());
-       bmval[t].push( [bm[i][0],bm[i][2]] );
+        t=bmtypes.indexOf(bm[i][1].toString());
+        bmval[t].push( [bm[i][0],bm[i][2]] );
+    }
+    //check complete
+    for(var i=0; i<bmcpus.length; i++){
+	bmcomplete[i]=1;
+    }
+    for(var t=0; t<bmtypes.length; t++){
+	for(var i=0; i<bmcpus.length; i++){
+	    //search for CPU(i) in bmvals for bmtype(t)
+	    a=0;while((a<bmval[t].length) && (bmval[t][a][0]!=bmcpus[i].toString())) a++;
+	    if(a>=bmval[t].length) bmcomplete[i]=0;
+	}
     }
     //create navtop
     for(var i=0; i<bmtypes.length; i++){
@@ -343,6 +355,11 @@ function create_tables_graphs(bm) {
 	text=text+"<option value=-1>Please Select</option>";
         for(var t=0; t<bmcpus.length; t++){
 	    text=text+"<option ";
+	    //complete set
+	    if(bmcomplete[t]){
+		text=text+"class=greentext ";
+	    }
+            //selected
 	    if(window["bclookup"]){
 		delimiter=[' ',')','/',','];
 		vars=getUrlVars();

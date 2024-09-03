@@ -54,8 +54,9 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       $qbt=$mysqli->query("Select benchmark_type from benchmark_result group by benchmark_type;");
       while($rbt=$qbt->fetch_array()){
          $grpby="cpu_name";$filter="";
-         if(substr($rbt[0],0,3)=="GPU") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='')";}
-         $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, AVG(benchmark_result) AS benchmark_result,
+         if(substr($rbt[0],0,11)=="GPU Drawing") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
+         if(substr($rbt[0],0,11)=="GPU OpenGL ") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
+         $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, round(AVG(benchmark_result),1) AS benchmark_result,
              board, cpu_name, cpu_config, num_cpus, num_cores,
              num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
              gpu_desc, pointer_bits, data_from_super_user, used_threads,
@@ -64,7 +65,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
          while($r=$q->fetch_array()){
 	    $a=array();
 	    $a['MachineId']=$r[0];
-	    $a['ExtraInfo']=$r[1];
+	    $a['ExtraInfo']="";//$r[1];
 	    $a['UserNote']=$r[2];
 	    $a['MachineType']=$r[3];
 	    $a['BenchmarkVersion']=1*$r[4];

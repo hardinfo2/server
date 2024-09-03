@@ -105,8 +105,9 @@ if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
       $q=$mysqli->query("Select value from settings where name='blobs-update-version'");
       $r=$q->fetch_array();
       $a=array();
-      $a['update-version']=$r[0];
+      $a['update-version']=$r[0];//must be first
       $a['program-version']=$_GET['ver'];
+      $a['latest-program-version']="2.1.10";//FIXME automatic set to last prelease before release which equals release
       echo json_encode($a);
       $mysqli->close();
   }

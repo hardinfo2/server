@@ -238,7 +238,11 @@ function showPage() {
 }
 
 function html_table(bmtypes,bmval,htmltable) {
-    text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=3 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
+    if(bmtypes.substring(0,3)=="GPU"){
+	text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=2 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
+    }else{
+	text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=4 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
+    }
     for(var i=0;i<bmval.length;i++){
 	if(!bmval[i][2]) bmval[i][2]="";
 	if(bmtypes.substring(0,3)=="GPU"){
@@ -248,6 +252,9 @@ function html_table(bmtypes,bmval,htmltable) {
 	}
     }
     text=text+"</table>";
+    if(bmtypes=="GPU Drawing"){
+	text=text+"<br>GPU Drawing: Many Desktop Environments only uses software.";
+    }
     htmltable.innerHTML=text;
 }
 function create_tables_graphs(bm) {

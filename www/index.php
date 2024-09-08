@@ -19,12 +19,12 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       $j=json_decode(file_get_contents("php://input"),true,3);
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
       if(0){
-         $q=$mysqli->prepare("INSERT INTO settings (SELECT CONCAT('lastdata',VALUE+1),? FROM settings WHERE NAME='lastdatanumber');");
+         $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lastdata',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lastdatanumber');");
 	 $post=file_get_contents("php://input");
          $q->bind_param('b',$post);
          $q->send_long_data(0,$post);
          $q->execute();
-	 $q->close();
+         $q->close();
 	 //increase value
          $mysqli->query("update settings set value=value+1 WHERE NAME='lastdatanumber';");
       }
@@ -33,14 +33,15 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
           $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,? );");
           $stmt->bind_param('sdsssssiiiiisssiiiisdiiissssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU']);
           $stmt->execute();
-          if(0 && $stmt->error){
-             $mysqli->query("update settings set value=now() where name='lasterrortime'");
-             $q=$mysqli->prepare("update settings set value=? where name='lasterror'");
-             $q->bind_param('b',$stmt->error);
-             $q->send_long_data(0,$stmt->error);
-             $q->execute();
-	     $q->close();
-          }
+      }
+      if(1 && (!$stmt || $stmt->error)){
+         $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lasterror',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lasterrornumber');");
+         $q->bind_param('b',$stmt->error);
+         $q->send_long_data(0,$stmt->error);
+         $q->execute();
+	 $q->close();
+	 //increase value
+         $mysqli->query("update settings set value=value+1 WHERE NAME='lasterrornumber';");
       }
       $stmt->close();
       $mysqli->close();
@@ -108,7 +109,9 @@ if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
       $a=array();
       $a['update-version']=$r[0];//must be first
       $a['program-version']=$_GET['ver'];
-      $a['latest-program-version']="2.1.10";//FIXME automatic set to last prelease before release which equals release
+      $q=$mysqli->query("Select value from settings where name='latest-program-version'");
+      $r=$q->fetch_array();
+      $a['latest-program-version']=$r[0];//set to last prelease before release which equals release
       echo json_encode($a);
       $mysqli->close();
   }

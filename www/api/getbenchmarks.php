@@ -31,6 +31,8 @@
 
      case "GPU" : $q = $db->query('SELECT gpu, benchmark_type, avg(benchmark_result) res FROM benchmark_result WHERE instr(benchmark_type,"GPU") and NOT ISNULL(opengl_renderer) and not isnull(gpu) and gpu<>"" and GPU<>"Software" and not instr(machine_type,"irtual") GROUP BY gpu,benchmark_type order by res DESC;'); break;
 
+     case "STORAGE" : $q = $db->query('SELECT Storage, benchmark_type, avg(benchmark_result) res FROM benchmark_result WHERE instr(benchmark_type,"Storage") and NOT ISNULL(Storage) and not instr(machine_type,"irtual") GROUP BY storage,benchmark_type order by res DESC;'); break;
+
    /*FIXME*/
      case "TOP": $q = $db->query($FRONT.'SELECT cpu_name,benchmark_type,avg(benchmark_result) res,max(num_threads) maxt FROM benchmark_result where (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"OpenGL") group by cpu_name,benchmark_type '.$BACK.' order by res desc;'); break;
      case "MID": $q = $db->query($FRONT.'SELECT cpu_name,benchmark_type,avg(benchmark_result) res,max(num_threads) maxt FROM benchmark_result where (left(machine_type,7)!="Virtual") and not instr(benchmark_type,"OpenGL") group by cpu_name,benchmark_type '.$BACK.' order by res desc;'); break;

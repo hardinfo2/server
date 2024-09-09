@@ -238,14 +238,18 @@ function showPage() {
 }
 
 function html_table(bmtypes,bmval,htmltable) {
-    if(bmtypes.substring(0,3)=="GPU"){
+    if(bmtypes.substring(0,7)=="Storage"){
 	text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=2 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
-    }else{
+    } else if(bmtypes.substring(0,3)=="GPU"){
+	text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=2 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
+    } else {
 	text="<table border=1 cellspacing=0 cellpadding=3><tr><td colspan=4 bgcolor=lightblue><b>"+bmtypes+"</b></td></tr>";
     }
     for(var i=0;i<bmval.length;i++){
 	if(!bmval[i][2]) bmval[i][2]="";
-	if(bmtypes.substring(0,3)=="GPU"){
+	if(bmtypes.substring(0,7)=="Storage"){
+	    text=text+"<tr><td>"+bmval[i][0]+"</td><td align=right>"+parseFloat(bmval[i][1]).toFixed(2)+"</td></tr>";
+	} else if(bmtypes.substring(0,3)=="GPU"){
 	    text=text+"<tr><td>"+bmval[i][0]+"</td><td align=right>"+parseFloat(bmval[i][1]).toFixed(2)+"</td></tr>";
 	} else {
 	    text=text+"<tr><td align=right>"+bmval[i][2]+"&nbsp;</td><td>&nbsp;"+bmval[i][0]+"</td><td align=right>"+parseFloat(bmval[i][1]).toFixed(2)+"</td></tr>";

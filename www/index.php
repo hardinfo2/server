@@ -30,8 +30,8 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       }
       $url=$_SERVER['SCRIPT_URI']."?".$_SERVER['QUERY_STRING'];
       foreach($j as $k=>$v){
-          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,? );");
-          $stmt->bind_param('sdsssssiiiiisssiiiisdiiissssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU']);
+          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,? );");
+          $stmt->bind_param('sdsssssiiiiisssiiiisdiiisssssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU'],$v['Storage']);
           $stmt->execute();
       }
       if(1 && (!$stmt || $stmt->error)){
@@ -57,11 +57,12 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
          $grpby="cpu_name";$filter="";
          if(substr($rbt[0],0,11)=="GPU Drawing") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
          if(substr($rbt[0],0,11)=="GPU OpenGL ") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
+         if(substr($rbt[0],0,8)=="Storage ") {$grpby="storage";$filter="and (not isnull(storage))";}
          $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, round(AVG(benchmark_result),2) AS benchmark_result,
              board, cpu_name, cpu_config, num_cpus, num_cores,
              num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
              gpu_desc, pointer_bits, data_from_super_user, used_threads,
-             elapsed_time, machine_data_version, legacy, num_nodes, GPU
+             elapsed_time, machine_data_version, legacy, num_nodes, GPU, Storage
 	     from benchmark_result where benchmark_type='".$rbt[0]."' and (left(machine_type,7)!='Virtual') ".$filter." group by ".$grpby." order by rand() limit 50");//,pointer_bits;");
          while($r=$q->fetch_array()){
 	    $a=array();
@@ -90,6 +91,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	    $a['Legacy']=1*$r[22];
 	    $a['NumNodes']=1*$r[23];
 	    $a['GPU']=$r[24];
+	    $a['Storage']=$r[25];
             $d[$rbt[0]][]=$a;
          }
       }

@@ -21,41 +21,28 @@ if(1*$r[0]){ //refresh
     ];
 
     $context = stream_context_create($opts);
-    //$packagestatus1 = file_get_contents('https://repology.org/badge/vertical-allrepos/hardinfo.svg?columns=1&exclude_unsupported=1', false, $context);
-    //echo $packagestatus1;
     $packagestatus2 = file_get_contents('https://repology.org/badge/vertical-allrepos/hardinfo2.svg?columns=1&exclude_unsupported=1', false, $context);
     $p=array();
     $t=0;
     //strip data
-    /*$t=strpos($packagestatus1,'"end"',$t+1)+6;
-    while($t !== false){
-       $d=substr($packagestatus1,$t,strpos($packagestatus1,"<",$t)-$t);
-       if($d[0]>'Z') $d[0]=strtoupper($d[0]);
-       $t=strpos($packagestatus1,'"middle"',$t+1)+9;
-       $t=strpos($packagestatus1,'"middle"',$t+1)+9;
-       $v=substr($packagestatus1,$t,strpos($packagestatus1,"<",$t)-$t);
-       $p[$d]=array("hardinfo",$v);
-       //skip dublet
-       if($t!==false) $t=strpos($packagestatus1,'"end"',$t+1);
-       if($t!==false) $t+=6;
-       if($t!==false) $t=strpos($packagestatus1,'"end"',$t+1);
-       if($t!==false) $t+=6;
-    }*/
-    $t=0;
-    //strip data
-    $t=strpos($packagestatus2,'"end"',$t+1)+6;
+    $t=strpos($packagestatus2,'"end"',$t+1)+5;
+    if($t!==false) $t=strpos($packagestatus2,">",$t+1)+1;
     while($t !== false){
        $d=substr($packagestatus2,$t,strpos($packagestatus2,"<",$t)-$t);
        if($d[0]>'Z') $d[0]=strtoupper($d[0]);
        $t=strpos($packagestatus2,'"middle"',$t+1)+9;
+       if($t!==false) $t=strpos($packagestatus2,">",$t+1)+1;
        $t=strpos($packagestatus2,'"middle"',$t+1)+9;
+       if($t!==false) $t=strpos($packagestatus2,">",$t+1)+1;
        $v=substr($packagestatus2,$t,strpos($packagestatus2,"<",$t)-$t);
-       $p[$d]=array("hardinfo2",$v);
+       $p[$d]=array("hardinfo2",$v);//save distro and version
        //skip dublet
        if($t!==false) $t=strpos($packagestatus2,'"end"',$t+1);
-       if($t!==false) $t+=6;
+       if($t!==false) $t=strpos($packagestatus2,">",$t+1);
+       if($t!==false) $t+=1;
        if($t!==false) $t=strpos($packagestatus2,'"end"',$t+1);
-       if($t!==false) $t+=6;
+       if($t!==false) $t=strpos($packagestatus2,">",$t+1);
+       if($t!==false) $t+=1;
     }
     ksort($p,SORT_STRING);
     $ps=array();$x=0;$currentver=0;$count=0;

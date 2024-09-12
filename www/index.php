@@ -16,7 +16,6 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
   if($_SERVER['REQUEST_METHOD']=="POST"){
       if(!isset($_GET['rel']) || $_GET['rel']>=0){
       //Store JSON in Mariadb
-      $j=json_decode(file_get_contents("php://input"),true,3);
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
       if(0){
          $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lastdata',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lastdatanumber');");
@@ -28,9 +27,10 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	 //increase value
          $mysqli->query("update settings set value=value+1 WHERE NAME='lastdatanumber';");
       }
+      $j=json_decode(file_get_contents("php://input"),true,3);
       $url=$_SERVER['SCRIPT_URI']."?".$_SERVER['QUERY_STRING'];
       foreach($j as $k=>$v){
-          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,? );");
+          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,?,0 );");
           $stmt->bind_param('sdsssssiiiiisssiiiisdiiisssssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU'],$v['Storage']);
           $stmt->execute();
       }

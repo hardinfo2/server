@@ -28,7 +28,7 @@ function show_table($q){
     $q=$mysqli->query('SELECT COUNT(*) cnt FROM benchmark_result WHERE (NOT ISNULL(linux_os)) AND linux_os<>"Unknown" AND benchmark_type="CPU Blowfish (Single-thread)"');
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query('SELECT IF(LEFT(linux_os,10)="Linux Mint","Mint",IF(LEFT(linux_os,3)="Red","RedHat",LEFT(linux_os,IF(LOCATE(" ",linux_os) - 1<0,99,LOCATE(" ",linux_os) - 1) ))) Distro, ROUND(COUNT(*)*100/'.$total.',1) percent FROM benchmark_result WHERE (NOT ISNULL(linux_os)) AND linux_os<>"Unknown" AND benchmark_type="CPU Blowfish (Single-thread)" GROUP BY Distro ORDER BY percent DESC;');
+    $q=$mysqli->query('SELECT IF(LEFT(linux_os,10)="Linux Mint","Mint",IF(LEFT(linux_os,3)="Red","RedHat",LEFT(linux_os,IF(LOCATE(" ",linux_os) - 1<0,99,LOCATE(" ",linux_os) - 1) ))) Distro, ROUND(COUNT(*)*100/'.$total.',1) percent FROM benchmark_result WHERE (NOT ISNULL(linux_os)) AND not instr(machine_type,"Virtual") and  linux_os<>"Unknown" AND benchmark_type="CPU Blowfish (Single-thread)" GROUP BY Distro ORDER BY percent DESC;');
     show_table($q);
 
 
@@ -36,7 +36,7 @@ function show_table($q){
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result;");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT machine_type, ROUND((COUNT(*)*100)/".$total.",1) percent FROM benchmark_result GROUP BY machine_type ORDER BY percent DESC;");
+    $q=$mysqli->query("SELECT machine_type, ROUND((COUNT(*)*100)/".$total.",1) percent FROM benchmark_result WHERE not instr(machine_type,'Virtual') and not instr(machine_type,'WSL') GROUP BY machine_type ORDER BY percent DESC;");
     show_table($q);
 
 

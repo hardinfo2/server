@@ -1,6 +1,6 @@
 <?php
 //Redirect links
-if(in_array($_SERVER['SCRIPT_URL'],array("/history","/news","/benchcompare","/userguide","/about","/credits","/app","/dbstats"))){
+if(in_array($_SERVER['SCRIPT_URL'],array("/history","/news","/benchcompare","/benchstats","/benchgraphs","/userguide","/about","/credits","/app","/dbstats"))){
   echo file_get_contents("/var/www/html/server/www/index.html");
   exit(0);
 }
@@ -30,8 +30,8 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       $j=json_decode(file_get_contents("php://input"),true,3);
       $url=$_SERVER['SCRIPT_URI']."?".$_SERVER['QUERY_STRING'];
       foreach($j as $k=>$v){
-          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,?,0 );");
-          $stmt->bind_param('sdsssssiiiiisssiiiisdiiisssssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU'],$v['Storage']);
+          $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,?,0,?,?,? );");
+          $stmt->bind_param('sdsssssiiiiisssiiiisdiiissssssssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU'],$v['Storage'],$v['VulkanDriver'],$v['VulkanDevice'],$v['VulkanVersions']);
           $stmt->execute();
       }
       if(1 && (!$stmt || $stmt->error)){
@@ -62,7 +62,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
              board, cpu_name, cpu_config, num_cpus, num_cores,
              num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
              gpu_desc, pointer_bits, data_from_super_user, used_threads,
-             elapsed_time, machine_data_version, legacy, num_nodes, GPU, storagedev
+             elapsed_time, machine_data_version, legacy, num_nodes, GPU, storagedev, vulkanDriver, vulkanDevice, vulkanVersions
 	     from benchmark_result where benchmark_type='".$rbt[0]."' and (left(machine_type,7)!='Virtual') ".$filter." group by ".$grpby." order by rand() limit 50");//,pointer_bits;");
          while($r=$q->fetch_array()){
 	    $a=array();
@@ -92,6 +92,9 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	    $a['NumNodes']=1*$r[23];
 	    $a['GPU']=$r[24];
 	    $a['Storage']=$r[25];
+	    //$a['VulkanDriver']=$r[26];
+	    //$a['VulkanDevice']=$r[27];
+	    //$a['VulkanVersions']=$r[28];
             $d[$rbt[0]][]=$a;
          }
       }

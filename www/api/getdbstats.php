@@ -20,7 +20,7 @@ function show_table($q){
     $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable",""),"Build Date:",""),"/"," ")';
 
     echo "<h1>Last incoming benchmarks</h1>";
-    $q=$mysqli->query('SELECT left('.$BOARD.',45) ,cpu_name,  replace(gpu,"(D3D12)","")  ,if(instr(if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type)),"nknown"),"Unknown",if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type))) MachineType, TRIM(if(locate("-",linux_os),left(linux_os,locate("-",linux_os)-2),REGEXP_REPLACE(linux_os, "\\\\([^^)]*\\\\)", ""))) LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');
+    $q=$mysqli->query('SELECT left('.$BOARD.',45) ,cpu_name,  replace(gpu,"(D3D12)","")  ,if(instr(if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type)),"nknown"),"Unknown",if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type))) MachineType, replace(TRIM(if(locate("-",linux_os),left(linux_os,locate("-",linux_os)-2),REGEXP_REPLACE(linux_os, "\\\\([^^)]*\\\\)", "")))," x86_64","") LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');
     show_table($q);
 
 

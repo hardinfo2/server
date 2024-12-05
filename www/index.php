@@ -33,15 +33,15 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
           $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,?,0,?,?,? );");
           $stmt->bind_param('sdsssssiiiiisssiiiisdiiissssssssss',$k,$v['BenchmarkResult'],$v['ExtraInfo'],$v['MachineId'],$v['Board'],$v['CpuName'],$v['CpuConfig'],$v['NumCpus'],$v['NumCores'],$v['NumThreads'],$v['MemoryInKiB'],$v['PhysicalMemoryInMiB'],$v['MemoryTypes'],$v['OpenGlRenderer'],$v['GpuDesc'],$v['PointerBits'],$v['DataFromSuperUser'],$v['UsedThreads'],$v['BenchmarkVersion'],$v['UserNote'],$v['ElapsedTime'],$v['MachineDataVersion'],$v['Legacy'],$v['NumNodes'],$v['MachineType'],$v['LinuxKernel'],$v['LinuxOS'],$url,$v['PowerState'],$v['GPU'],$v['Storage'],$v['VulkanDriver'],$v['VulkanDevice'],$v['VulkanVersions']);
           $stmt->execute();
-      }
-      if(1 && (!$stmt || $stmt->error)){
-         $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lasterror',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lasterrornumber');");
-         $q->bind_param('b',$stmt->error);
-         $q->send_long_data(0,$stmt->error);
-         $q->execute();
-	 $q->close();
-	 //increase value
-         $mysqli->query("update settings set value=value+1 WHERE NAME='lasterrornumber';");
+          if($stmt && $stmt->error){
+	       $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lasterror',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lasterrornumber');");
+	       $q->bind_param('b',$stmt->error);
+	       $q->send_long_data(0,$stmt->error);
+               $q->execute();
+	       $q->close();
+	       //increase value
+               $mysqli->query("update settings set value=value+1 WHERE NAME='lasterrornumber';");
+          }
       }
       $stmt->close();
       $mysqli->close();

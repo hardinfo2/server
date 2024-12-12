@@ -17,11 +17,33 @@ function show_table($q){
     echo "<font size='2'>Total: ".($q->num_rows)."</font><br><br>";
 }
 
+function show_table_color($q){
+    echo "<table class='tablecenter'>";
+    $c=0;
+    while(($c++<20) && ($row = $q->fetch_row())){
+        echo "<tr>";
+	$i=0;
+	while($i<$q->field_count){
+            echo "<td class='tableleft'>";
+	    if(($row[0]>="2.2.5")) echo "<font color=blue>";//DEV
+	    if(($row[0]=="2.2.4") && ($row[1]%17==0)) echo "<font color=green>";//LKG
+	    else if(($row[0]=="2.2.1") && ($row[1]%17==0)) echo "<font color=orange>";//has fault but data okay
+	    else if(($row[0]=="2.1.11") && ($row[1]%15==0)) echo "<font color=orange>";//LTS
+	    else if(($row[0]<"2.1.11") || $row[0]=="2.1.14" || $row[0]=="2.1.17") echo "<font color=red>";//TOO OLD
+	    echo htmlspecialchars($row[$i])."</td>";
+	    $i++;
+	}
+	echo "</tr>";
+    }
+    echo "</table>";
+    echo "<font size='2'>Total: ".($q->num_rows)." - green:BEST, blue:DEV, orange:OK, black:Incomplete, red:UPDATE NOW!</font><br><br>";
+}
+
     $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable",""),"Build Date:",""),"/"," ")';
 
     echo "<h1>Last incoming benchmarks</h1>";
-    $q=$mysqli->query('SELECT left('.$BOARD.',45) ,cpu_name,  replace(gpu,"(D3D12)","")  ,if(instr(if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type)),"nknown"),"Unknown",if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type))) MachineType, replace(replace(TRIM(if(locate("-",linux_os),left(linux_os,locate("-",linux_os)-2),REGEXP_REPLACE(linux_os, "\\\\([^^)]*\\\\)", "")))," x86_64","")," (Flagship Edition)","") LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');
-    show_table($q);
+    $q=$mysqli->query('SELECT REPLACE(REPLACE(REPLACE(programver,"http://api.hardinfo2.org/benchmark.json?ver=",""),"&rel=0",""),"&rel=1","") API,count(*) cnt, left('.$BOARD.',45) ,cpu_name,  replace(gpu,"(D3D12)","")  ,if(instr(if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type)),"nknown"),"Unknown",if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type))) MachineType, replace(replace(TRIM(if(locate("-",linux_os),left(linux_os,locate("-",linux_os)-2),REGEXP_REPLACE(linux_os, "\\\\([^^)]*\\\\)", "")))," x86_64","")," (Flagship Edition)","") LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) GROUP BY board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');
+    show_table_color($q);
 
 
     echo "<h1>Distro</h1><font size='2'>Percent most benchmarked</font><br>";

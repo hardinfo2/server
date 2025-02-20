@@ -85,8 +85,16 @@ function show_table_color($q){
     $r=$q->fetch_row();
     $total=$r[0];
     $q=$mysqli->query('SELECT GPU, ROUND((COUNT(*)*100)/'.$total.',1) percent FROM benchmark_result WHERE valid=1 GROUP BY GPU order by percent DESC;');
-
     show_table($q);
+
+    echo "<h1>Machine Arch</h1><font size='2'>Percent most benchmarked</font><br>";
+    $q=$mysqli->query('SELECT COUNT(*) FROM benchmark_result WHERE NOT ISNULL(linux_kernel) and valid=1;');
+    $r=$q->fetch_row();
+    $total=$r[0];
+    $q=$mysqli->query('SELECT SUBSTR(linux_kernel,INSTR(linux_kernel,"(") + 1, CHAR_LENGTH(linux_kernel)-1-INSTR(linux_kernel,"(")) arch, ROUND((COUNT(*)*100)/'.$total.',1) percent FROM benchmark_result WHERE valid=1 AND NOT ISNULL(linux_kernel) GROUP BY arch ORDER BY COUNT(*) DESC;');
+    show_table($q);
+
+
 
     $mysqli->close();
 ?>

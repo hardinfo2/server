@@ -58,12 +58,15 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
          if(substr($rbt[0],0,11)=="GPU Drawing") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='')";}
          if(substr($rbt[0],0,11)=="GPU OpenGL ") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
          if(substr($rbt[0],0,8)=="Storage ") {$grpby="HD";$filter="and (not isnull(storagedev) and not instr(storagedev,'irtual'))";}
+	 $limit="limit 50";
+	 if(isset($_GET['L'])) $limit="limit ".(1*$_GET['L']);
+	 if(isset($_GET['L']) && ($_GET['L']=="-1")) $limit="";
          $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, round(AVG(benchmark_result),2) AS benchmark_result,
              board, cpu_name, cpu_config, num_cpus, num_cores,
              num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
              gpu_desc, pointer_bits, data_from_super_user, used_threads,
              elapsed_time, machine_data_version, legacy, num_nodes, GPU, REGEXP_REPLACE(storagedev,',.*$','') HD, vulkanDriver, vulkanDevice, vulkanVersions
-	     from benchmark_result where benchmark_type='".$rbt[0]."' and (valid=1) ".$filter." group by ".$grpby." order by rand() limit 50");//,pointer_bits;");
+	     from benchmark_result where benchmark_type='".$rbt[0]."' and (valid=1) ".$filter." group by ".$grpby." order by rand() ".$limit);//,pointer_bits;");
          while($r=$q->fetch_array()){
 	    $a=array();
 	    $a['MachineId']=$r[0];

@@ -25,10 +25,14 @@ function show_table_color($q){
 	$i=0;
 	while($i<$q->field_count){
             echo "<td class='tableleft'>";
-	    if(($row[0]>="2.2.8")) echo "<font color=blue>";//DEV
-	    else if(($row[0]=="2.2.7") && ($row[1]%18==0)) echo "<font color=green>";//LKG
+	    if(($row[0]=="2.2.11")) echo "<font color=blue>";//DEV
+	    else if(($row[0]=="2.2.10") && ($row[1]%18==0)) echo "<font color=green>";//LKG REL
+	    else if(($row[0]=="2.2.9") && ($row[1]%18==0)) echo "<font color=green>";//LKG
+	    else if(($row[0]=="2.2.8") && ($row[1]%18==0)) echo "<font color=green>";//LKG
+	    else if(($row[0]=="2.2.7") && ($row[1]%18==0)) echo "<font color=green>";//LKG REL
 	    else if(($row[0]=="2.2.6") && ($row[1]%18==0)) echo "<font color=green>";//LKG
-	    else if(($row[0]=="2.2.4") && ($row[1]%17==0)) echo "<font color=green>";//LKG
+	    else if(($row[0]=="2.2.5") && ($row[1]%18==0)) echo "<font color=green>";//LKG
+	    else if(($row[0]=="2.2.4") && ($row[1]%17==0)) echo "<font color=green>";//LKG REL
 	    else if(($row[0]=="2.2.3") && ($row[1]%17==0)) echo "<font color=green>";//LKG
 	    else if(($row[0]=="2.2.1") && ($row[1]%17==0)) echo "<font color=orange>";//has fault but data okay
 	    else if(($row[0]=="2.1.11") && ($row[1]%15==0)) echo "<font color=orange>";//LTS

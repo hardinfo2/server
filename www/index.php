@@ -57,6 +57,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
          $grpby="cpu_name";$filter="";
          if(substr($rbt[0],0,11)=="GPU Drawing") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='')";}
          if(substr($rbt[0],0,11)=="GPU OpenGL ") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
+         if(substr($rbt[0],0,11)=="GPU Vulkan ") {$grpby="GPU";$filter="and (not isnull(GPU) and GPU!='' and not isnull(vulkanDriver) and vulkanDriver!='')";}
          if(substr($rbt[0],0,8)=="Storage ") {$grpby="HD";$filter="and (not isnull(storagedev) and not instr(storagedev,'irtual'))";}
 	 $limit="limit 50";
 	 if(isset($_GET['L'])) $limit="limit ".(1*$_GET['L']);

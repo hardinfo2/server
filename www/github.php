@@ -40,6 +40,7 @@ if(isset($_GET['credits'])) $action="credits";
 if(isset($_GET['release_info'])) $action="release_info";
 if(isset($_GET['latest_release'])) $action="latest_release";
 if(isset($_GET['latest_prerelease'])) $action="latest_prerelease";
+if(isset($_GET['download'])) $action="latest_prerelease";
 if(isset($_GET['latest_git_release'])) $action="latest_git_release";
 
 $url="";

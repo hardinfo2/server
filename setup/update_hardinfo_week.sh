@@ -17,3 +17,14 @@ cd /var/www/html/serverDB
 mysqldump -h127.0.0.1 -uhardinfo -phardinfo hardinfo |gzip -c > hardinfo2.sql.tgz
 git commit -a -m "Database Backup"
 git push
+
+#create downloads from github
+curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|sed 's/    <span data-view-component="true" class="Truncate-text text-bold">//g' |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' |sed 's/<\/span>/<\/a><br>/g' |sed 's/  //g'|sed ':a;N;$!ba;s/">\n/">/g' |sed 's/href="/href="https:\/\/github.com/g' >/var/www/html/server/www/downloads1.ids
+rm -f /var/www/html/server/www/downloads.ids
+echo "<h1>Debian Based</h1>sudo apt install ./hardinfo2_FULLNAME<br><br>" >/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2_2'>> /var/www/html/server/www/downloads.ids
+echo "<h1>Fedora Based</h1>sudo dnf install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'>> /var/www/html/server/www/downloads.ids
+echo "<h1>Arch Based</h1>sudo pacman -S ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
+rm -f /var/www/html/server/www/downloads1.ids

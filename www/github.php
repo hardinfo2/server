@@ -41,12 +41,19 @@ if(isset($_GET['release_info'])) $action="release_info";
 if(isset($_GET['latest_release'])) $action="latest_release";
 if(isset($_GET['latest_prerelease'])) $action="latest_prerelease";
 if(isset($_GET['download'])) $action="latest_prerelease";
+if(isset($_GET['downloadlist'])) $action="latest_prerelease";
+if(isset($_GET['ordereddownloadlist'])) $action="ordereddownloadlist";
 if(isset($_GET['latest_git_release'])) $action="latest_git_release";
 
 $url="";
 
 if($action=="credits"){
     echo file_get_contents("/var/www/html/server/www/credits.ids");
+    exit(0);
+}
+
+if($action=="ordereddownloadlist"){
+    echo file_get_contents("/var/www/html/server/www/downloads.ids");
     exit(0);
 }
 
@@ -109,6 +116,7 @@ if($action=="latest_prerelease"){
         }
         $n++;
     }
+    if(isset($_GET['downloadlist'])) $url=str_replace("tag","expanded_assets",$url);
 }
 
 //get latest git release

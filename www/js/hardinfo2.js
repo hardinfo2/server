@@ -193,11 +193,18 @@ function toggleMenu() {
 function showPage() {
     //console.log("showPage " + this.name);
     event.preventDefault();
+    if(this.name=="download"){//get download
+      fetch('/github/?ordereddownloadlist')
+	.then((response) => response.text())
+        .then((text) => {
+	    downloadtables.innerHTML=text;
+	});
+    }
     if(this.name=="dbstats"){//get dbstats
       fetch('/api/getdbstats')
 	.then((response) => response.text())
         .then((text) => {
-	    dbstats.innerHTML=text;
+	    dbstatstables.innerHTML=text;
 	});
     }
     if(this.name=="news"){//get github release info
@@ -462,11 +469,12 @@ document.addEventListener('DOMContentLoaded', function() {
     //direct links
     if(url.includes("news")) {const event=new Event('click');navlist[1].dispatchEvent(event);}
     if(url.includes("benchcompare")) {const event=new Event('click');navlist[2].dispatchEvent(event);}
-    if(url.includes("dbstats")) {const event=new Event('click');navlist[4].dispatchEvent(event);}
-    if(url.includes("userguide")) {const event=new Event('click');navlist[5].dispatchEvent(event);}
-    if(url.includes("history")) {const event=new Event('click');navlist[6].dispatchEvent(event);}
-    if(url.includes("credits")) {const event=new Event('click');navlist[7].dispatchEvent(event);}
-    if(url.includes("about")) {const event=new Event('click');navlist[7].dispatchEvent(event);}
+    if(url.includes("download")) {const event=new Event('click');navlist[4].dispatchEvent(event);}
+    if(url.includes("dbstats")) {const event=new Event('click');navlist[5].dispatchEvent(event);}
+    if(url.includes("userguide")) {const event=new Event('click');navlist[6].dispatchEvent(event);}
+    if(url.includes("history")) {const event=new Event('click');navlist[7].dispatchEvent(event);}
+    if(url.includes("credits")) {const event=new Event('click');navlist[8].dispatchEvent(event);}
+    if(url.includes("about")) {const event=new Event('click');navlist[8].dispatchEvent(event);}
     //language
     if(document.getElementById("language"))
 	document.getElementById("language").addEventListener('change', changeLanguage, false);

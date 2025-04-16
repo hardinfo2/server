@@ -1,6 +1,6 @@
 <?php
 //Redirect links
-if(in_array($_SERVER['SCRIPT_URL'],array("/history","/news","/benchcompare","/benchstats","/benchgraphs","/userguide","/about","/credits","/app","/dbstats"))){
+if(in_array($_SERVER['SCRIPT_URL'],array("/history","/news","/benchcompare","/benchstats","/benchgraphs","/userguide","/about","/credits","/app","/dbstats","/download"))){
   echo file_get_contents("/var/www/html/server/www/index.html");
   exit(0);
 }

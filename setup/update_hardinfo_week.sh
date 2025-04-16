@@ -19,7 +19,7 @@ git commit -a -m "Database Backup"
 git push
 
 #create downloads from github
-curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|sed 's/    <span data-view-component="true" class="Truncate-text text-bold">//g' |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' |sed 's/<\/span>/<\/a><br>/g' |sed 's/  //g'|sed ':a;N;$!ba;s/">\n/">/g' |sed 's/href="/href="https:\/\/github.com/g' >/var/www/html/server/www/downloads1.ids
+curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|grep -v debug|sed 's/    <span data-view-component="true" class="Truncate-text text-bold">//g' |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' |sed 's/<\/span>/<\/a><br>/g' |sed 's/  //g'|sed ':a;N;$!ba;s/">\n/">/g' |sed 's/href="/href="https:\/\/github.com/g' >/var/www/html/server/www/downloads1.ids
 rm -f /var/www/html/server/www/downloads.ids
 echo "<h1>Debian Based</h1>sudo apt install ./hardinfo2_FULLNAME<br><br>" >/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep '2_2'>> /var/www/html/server/www/downloads.ids

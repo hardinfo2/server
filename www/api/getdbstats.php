@@ -100,7 +100,7 @@ function show_table_color($q){
     $q=$mysqli->query('SELECT SUBSTR(linux_kernel,INSTR(linux_kernel,"(") + 1, CHAR_LENGTH(linux_kernel)-1-INSTR(linux_kernel,"(")) arch, ROUND((COUNT(*)*100)/'.$total.',1) percent FROM benchmark_result WHERE valid=1 AND NOT ISNULL(linux_kernel) GROUP BY arch ORDER BY COUNT(*) DESC;');
     show_table($q);
 
-    echo "<h1>New CPUs</h1>";
+    echo "<h1>Unknown CPUs</h1>";
     $q=$mysqli->query('SELECT cpuen,cpuname FROM (SELECT REGEXP_SUBSTR(cpu_name, "[^(]+") cpuen FROM benchmark_result WHERE valid=1 GROUP BY cpu_name) a LEFT JOIN cpudb ON cpuname=cpuen WHERE ISNULL(cpuname) OR (LENGTH(cpuname)<1)');
     show_table($q);
 

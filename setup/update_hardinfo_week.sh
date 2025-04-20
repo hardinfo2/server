@@ -24,9 +24,13 @@ rm -f /var/www/html/server/www/downloads.ids
 echo "<h1>Debian/APT Based</h1>sudo apt install ./hardinfo2_FULLNAME<br><br>" >/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep '2_2'>> /var/www/html/server/www/downloads.ids
 echo "<h1>Fedora/DNF/RPM Based</h1>sudo dnf install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep -v SUSE>> /var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep -v SUSE|grep -v PCL|grep -v Atomic>> /var/www/html/server/www/downloads.ids
+echo "<h1>Fedora/OSTREE/RPM Based</h1>sudo rpm-ostree install ./hardinfo2-FULLNAME (And reboot)<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep Atomic>> /var/www/html/server/www/downloads.ids
 echo "<h1>OpenSuse/ZYPPER/RPM Based</h1>sudo zypper --no-gpg-checks install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep SUSE>> /var/www/html/server/www/downloads.ids
+echo "<h1>PCLinuxOS/APT/RPM Based</h1>sudo apt install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep PCL>> /var/www/html/server/www/downloads.ids
 echo "<h1>Arch/PACMAN Based</h1>sudo pacman -U ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
 rm -f /var/www/html/server/www/downloads1.ids

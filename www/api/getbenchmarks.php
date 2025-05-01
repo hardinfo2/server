@@ -5,7 +5,7 @@
 
   if(!isset($_GET['u'])) $_GET['u']="DESKTOP";
 
-  $FRONT='SELECT cpu_name,benchmark_type,res,concat("",releasedate,"</td><td align=right>",maxt,"t") extra FROM (';
+  $FRONT='SELECT cpu_name,benchmark_type,res,concat("",if(isnull(releasedate)," ",releasedate),"</td><td align=right>",maxt,"t") extra FROM (';
 //  $FRONT='SELECT cpu_name,benchmark_type,res,concat("",releasedate," ",lpad(maxt,3,0),"t") extra FROM (';
   $BACK=') b LEFT JOIN cpudb c ON cpuname=TRIM(REGEXP_REPLACE(cpu_name, "\\\\([^^)]*\\\\)", "")) ';
   $FILTER=' and not instr(benchmark_type,"Cache") ';

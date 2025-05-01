@@ -8,7 +8,7 @@
   $FRONT='SELECT cpu_name,benchmark_type,res,concat("",if(isnull(releasedate)," ",releasedate),"</td><td align=right>",maxt,"t") extra FROM (';
 //  $FRONT='SELECT cpu_name,benchmark_type,res,concat("",releasedate," ",lpad(maxt,3,0),"t") extra FROM (';
   $BACK=') b LEFT JOIN cpudb c ON cpuname=TRIM(REGEXP_REPLACE(cpu_name, "\\\\([^^)]*\\\\)", "")) ';
-  $FILTER=' and not instr(benchmark_type,"Cache") ';
+  $FILTER='';//' and not instr(benchmark_type,"Cache") ';
   
   switch($_GET['u']){
      case "SBC": $q = $db->query($FRONT.'SELECT cpu_name,benchmark_type,avg(benchmark_result) res,max(num_threads) maxt FROM benchmark_result where (instr(cpu_name,"Atom") or machine_type="Single-board computer") and valid=1 and not instr(benchmark_type,"GPU") and not instr(benchmark_type,"Storage") '.$FILTER.' group by cpu_name,benchmark_type '.$BACK.' order by res desc;'); break;

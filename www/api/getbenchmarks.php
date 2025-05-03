@@ -40,7 +40,10 @@
      case "BOT": $q = $db->query($FRONT.'SELECT cpu_name,benchmark_type,avg(benchmark_result) res,max(num_threads) maxt FROM benchmark_result where valid=1 and not instr(benchmark_type,"OpenGL") '.$FILTER.' group by cpu_name,benchmark_type '.$BACK.' order by res desc;'); break;
 
      /*User Group*/
-     default: $q = $db->query($FRONT.'SELECT cpu_name,benchmark_type,avg(benchmark_result) res,max(num_threads) maxt FROM benchmark_result where (user_note="'.mysqli_real_escape_string($db,$_GET['u']).'") and valid=1 and not instr(cpu_name,"Sample") and not instr(benchmark_type,"GPU") '.$FILTER.' group by cpu_name,benchmark_type '.$BACK.' order by res desc;'); break;
+     default:
+      $FRONT='SELECT cpunamed,benchmark_type,res,concat("",if(isnull(releasedate)," ",releasedate),"</td><td align=right>",maxt,"t") extra FROM (';
+      $BACK=') b LEFT JOIN cpudb c ON cpuname=TRIM(REGEXP_REPLACE(cpunamed, "\\\\([^^)]*\\\\)", "")) ';
+      $q = $db->query($FRONT.'SELECT concat(cpu_name," (",substr(user_note,1+POSITION("-" IN user_note),50),")") cpunamed,benchmark_type,avg(benchmark_result) res,max(num_threads) maxt FROM benchmark_result where (SUBSTRING_INDEX(user_note,"-",1)="'.mysqli_real_escape_string($db,$_GET['u']).'") and valid=1 and not instr(cpu_name,"Sample") and not instr(benchmark_type,"GPU") '.$FILTER.' group by cpunamed,benchmark_type '.$BACK.' order by res desc;'); break;
   }
 
 

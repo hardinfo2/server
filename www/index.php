@@ -92,8 +92,8 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	     $HD="concat(REGEXP_REPLACE(storagedev,',.*$',''),' (',substr(user_note,1+POSITION('-' IN user_note),50),')') HDname";
 	   }
 	 }
-	 if($req=="NEW") {
-	   $filter=$filter." and (timestamp>(unix_timestamp(now())-3600*24*30))";
+	 if($req=="NONE") {
+	   $filter=" and (1=2)";
 	 }
 	 if($req=="NEWCPU") {//Needs cpudb
 	 }

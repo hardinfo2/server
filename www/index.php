@@ -17,7 +17,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       if(!isset($_GET['rel']) || $_GET['rel']>=0){
       //Store JSON in Mariadb
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
-      if(1){
+      if(0){
          $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lastdata',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lastdatanumber');");
 	 $post=file_get_contents("php://input");
          $q->bind_param('b',$post);
@@ -118,12 +118,17 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	 $limit="limit 50";
 	 if(isset($_GET['L'])) $limit="limit ".(1*$_GET['L']);
 	 if(isset($_GET['L']) && ($_GET['L']=="-1")) $limit="";
-         $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, ".$BENCHVALUE." AS benchmark_result,
-             board, ".$CPU_NAME.", cpu_config, num_cpus, num_cores,
-             num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
-             gpu_desc, pointer_bits, data_from_super_user, used_threads,
-             elapsed_time, machine_data_version, legacy, num_nodes, ".$GPU.", ".$HD.", vulkanDriver, vulkanDevice, vulkanVersions
-	     from benchmark_result where benchmark_type='".$rbt[0]."' and (valid=1) ".$filter." group by ".$grpby." order by rand() ".$limit);//,pointer_bits;");
+         $sql="Select machine_id, extra_info, user_note, machine_type, benchmark_version, ".$BENCHVALUE." AS benchmark_result, board, ".$CPU_NAME.", cpu_config, num_cpus, num_cores,num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer, gpu_desc, pointer_bits, data_from_super_user, used_threads, elapsed_time, machine_data_version, legacy, num_nodes, ".$GPU.", ".$HD.", vulkanDriver, vulkanDevice, vulkanVersions from benchmark_result where benchmark_type='".$rbt[0]."' and (valid=1) ".$filter." group by ".$grpby." order by rand() ".$limit;//pointer_bits
+         if(0){
+           $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lastdata',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lastdatanumber');");
+           $q->bind_param('b',$sql);
+           $q->send_long_data(0,$sql);
+           $q->execute();
+           $q->close();
+	   //increase value
+           $mysqli->query("update settings set value=value+1 WHERE NAME='lastdatanumber';");
+         }
+         $q=$mysqli->query($sql);
          while($r=$q->fetch_array()){
 	    $a=array();
 	    $a['MachineId']=$r[0];

@@ -98,18 +98,22 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	 if($req=="NEWCPU") {//Needs cpudb
 	 }
 	 if($req=="MYCPU" && isset($usercpu)) {//avg,min,max - needs multiple resulte
-	   $multi++;//Use Multiple Results
-	   if($multi==1) $CPU_NAME="concat(cpu_name,' (MIN)') cpuname";
-	   if($multi==2) $CPU_NAME="concat(cpu_name,' (MAX)') cpuname";
-	   if($multi==3) $CPU_NAME="concat(cpu_name,' (AVG)') cpuname";
-           if($multi==4) $CPU_NAME="concat(cpu_name,' (NORM)') cpuname";
-	   if($multi==1) $BENCHVALUE="round(MIN(benchmark_result),2)";
-	   if($multi==2) $BENCHVALUE="round(MAX(benchmark_result),2)";
-	   if($multi==3) $BENCHVALUE="round(AVG(benchmark_result),2)";
-	   //if($multi==4) $BENCHVALUE="round(AVG(benchmark_result),2)";
-	   if($multi==4) $BENCHVALUE="round(AVG(if((benchmark_result<".($MAX-(($MAX-$MIN)*0.1)).") and (benchmark_result>".($MAX-(($MAX-$MIN)*0.9))."),benchmark_result,NULL)),2)";
-	   $filter=$filter." and (cpu_name='".$usercpu."')";
-	   if($multi>=4) $multi=0;//Multi Done
+	   if(substr($rbt[0],0,8)=="Storage ") {
+	   } else if(substr($rbt[0],0,4)=="GPU ") {
+	   } else {
+	     $multi++;//Use Multiple Results
+	     if($multi==1) $CPU_NAME="concat(cpu_name,' (MIN)') cpuname";
+	     if($multi==2) $CPU_NAME="concat(cpu_name,' (MAX)') cpuname";
+	     if($multi==3) $CPU_NAME="concat(cpu_name,' (AVG)') cpuname";
+             if($multi==4) $CPU_NAME="concat(cpu_name,' (NORM)') cpuname";
+	     if($multi==1) $BENCHVALUE="round(MIN(benchmark_result),2)";
+	     if($multi==2) $BENCHVALUE="round(MAX(benchmark_result),2)";
+	     if($multi==3) $BENCHVALUE="round(AVG(benchmark_result),2)";
+	     //if($multi==4) $BENCHVALUE="round(AVG(benchmark_result),2)";
+	     if($multi==4) $BENCHVALUE="round(AVG(if((benchmark_result<".($MAX-(($MAX-$MIN)*0.1)).") and (benchmark_result>".($MAX-(($MAX-$MIN)*0.9))."),benchmark_result,NULL)),2)";
+	     $filter=$filter." and (cpu_name='".$usercpu."')";
+	     if($multi>=4) $multi=0;//Multi Done
+	   }
 	 }
 	 $limit="limit 50";
 	 if(isset($_GET['L'])) $limit="limit ".(1*$_GET['L']);

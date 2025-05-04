@@ -17,7 +17,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       if(!isset($_GET['rel']) || $_GET['rel']>=0){
       //Store JSON in Mariadb
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
-      if(0){
+      if(1){
          $q=$mysqli->prepare("REPLACE INTO settings (SELECT CONCAT('lastdata',VALUE+1),concat(now(),' ',?) FROM settings WHERE NAME='lastdatanumber');");
 	 $post=file_get_contents("php://input");
          $q->bind_param('b',$post);
@@ -55,13 +55,23 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       if(isset($_GET['BUN'])){
          $bun=mysqli_real_escape_string($mysqli,$_GET['BUN']);
          //check letter+number 0-2 dashes
-	 $grp=strtok($bun,'-');
-	 $machine=strtok('-');
-	 $req=strtok('-');
+	 if($bun[0]!='-'){
+	   $grp=strtok($bun,'-');
+	   $machine=strtok('-');
+	   $req=strtok('-');
+	 }else{
+	   $req=strtok($bun,'-');
+	 }
+      }
+      if(isset($_GET['CPU'])){
+        $usercpu=mysqli_real_escape_string($mysqli,$_GET['CPU']);
       }
       $d=array();
       $qbt=$mysqli->query("Select benchmark_type from benchmark_result group by benchmark_type;");
+
       while($rbt=$qbt->fetch_array()){
+       $multi=0;do {
+         $BENCHVALUE="round(AVG(benchmark_result),2)";
          $CPU_NAME="cpu_name cpuname";
 	 $GPU="GPU GPUname";
 	 $HD="REGEXP_REPLACE(storagedev,',.*$','') HDname";
@@ -82,10 +92,29 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	     $HD="concat(REGEXP_REPLACE(storagedev,',.*$',''),' (',substr(user_note,1+POSITION('-' IN user_note),50),')') HDname";
 	   }
 	 }
+	 if($req=="NEW") {
+	   $filter=$filter." and (timestamp>(unix_timestamp(now())-3600*24*30))";
+	 }
+	 if($req=="NEWCPU") {//Needs cpudb
+	 }
+	 if($req=="MYCPU" && isset($usercpu)) {//avg,min,max - needs multiple resulte
+	   $multi++;//Use Multiple Results
+	   if($multi==1) $CPU_NAME="concat(cpu_name,' (MIN)') cpuname";
+	   if($multi==2) $CPU_NAME="concat(cpu_name,' (MAX)') cpuname";
+	   if($multi==3) $CPU_NAME="concat(cpu_name,' (AVG)') cpuname";
+           if($multi==4) $CPU_NAME="concat(cpu_name,' (NORM)') cpuname";
+	   if($multi==1) $BENCHVALUE="round(MIN(benchmark_result),2)";
+	   if($multi==2) $BENCHVALUE="round(MAX(benchmark_result),2)";
+	   if($multi==3) $BENCHVALUE="round(AVG(benchmark_result),2)";
+	   //if($multi==4) $BENCHVALUE="round(AVG(benchmark_result),2)";
+	   if($multi==4) $BENCHVALUE="round(AVG(if((benchmark_result<".($MAX-(($MAX-$MIN)*0.1)).") and (benchmark_result>".($MAX-(($MAX-$MIN)*0.9))."),benchmark_result,NULL)),2)";
+	   $filter=$filter." and (cpu_name='".$usercpu."')";
+	   if($multi>=4) $multi=0;//Multi Done
+	 }
 	 $limit="limit 50";
 	 if(isset($_GET['L'])) $limit="limit ".(1*$_GET['L']);
 	 if(isset($_GET['L']) && ($_GET['L']=="-1")) $limit="";
-         $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, round(AVG(benchmark_result),2) AS benchmark_result,
+         $q=$mysqli->query("Select machine_id, extra_info, user_note, machine_type, benchmark_version, ".$BENCHVALUE." AS benchmark_result,
              board, ".$CPU_NAME.", cpu_config, num_cpus, num_cores,
              num_threads, memory_in_kib, physical_memory_in_mib, memory_types, opengl_renderer,
              gpu_desc, pointer_bits, data_from_super_user, used_threads,
@@ -123,7 +152,14 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	    //$a['VulkanDevice']=$r[27];
 	    //$a['VulkanVersions']=$r[28];
             $d[$rbt[0]][]=$a;
+	    //
+            //store last benchmark value for min/max
+	    if($multi){
+	      if($multi==1) $MIN=1*$r[5];
+	      if($multi==2) $MAX=1*$r[5];
+	    }
          }
+       } while($multi);
       }
       echo json_encode($d);
       $mysqli->close();

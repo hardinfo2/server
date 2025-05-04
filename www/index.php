@@ -62,15 +62,18 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
       $d=array();
       $qbt=$mysqli->query("Select benchmark_type from benchmark_result group by benchmark_type;");
       while($rbt=$qbt->fetch_array()){
-         $grpby="cpuname";$filter=""; $CPU_NAME="cpu_name cpuname";$GPU="GPU GPUname";$HD="REGEXP_REPLACE(storagedev,',.*$','') HDname";
-	 if(($req=="GRP") && $grp) {
-	   $CPU_NAME="concat(cpu_name,' (',substr(user_note,1+POSITION('-' IN user_note),50),')') cpuname";
-	 }
+         $CPU_NAME="cpu_name cpuname";
+	 $GPU="GPU GPUname";
+	 $HD="REGEXP_REPLACE(storagedev,',.*$','') HDname";
+         //default
+         $grpby="cpuname";$filter="";
          if(substr($rbt[0],0,11)=="GPU Drawing") {$grpby="GPUname";$filter="and (not isnull(GPU) and GPU!='')";}
          if(substr($rbt[0],0,11)=="GPU OpenGL ") {$grpby="GPUname";$filter="and (not isnull(GPU) and GPU!='' and not isnull(opengl_renderer) and opengl_renderer!='')";}
          if(substr($rbt[0],0,11)=="GPU Vulkan ") {$grpby="GPUname";$filter="and (not isnull(GPU) and GPU!='' and not isnull(vulkanDriver) and vulkanDriver!='')";}
          if(substr($rbt[0],0,8)=="Storage ") {$grpby="HDname";$filter="and (not isnull(storagedev) and not instr(storagedev,'irtual'))";}
+	 //ServerRequests - >2.2.11
 	 if(($req=="GRP") && $grp) {
+	   $CPU_NAME="concat(cpu_name,' (',substr(user_note,1+POSITION('-' IN user_note),50),')') cpuname";
 	   $filter=$filter." and SUBSTRING_INDEX(user_note,'-', 1)='".$grp."'";
 	   if(substr($rbt[0],0,4)=="GPU ") {
 	     $GPU="concat(GPU,' (',substr(user_note,1+POSITION('-' IN user_note),50),')') GPUname";

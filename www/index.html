@@ -217,30 +217,27 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 <h2>Command Line Interface</h2>
 The hardinfo2 program also has a Command Line Interface, for use in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br><br>
 <b>man hardinfo2</b> shows the following CLI options:
-<table>
+<table border=1>
 <tr><td>-h, --help</td><td>Show help options</td></tr>
 <tr><td>-q, --quite</td><td>do not print status messages to standard output</td></tr>
 <tr><td nowrap>-r, --generate-report</td><td>creates a report and prints to standard output</td></tr>
 <tr><td>-f, --report-format</td><td>chooses a report format (text, html)</td></tr>
-<tr><td>-g, --result-format</td><td>chooses a result format (short, conf, shell)</td></tr>
+<tr><td>-t, --topic</td><td>search for a topic in CLI report (-t getlist shows available) (*cpu search for cpu in all report) <b>(2.2.11+)</b></td></tr>
+<tr><td>-c, --topic-cache</td><td>search for a topic in Cached CLI report (-t getlist shows available) (*cpu search for cpu in all report) <b>(2.2.11+)</b></td></tr>
 <tr><td>-b, --run-benchmark</td><td>run a specific benchmark eg. -b 'FPU FFT'  (Default all benchmarks runs when generate report)</td></tr>
-<tr><td>-s, --skip-benchmarks</td><td>Disables all benchmark runs.</td></tr>
+<tr><td>-u, user-note</td><td>Group-MachineName[-ServerReq] - adds a user note to data send to server. When added eg. -u 1 synchronization is activated.  Letters (small+caps) and  numbers and  dashes are accepted. Length max 50. 0-2 dashes used as seperator.  Format Group-MachineName-ServerReq Group and MachineName are for anonymous identification and can put benchmarks into a group and you can sort of identify each machine  by  your chosen  string.   ServerReq is to tell the server which records you want to get. See https://hardinfo2.org/userguide#usernote for more details about the Server Request strings available. <b>(2.2.11+)</b></td></tr>
+<tr><td>-g, --result-format</td><td>chooses a result format (short, conf, shell)</td></tr>
 <tr><td>-n, --max-results</td><td>maximum number of benchmark results to include (-1 for no limit, default is 50)</td></tr>
-<tr><td>-u, --user-note</td><td>adds a user note to data send to server. When added eg. -u 1 synchronization is activated.</td></tr>
 <tr><td>-v, --version</td><td>shows program version and quit</td></tr>
+<tr><td>-s, --skip-benchmarks</td><td>Disables all benchmark runs.</td></tr>
 <tr><td>-w, --very-verbose</td><td>show all details</td></tr>
-<tr><td><br>EXAMPLES</td><td><br>examples of CLI command usage:</td></tr>
-<tr><td>hardinfo2 -b 'FPU FFT'</td><td>runs only FPU FFT benchmark</td></tr>
-<tr><td>hardinfo2 -u 1</td><td>enable updates at startup and starts gui (can also be set in gui)</td></tr>
-<tr><td nowrap>hardinfo2 -u X -r</td><td>updates data from server, generate CLI report and sends benchmark with user-note X</td></tr>
-<tr><td>hardinfo2 -r</td><td>generates CLI report</td></tr>
 </table><br>
-Example of remote support issues: hardinfo2 -r -s -q|grep -A3 ^\-BIOS<br>
-List of topics available: hardinfo2 -r -s -q|grep ^\-<br>
+Example of remote support issues: hardinfo2 -t bios <b>(2.2.11+)</b><br>
+List of topics available: hardinfo2 -t getlist <b>(2.2.11+)</b><br><br>
 <div id="usernote">
 <h3>User Note (2.2.11+)</h3>
 <p>Can be used to put the benchmarks into a group with some sort of identification. <br>Furthermore user note allows to decide the benchmark compare list.<br><br>
-  The default is Group/MachineName/ServerReq or blank - both results in a random selection of benchmarks returns and no group nor identification is added.<br><br>
+  The default is Group-MachineName-ServerReq or blank - both results in a random selection of benchmarks returns and no group nor identification is added.<br><br>
   <b>Group</b> is to put a collection of benchmarks into a box, that can then be used to compare against.<br> Eg. your 2 PC and 2 Notebooks or you are part of a community that wants to compare their machines. You want to compare different distros you have on your PC, create a group and voila. Or you want to compare a large number of PCs via batchscripts.<br><br>
   <b>MachineName</b> is some id for you to could say what the benchmark is.<br><br>
   <b>ServerRequest</b> is the parameter to tell the server which benchmarks you want to see.<br><br>
@@ -268,8 +265,8 @@ groups:<br>
 ALL,SBC,NOTEBOOK,DESKTOP,GPU,STORAGE<br>
 WORKSERVER,32,INTEL,AMD,OTHER<br><br>
 <b>You can filter for your own custom group of benchmarks:</b><br>
-See above option -u<br>
-<a href='https://hardinfo2.org/?u=MyUniqueNote'>https://hardinfo2.org/?u=MyUniqueNote</a><br><br>
+See above user note or CLI option -u<br>
+<a href='https://hardinfo2.org/?u=mychoosengroup'>https://hardinfo2.org/?u=mychoosengroup</a><br><br>
 <b>You can call a page directly:</b><br>
 <a href='https://hardinfo2.org/news'>https://hardinfo2.org/news</a><br>
 <a href='https://hardinfo2.org/benchcompare'>https://hardinfo2.org/benchcompare</a><br>

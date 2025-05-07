@@ -95,6 +95,18 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	 if($req=="NONE") {
 	   $filter=" and (1=2)";
 	 }
+	 if($req=="SBC") {
+	   $filter=" and (machine_type='Single-board Computer')";
+	 }
+	 if($req=="SERVER") {
+	   $filter=" and (machine_type='Server' || machine_type='Workstation')";
+	 }
+	 if($req=="DESKTOP") {
+	   $filter=" and (machine_type='Desktop' || machine_type='Tower')";
+	 }
+	 if($req=="NOTEBOOK") {
+	   $filter=" and (machine_type='Notebook' || machine_type='Laptop')";
+	 }
 	 if($req=="NEWCPU") {//Needs cpudb
 	 }
 	 if($req=="MYCPU" && isset($usercpu)) {//avg,min,max - needs multiple resulte

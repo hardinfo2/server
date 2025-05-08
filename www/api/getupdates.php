@@ -45,11 +45,33 @@
 
     echo "<br><br>";
 
+    $showupdate=1;//HACK remove me
+    echo "<b>FORCED TO SHOW NOT NEW PACKAGE FOR TEST RIGHT NOW</b><br><br>"; 
+
     if($showupdate){
        $downloads=file_get_contents("/var/www/html/server/www/downloads.ids");
-       //Simple First name
+       //Simple First name - combine if linux first
        $distroname=$_GET['distro'];
        if(strpos($distroname,' ')) $distroname=substr($distroname,0,strpos($distroname,' '));
+       if($distroname=="Linux") $distroname=str_replace("Linux ","Linux",$_GET['distro']);
+       //
+       if($distroname=="Raspberry") $distroname="Raspbian";
+       if(strstr($distroname,"buntu")) $distroname="Ubuntu";
+       //
+       if(strpos($distroname,'!')) $distroname=substr($distroname,0,strpos($distroname,'!'));
+       if(strpos($distroname,'_')) $distroname=substr($distroname,0,strpos($distroname,'_'));
+       if(strpos($distroname,' ')) $distroname=substr($distroname,0,strpos($distroname,' '));
+       if(strpos($distroname,'0')) $distroname=substr($distroname,0,strpos($distroname,'0'));
+       if(strpos($distroname,'1')) $distroname=substr($distroname,0,strpos($distroname,'1'));
+       if(strpos($distroname,'2')) $distroname=substr($distroname,0,strpos($distroname,'2'));
+       if(strpos($distroname,'3')) $distroname=substr($distroname,0,strpos($distroname,'3'));
+       if(strpos($distroname,'4')) $distroname=substr($distroname,0,strpos($distroname,'4'));
+       if(strpos($distroname,'5')) $distroname=substr($distroname,0,strpos($distroname,'5'));
+       if(strpos($distroname,'6')) $distroname=substr($distroname,0,strpos($distroname,'6'));
+       if(strpos($distroname,'7')) $distroname=substr($distroname,0,strpos($distroname,'7'));
+       if(strpos($distroname,'8')) $distroname=substr($distroname,0,strpos($distroname,'8'));
+       if(strpos($distroname,'9')) $distroname=substr($distroname,0,strpos($distroname,'9'));
+       $distroname=trim($distroname);
        //
        $distrnumber="";
        $s=$_GET['distro'];
@@ -59,10 +81,10 @@
        $e=$n;
        $hasver=0;
        while($s[$e] && ((($s[$e]>='0') && ($s[$e]<='9'))||($s[$e]=='.'))) {$hasver=1;$e++;}
-       if($hasver) {$distronumber=substr($_GET['distro'],$n,$e-$n+1);}
+       if($hasver) {$distronumber=trim(substr($_GET['distro'],$n,$e-$n+1));}
        //
        if(!$hasver) {
-	  $distroname=str_replace(" ","",$s);
+	  $distroname=trim(str_replace(" ","",$s));
        }
        $check=1;
        while($check){
@@ -72,17 +94,17 @@
 	   while($p) {
 	       $t=strpos($p,"<br>");
 	       $d=substr($p,0,$t);
+	       $dcmp=str_replace($prerelver."_","",str_replace($prerelver."-","",str_replace("hardinfo2-","",str_replace("hardinfo2_","",$d))));
 
                $arch=0;
-               if($_GET['arch']=="x86_64") if(strstr($d,"amd64")) $arch=1;
-               if(strstr($d,$_GET['arch'])) $arch=1;
-	       //if(strlen($_GET['arch'])<=1) $arch=1;
+               if($_GET['arch']=="x86_64") if(strstr($dcmp,"amd64")) $arch=1;
+               if(strstr($dcmp,trim($_GET['arch']))) $arch=1;
 
                $distro=0;
-               if(strstr($d,$distroname)) $distro=1;
-	       if($hasver && !strstr($d,$distronumber)) $distro=0;
-	       //if(strlen($_GET['distro'])<=1) $distro=1;
+               if(strstr($dcmp,$distroname)) $distro=1;
+	       if($hasver && !strstr($dcmp,$distronumber)) $distro=0;
 	       //echo $arch.$distro.$d."<br>";
+	       //echo $arch.$distro.$dcmp."<br>";
 	       if($arch && $distro) {$found=1; echo "New Package: ".$d."<br>";}
 
 	       $p=strstr($p,"<br>");

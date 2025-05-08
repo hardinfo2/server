@@ -25,18 +25,17 @@ function show_table_color($q){
 	$i=0;
 	while($i<$q->field_count){
             echo "<td class='tableleft'>";
-	    if(($row[0]=="2.2.11")) echo "<font color=blue>";//DEV
-	    else if(($row[0]=="2.2.10") && ($row[1]%18==0)) echo "<font color=green>";//LKG REL
-	    else if(($row[0]=="2.2.9") && ($row[1]%18==0)) echo "<font color=green>";//LKG
-	    else if(($row[0]=="2.2.8") && ($row[1]%18==0)) echo "<font color=green>";//LKG
-	    else if(($row[0]=="2.2.7") && ($row[1]%18==0)) echo "<font color=green>";//LKG REL
-	    else if(($row[0]=="2.2.6") && ($row[1]%18==0)) echo "<font color=green>";//LKG
-	    else if(($row[0]=="2.2.5") && ($row[1]%18==0)) echo "<font color=green>";//LKG
-	    else if(($row[0]=="2.2.4") && ($row[1]%17==0)) echo "<font color=green>";//LKG REL
-	    else if(($row[0]=="2.2.3") && ($row[1]%17==0)) echo "<font color=green>";//LKG
-	    else if(($row[0]=="2.2.1") && ($row[1]%17==0)) echo "<font color=orange>";//has fault but data okay
-	    else if(($row[0]=="2.1.11") && ($row[1]%15==0)) echo "<font color=orange>";//LTS
-	    else if(($row[0]<"2.1.11") || $row[0]=="2.1.14" || $row[0]=="2.1.17") echo "<font color=red>";//TOO OLD
+	    if(($row[0]=="2.2.14")) echo "<font color=blue>";//DEV
+	    else if($row[0]=="2.2.13") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//LKG REL
+	    else if($row[0]=="2.2.12") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//LKG <-------This will be minimum
+	    else if($row[0]=="2.2.10") {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//REL <-2.base
+	    else if($row[0]=="2.2.9")  {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//pre
+	    else if($row[0]=="2.2.7")  {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//REL
+	    else if($row[0]=="2.2.6")  {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//pre
+	    else if($row[0]=="2.2.4")  {if($row[1]%17==0) echo "<font color=orange>"; else echo "<font color=black>";}//REL
+	    else if($row[0]=="2.2.3")  {if($row[1]%17==0) echo "<font color=orange>"; else echo "<font color=black>";}//pre
+	    else if($row[0]=="2.1.11") {if($row[1]%15==0) echo "<font color=orange>"; else echo "<font color=black>";}//REL <-1.Base
+	    else echo "<font color=red>";//TOO OLD, Old Development
 	    echo htmlspecialchars($row[$i])."</td>";
 	    $i++;
 	}

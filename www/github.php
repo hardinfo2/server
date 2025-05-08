@@ -25,6 +25,24 @@ if(1*$r[0]){ //refresh
 
     mysqli_query($db,"update settings set value=unix_timestamp(now()) where name='github-refresh'");
 
+    //Find release and prerelease versions and store in settings
+    $releases = json_decode($releasetxt);
+    $n=0;
+    while(isset($releases[$n])){
+        if($releases[$n]->prerelease && !isset($prerelver) ){
+            $prerelver = $releases[$n]->name;
+	}
+        if(!$releases[$n]->prerelease && !isset($relver)){
+            $relver = $releases[$n]->name;
+        }
+	$n++;
+    }
+    $release_ver=str_replace("v","",$relver);
+    $pre_release_ver=str_replace("pre","",str_replace("v","",$prerelver));
+    mysqli_query($db,"update settings set value='".$release_ver."' where name='latest-release-version'");
+    mysqli_query($db,"update settings set value='".$pre_release_ver."' where name='latest-prerelease-version'");
+
+
 }else{
 
     $r=mysqli_fetch_row(mysqli_query($db,"select value from settings where name='github-releasetxt'"));

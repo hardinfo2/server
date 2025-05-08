@@ -28,13 +28,13 @@ function show_table_color($q){
 	    if(($row[0]=="2.2.14")) echo "<font color=blue>";//DEV
 	    else if($row[0]=="2.2.13") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//LKG REL
 	    else if($row[0]=="2.2.12") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//LKG <-------This will be minimum
-	    else if($row[0]=="2.2.10") {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//REL <-2.base
+	    else if($row[0]=="2.2.10") {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//REL 
 	    else if($row[0]=="2.2.9")  {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//pre
 	    else if($row[0]=="2.2.7")  {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//REL
 	    else if($row[0]=="2.2.6")  {if($row[1]%18==0) echo "<font color=green>";  else echo "<font color=black>";}//pre
 	    else if($row[0]=="2.2.4")  {if($row[1]%17==0) echo "<font color=orange>"; else echo "<font color=black>";}//REL
 	    else if($row[0]=="2.2.3")  {if($row[1]%17==0) echo "<font color=orange>"; else echo "<font color=black>";}//pre
-	    else if($row[0]=="2.1.11") {if($row[1]%15==0) echo "<font color=orange>"; else echo "<font color=black>";}//REL <-1.Base
+	    else if($row[0]=="2.1.11") {if($row[1]%15==0) echo "<font color=orange>"; else echo "<font color=black>";}//REL
 	    else echo "<font color=red>";//TOO OLD, Old Development
 	    echo htmlspecialchars($row[$i])."</td>";
 	    $i++;
@@ -42,7 +42,7 @@ function show_table_color($q){
 	echo "</tr>";
     }
     echo "</table>";
-    echo "<font size='2'>Total: ".($q->num_rows)." - green:BEST, blue:DEV, orange:OK, black:Incomplete, red:UPDATE NOW!</font><br><br>";
+    echo "<font size='2'>Total: ".($q->num_rows)." - green:BEST, blue:DEVELOPMENT, orange:OK, black:Incomplete, red:UPDATE NOW!</font><br><br>";
 }
 
     $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable",""),"Build Date:",""),"/"," ")';

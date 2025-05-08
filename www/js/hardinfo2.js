@@ -237,6 +237,7 @@ function showPage() {
 	} else if (navlist[x] == obj) {
 	    navlist[x].classList.add('active');
 	    document.getElementById("Page-" + navlist[x].name).style.display="block";
+	    document.getElementById("Page-updates").style.display="none";
 	} else {
 	    navlist[x].classList.remove('active');
 	    document.getElementById("Page-" + navlist[x].name).style.display="none";
@@ -475,6 +476,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if(url.includes("history")) {const event=new Event('click');navlist[7].dispatchEvent(event);}
     if(url.includes("credits")) {const event=new Event('click');navlist[8].dispatchEvent(event);}
     if(url.includes("about")) {const event=new Event('click');navlist[8].dispatchEvent(event);}
+    if(url.includes("updates")) {
+	fetch('/api/getupdates?ver='+vars["ver"]+'&arch='+vars["arch"]+'&distro='+vars["distro"])
+	    .then((response) => response.text())
+            .then((text) => {
+	        updates.innerHTML=text;
+	    });
+	let navlist = document.querySelectorAll('.navlist');
+	for (let x = 0; x < navlist.length; x++) {
+	    navlist[x].classList.remove('active');
+	    document.getElementById("Page-" + navlist[x].name).style.display="none";
+	}
+	document.getElementById("Page-updates").style.display="block";
+    }
     //language
     if(document.getElementById("language"))
 	document.getElementById("language").addEventListener('change', changeLanguage, false);

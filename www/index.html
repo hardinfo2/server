@@ -243,14 +243,14 @@ List of topics available: hardinfo2 -t getlist <b>(2.2.11+)</b><br><br>
   <b>ServerRequest</b> is the parameter to tell the server which benchmarks you want to see.<br><br>
   Valid inputs are letters(small+caps) and numbers. Total max length is 50.<br><br>
   <u>Current supported Server Requests:</u><br>
-  mychoosengrp-mychossenid - returns random benchmarks (default)<br>
-  mychoosengrp-mychossenid-GRP - returns benchmarks for mychoosengrp<br>
-  mychoosengrp-mychossenid-MYCPU - returns benchmarks for same model as my cpu<br>
-  mychoosengrp-mychossenid-NONE - returns no benchmarks (Special case)<br>
-  mychoosengrp-mychossenid-SBC - returns Single Board Computer benchmarks<br>
-  mychoosengrp-mychossenid-DESKTOP - returns Desktop Computer benchmarks<br>
-  mychoosengrp-mychossenid-SERVER - returns Server Computer benchmarks<br>
-  mychoosengrp-mychossenid-NOTEBOOK - returns Notebook Computer benchmarks<br>
+  mychosengrp-mychosenid - returns random benchmarks (default)<br>
+  mychosengrp-mychosenid-GRP - returns benchmarks for mychosengrp<br>
+  mychosengrp-mychosenid-MYCPU - returns benchmarks for same model as my cpu<br>
+  mychosengrp-mychosenid-NONE - returns no benchmarks (Special case)<br>
+  mychosengrp-mychosenid-SBC - returns Single Board Computer benchmarks<br>
+  mychosengrp-mychosenid-DESKTOP - returns Desktop Computer benchmarks<br>
+  mychosengrp-mychosenid-SERVER - returns Server Computer benchmarks<br>
+  mychosengrp-mychosenid-NOTEBOOK - returns Notebook Computer benchmarks<br>
   <br><br>
 </p>
 </div>
@@ -266,7 +266,7 @@ ALL,SBC,NOTEBOOK,DESKTOP,GPU,STORAGE<br>
 WORKSERVER,32,INTEL,AMD,OTHER<br><br>
 <b>You can filter for your own custom group of benchmarks:</b><br>
 See above user note or CLI option -u<br>
-<a href='https://hardinfo2.org/?u=mychoosengroup'>https://hardinfo2.org/?u=mychoosengroup</a><br><br>
+<a href='https://hardinfo2.org/?u=mychosengroup'>https://hardinfo2.org/?u=mychosengroup</a><br><br>
 <b>You can call a page directly:</b><br>
 <a href='https://hardinfo2.org/news'>https://hardinfo2.org/news</a><br>
 <a href='https://hardinfo2.org/benchcompare'>https://hardinfo2.org/benchcompare</a><br>
@@ -394,6 +394,10 @@ See above user note or CLI option -u<br>
 
 <div id="Page-dbstats" class="notactive">
   <div id="dbstatstables"></div>
+</div>
+
+<div id="Page-updates">
+  <div id="updates"></div>
 </div>
 
 <div id="Page-download" class="notactive">

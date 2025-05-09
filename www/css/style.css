@@ -215,11 +215,27 @@ c { text-align:center;}
     border-collaps: collapse;
     border-spacing: 0px;
 }
+.tabletop {
+    font-size: 14px;
+    border: 1px solid black;
+    border-collaps: collapse;
+    border-spacing: 0px;
+}
 .tableleft {
     border: 1px solid black;
     border-collaps: collapse;
     text-align: left;
     border-spacing: 0px;
+}
+.tableleft2 {
+    border: 1px solid black;
+    border-collaps: collapse;
+    text-align: left;
+    border-spacing: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 .left {
     text-align: left;

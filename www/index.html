@@ -203,9 +203,9 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 </div>
 
 <div id="Page-userguide" class="notactive">
-<h2><b><font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font> User Guide</b></h2>
+<h1><b><font color=black>hard<font color=#4060FF>info<font color=red>2</font></font></font> User Guide</b></h1>
 <article>
-<h2>Frequently Asked Questions</h2>
+<h3>Frequently Asked Questions</h3>
 <dl>
 <dt><b>Is hardinfo2 just a GUI interface for information that can be read from kernel?</b></dt>
 <dd>No, it is correct that many informations can be found from kernel, but hardinfo2 does not just collect all these into a nice interface (GUI+CLI) but also adds extra information from blobs and internal tables and routines.</dd>
@@ -217,25 +217,26 @@ PS: Numbers in () are working right now but might be unsupported in future relea
 <h2>Command Line Interface</h2>
 The hardinfo2 program also has a Command Line Interface, for use in terminals. This can be useful for remote support issues, describing and benchmarking a lot of machines remotely, adding a note to the uploaded benchmarks for identifying a group of benchmarks, etc.<br><br>
 <b>man hardinfo2</b> shows the following CLI options:
-<table border=1>
-<tr><td>-h, --help</td><td>Show help options</td></tr>
-<tr><td>-q, --quite</td><td>do not print status messages to standard output</td></tr>
-<tr><td nowrap>-r, --generate-report</td><td>creates a report and prints to standard output</td></tr>
-<tr><td>-f, --report-format</td><td>chooses a report format (text, html)</td></tr>
-<tr><td>-t, --topic</td><td>search for a topic in CLI report (-t getlist shows available) (*cpu search for cpu in all report) <b>(2.2.11+)</b></td></tr>
-<tr><td>-c, --topic-cache</td><td>search for a topic in Cached CLI report (-t getlist shows available) (*cpu search for cpu in all report) <b>(2.2.11+)</b></td></tr>
-<tr><td>-b, --run-benchmark</td><td>run a specific benchmark eg. -b 'FPU FFT'  (Default all benchmarks runs when generate report)</td></tr>
-<tr><td>-u, user-note</td><td>Group-MachineName[-ServerReq] - adds a user note to data send to server. When added eg. -u 1 synchronization is activated.  Letters (small+caps) and  numbers and  dashes are accepted. Length max 50. 0-2 dashes used as seperator.  Format Group-MachineName-ServerReq Group and MachineName are for anonymous identification and can put benchmarks into a group and you can sort of identify each machine  by  your chosen  string.   ServerReq is to tell the server which records you want to get. See https://hardinfo2.org/userguide#usernote for more details about the Server Request strings available. <b>(2.2.11+)</b></td></tr>
-<tr><td>-g, --result-format</td><td>chooses a result format (short, conf, shell)</td></tr>
-<tr><td>-n, --max-results</td><td>maximum number of benchmark results to include (-1 for no limit, default is 50)</td></tr>
-<tr><td>-v, --version</td><td>shows program version and quit</td></tr>
-<tr><td>-s, --skip-benchmarks</td><td>Disables all benchmark runs.</td></tr>
-<tr><td>-w, --very-verbose</td><td>show all details</td></tr>
-</table><br>
-Example of remote support issues: hardinfo2 -t bios <b>(2.2.11+)</b><br>
-List of topics available: hardinfo2 -t getlist <b>(2.2.11+)</b><br><br>
+<table class="tabletop">
+<tr><td class="tableleft2">-h, --help</td><td class="tableleft2">Show help options</td></tr>
+<tr><td class="tableleft2">-q, --quite</td><td class="tableleft2">do not print status messages to standard output</td></tr>
+<tr><td class="tableleft2" nowrap>-r, --generate-report</td><td class="tableleft2">creates a report and prints to standard output</td></tr>
+<tr><td class="tableleft2">-f, --report-format</td><td class="tableleft2">chooses a report format (text, html)</td></tr>
+<tr><td class="tableleft2">-t, --topic</td><td class="tableleft2">search for a topic in CLI report (-t getlist shows available) (*cpu search for cpu in all report) <b>(2.2.12+)</b></td></tr>
+<tr><td class="tableleft2">-c, --topic-cache</td><td class="tableleft2">search for a topic in Cached CLI report (-t getlist shows available) (*cpu search for cpu in all report) <b>(2.2.12+)</b></td></tr>
+<tr><td class="tableleft2">-b, --run-benchmark</td><td class="tableleft2">run a specific benchmark eg. -b 'FPU FFT'  (Default all benchmarks runs when generate report)</td></tr>
+<tr><td class="tableleft2">-u, user-note</td><td class="tableleft2">Group-MachineName[-ServerReq] - adds a user note to data send to server. When added eg. -u 1 synchronization is activated.  Letters (small+caps) and  numbers and  dashes are accepted. Length max 50. 0-2 dashes used as seperator.  Format Group-MachineName-ServerReq Group and MachineName are for anonymous identification and can put benchmarks into a group and you can sort of identify each machine  by  your chosen  string.   ServerReq is to tell the server which records you want to get. See https://hardinfo2.org/userguide#usernote for more details about the Server Request strings available. <b>(2.2.12+)</b></td></tr>
+<tr><td class="tableleft2">-g, --result-format</td><td class="tableleft2">chooses a result format (short, conf, shell)</td></tr>
+<tr><td class="tableleft2">-n, --max-results</td><td class="tableleft2">maximum number of benchmark results to include (-1 for no limit, default is 50)</td></tr>
+<tr><td class="tableleft2">-v, --version</td><td class="tableleft2">shows program version and quit</td></tr>
+<tr><td class="tableleft2">-s, --skip-benchmarks</td><td class="tableleft2">Disables all benchmark runs.</td></tr>
+<tr><td class="tableleft2">-w, --very-verbose</td><td class="tableleft2">show all details</td></tr>
+</table>
+<br>
+Example of remote support issues: hardinfo2 -t bios <b>(2.2.12+)</b><br>
+List of topics available: hardinfo2 -t getlist <b>(2.2.12+)</b><br><br>
 <div id="usernote">
-<h3>User Note (2.2.11+)</h3>
+<h3>User Note (2.2.12+)</h3>
 <p>Can be used to put the benchmarks into a group with some sort of identification. <br>Furthermore user note allows to decide the benchmark compare list.<br><br>
   The default is Group-MachineName-ServerReq or blank - both results in a random selection of benchmarks returns and no group nor identification is added.<br><br>
   <b>Group</b> is to put a collection of benchmarks into a box, that can then be used to compare against.<br> Eg. your 2 PC and 2 Notebooks or you are part of a community that wants to compare their machines. You want to compare different distros you have on your PC, create a group and voila. Or you want to compare a large number of PCs via batchscripts.<br><br>
@@ -406,7 +407,6 @@ See above user note or CLI option -u<br>
     <p>First check if your distro already has hardinfo2 - if it is older than below - please upgrade.</p>
   <p>Link to hardinfo2 download page: <a href="https://hardinfo2.org/download">https://hardinfo2.org/download</a></p>
   <p>CPU Architecture: amd64/x86_64=Normal PC, aarch64=ArmV8, riscv64, armv7l, i686, etc..<br>
-    Use apt/dnf/yum/zypper <b>reinstall</b> if allready installed.<br>
     This is the same version as distro release with minor stepped (only build by distros)</p>
   <br>
   <div id="downloadtables"></div>

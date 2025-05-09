@@ -42,7 +42,7 @@ function show_table_color($q){
 	echo "</tr>";
     }
     echo "</table>";
-    echo "<font size='2'>Total: ".($q->num_rows)." - green:BEST, blue:DEVELOPMENT, orange:OK, black:Incomplete, red:UPDATE NOW!</font><br><br>";
+    echo "<font size='2'>Total: ".($q->num_rows)." - green:BEST, blue:DEVELOPMENT, orange:OK, black:Incomplete, red:UPDATE NOW!(old/oldDEV/defect)</font><br><br>";
 }
 
     $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable",""),"Build Date:",""),"/"," ")';

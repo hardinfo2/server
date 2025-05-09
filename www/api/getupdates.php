@@ -1,6 +1,8 @@
 <?php
     $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
 
+    $DEBUG=0;
+
     $q=mysqli_query($db,"select value from settings where name='latest-release-version'");
     $r=mysqli_fetch_row($q);
     $relver=$r[0];
@@ -73,7 +75,7 @@
        if(strpos($distroname,'9')) $distroname=substr($distroname,0,strpos($distroname,'9'));
        $distroname=trim($distroname);
        //
-       $distrnumber="";
+       $distronumber="";
        $s=$_GET['distro'];
        if(strpos($s," (")) $s=substr($s,0,strpos($s," ("));
        $n=0;
@@ -84,11 +86,14 @@
        if($hasver) {$distronumber=trim(substr($_GET['distro'],$n,$e-$n+1));}
        //
        if(!$hasver) {
-	  $distroname=trim(str_replace(" ","",$s));
+	  //$distroname=trim(str_replace(" ","",$s));
+	  $distronumber=trim(substr($s,strripos($s," "),999));
+	  if(strpos($distronumber,"/")) $distronumber=substr($distronumber,0,strpos($distronumber,"/"));
+	  $hasver=1;
        }
        $check=1;
        while($check){
-           //echo "DistroName=".$distroname.". - DistroNumber=".$distronumber.".<br>";
+           if($DEBUG) echo "DistroName=".$distroname.". - DistroNumber=".$distronumber.".<br>";
 	   $found=0;
 	   $p=strstr($downloads,"<a");
 	   while($p) {
@@ -104,7 +109,7 @@
                if(strstr($dcmp,$distroname)) $distro=1;
 	       if($hasver && !strstr($dcmp,$distronumber)) $distro=0;
 	       //echo $arch.$distro.$d."<br>";
-	       //echo $arch.$distro.$dcmp."<br>";
+	       if($DEBUG) echo $arch.$distro.$dcmp."<br>";
 	       if($arch && $distro) {$found=1; echo "New Package: ".$d."<br>";}
 
 	       $p=strstr($p,"<br>");

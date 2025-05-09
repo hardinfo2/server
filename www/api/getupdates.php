@@ -102,7 +102,7 @@
 	       $dcmp=str_replace($prerelver."_","",str_replace($prerelver."-","",str_replace("hardinfo2-","",str_replace("hardinfo2_","",$d))));
 
                $arch=0;
-               if($_GET['arch']=="x86_64") if(strstr($dcmp,"amd64")) $arch=1;
+               if(trim($_GET['arch'])=="x86_64") if(strstr($dcmp,"amd64")) $arch=1;
                if(strstr($dcmp,trim($_GET['arch']))) $arch=1;
 
                $distro=0;

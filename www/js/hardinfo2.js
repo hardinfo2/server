@@ -429,6 +429,9 @@ function create_tables_graphs(bm) {
 
 document.addEventListener('DOMContentLoaded', function() {
     vars=getUrlVars();
+    //Update current year
+    var currentYear = new Date().getFullYear();
+    document.getElementById('currentYear').textContent = currentYear;
     //hamburger icon
     var elements=document.getElementsByClassName("icon");
     for (var i = 0; i < elements.length; i++) {

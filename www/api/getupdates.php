@@ -50,18 +50,17 @@
        $downloads=file_get_contents("/var/www/html/server/www/downloads.ids");
        //
        $distronumber="";
-       $s=str_replace("!","",$_GET['distro']);
+       $s=str_replace("/","",str_replace("!","",$_GET['distro']));
        if(strpos($s," (")) $s=substr($s,0,strpos($s," ("));
        $n=0;
-       while($s[$n] && (($s[$n]<'0') || ($s[$n]>'9'))) $n++;
+       while( (strlen($s)>$n) && (($s[$n]<'0') || ($s[$n]>'9'))) $n++;
        $e=0;
        $hasver=0;
-       while($s[$n+$e] && ((($s[$n+$e]>='0') && ($s[$n+$e]<='9')) || ($s[$n+$e]=='.'))) {$hasver=1;$e++;}
-       if($hasver) {$distronumber=trim(substr($_GET['distro'],$n,$e+2));}
+       while( (strlen($s)>($n+$e)) && ( (($s[$n+$e]>='0') && ($s[$n+$e]<='9')) || ($s[$n+$e]=='.') ) ) {$hasver=1;$e++;}
+       if($hasver) {$distronumber=trim(substr($s,$n,$e));}
        //
        if($hasver) $distroname=trim(substr($s,0,$n-1)); else $distroname=$s;
        $distroname=trim(str_replace(" ","",$distroname));
-       if(strpos($distroname,"buntu")) $distroname="Ubuntu";
        //
        if(!$hasver) {
 	  //$distroname=trim(str_replace(" ","",$s));
@@ -69,6 +68,10 @@
 	  if(strpos($distronumber,"/")) $distronumber=substr($distronumber,0,strpos($distronumber,"/"));
 	  $hasver=1;
        }
+       //Special changes
+       if(strstr($distroname,"buntu")) $distroname="Ubuntu";
+       if(strstr($distroname,"Fedora") && strlen($distronumber)>3) $distroname="FedoraAtomic";
+       //
        $check=1;
        $filenames="";
        while($check){
@@ -76,18 +79,22 @@
 	   $found=0;
 	   $p=strstr($downloads,"<a");
 	   while($p) {
+	       //url & filename
 	       $t=strpos($p,"<br>");
-	       $d=substr($p,0,$t);
-	       $dcmp=str_replace($prerelver."_","",str_replace($prerelver."-","",str_replace("hardinfo2-","",str_replace("hardinfo2_","",$d))));
+	       $d=substr($p,0,$t);//url with filename
+
+               //filename only
+	       $t=strpos($d,"\">")+2;
+	       $dcmp=substr($d,$t,strpos($d,"</a")-2);
+	       $dcmp=trim(str_replace($prerelver."_","",str_replace($prerelver."-","",str_replace("hardinfo2-","",str_replace("hardinfo2_","",$dcmp)))));
 
                $arch=0;
                if(trim($_GET['arch'])=="x86_64") if(strstr($dcmp,"amd64")) $arch=1;
                if(strstr($dcmp,trim($_GET['arch']))) $arch=1;
 
                $distro=0;
-               if(strstr($dcmp,$distroname)) $distro=1;
-	       if($hasver && !strstr($dcmp,$distronumber)) $distro=0;
-	       //echo $arch.$distro.$d."<br>";
+	       if( (strstr($dcmp,$distronumber)) && (strstr($dcmp,$distroname)) ) $distro=1;
+
 	       if($DEBUG) echo $arch.$distro.$dcmp."<br>";
 	       if($arch && $distro) {$found=1; if($showupdate) echo "New Package: ".$d."<br>";if(strlen($filenames)) $filenames.=", ";$filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);}
 
@@ -95,7 +102,7 @@
                $p=strstr($p,"<a");
            }
            if($found) $check=0;
-           else if(strpos($distronumber,'.')) {$distronumber=substr($distronumber,0,strpos($distronumber,'.'));}
+           else if(strpos($distronumber,'.')) {$distronumber=trim(substr($distronumber,0,strpos($distronumber,'.')));}
            else $check=0;
        }
        if(!$found) 

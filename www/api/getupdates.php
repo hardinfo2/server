@@ -50,7 +50,7 @@
        $downloads=file_get_contents("/var/www/html/server/www/downloads.ids");
        //
        $distronumber="";
-       $s=str_replace("/","",str_replace("!","",$_GET['distro']));
+       $s=str_replace("/","",str_replace("!",".",$_GET['distro']));
        if(strpos($s," (")) $s=substr($s,0,strpos($s," ("));
        $n=0;
        while( (strlen($s)>$n) && (($s[$n]<'0') || ($s[$n]>'9'))) $n++;
@@ -59,18 +59,21 @@
        while( (strlen($s)>($n+$e)) && ( (($s[$n+$e]>='0') && ($s[$n+$e]<='9')) || ($s[$n+$e]=='.') ) ) {$hasver=1;$e++;}
        if($hasver) {$distronumber=trim(substr($s,$n,$e));}
        //
-       if($hasver) $distroname=trim(substr($s,0,$n-1)); else $distroname=$s;
+       if($hasver) $distroname=trim(substr($s,0,$n)); else $distroname=$s;
+       if(($distroname[strlen($distroname)-2]==" ")&&($distroname[strlen($distroname)-1]=="v")) $distroname=str_replace(" v","",$distroname);
        $distroname=trim(str_replace(" ","",$distroname));
        //
        if(!$hasver) {
-	  //$distroname=trim(str_replace(" ","",$s));
 	  $distronumber=trim(substr($s,strripos($s," "),999));
 	  if(strpos($distronumber,"/")) $distronumber=substr($distronumber,0,strpos($distronumber,"/"));
+          $distroname=str_replace($distronumber,"",$distroname);
 	  $hasver=1;
        }
        //Special changes
+       //if(strstr($distroname,"Pop")) $distroname="Pop";
        if(strstr($distroname,"buntu")) $distroname="Ubuntu";
        if(strstr($distroname,"Fedora") && strlen($distronumber)>3) $distroname="FedoraAtomic";
+       if(strstr($distronumber,"sid")) $distronumber=str_replace("sid","",$distronumber);
        //
        $check=1;
        $filenames="";
@@ -102,7 +105,8 @@
                $p=strstr($p,"<a");
            }
            if($found) $check=0;
-           else if(strpos($distronumber,'.')) {$distronumber=trim(substr($distronumber,0,strpos($distronumber,'.')));}
+           else if(strpos($distronumber,'.')) {$distronumber=trim(substr($distronumber,0,strripos($distronumber,'.')));}
+           else if(strpos($distroname,"Linux")) {$distroname=trim(str_replace("Linux","",$distroname));}
            else $check=0;
        }
        if(!$found) 

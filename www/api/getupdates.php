@@ -47,43 +47,21 @@
 
     echo "<br><br>";
 
-    $showupdate=1;//HACK remove me
-    echo "<b>FORCED TO SHOW NOT NEW PACKAGE FOR TEST RIGHT NOW</b><br><br>"; 
-
-    if($showupdate){
        $downloads=file_get_contents("/var/www/html/server/www/downloads.ids");
-       //Simple First name - combine if linux first
-       $distroname=$_GET['distro'];
-       if(strpos($distroname,' ')) $distroname=substr($distroname,0,strpos($distroname,' '));
-       if($distroname=="Linux") $distroname=str_replace("Linux ","Linux",$_GET['distro']);
-       //
-       if($distroname=="Raspberry") $distroname="Raspbian";
-       if(strstr($distroname,"buntu")) $distroname="Ubuntu";
-       //
-       if(strpos($distroname,'!')) $distroname=substr($distroname,0,strpos($distroname,'!'));
-       if(strpos($distroname,'_')) $distroname=substr($distroname,0,strpos($distroname,'_'));
-       if(strpos($distroname,' ')) $distroname=substr($distroname,0,strpos($distroname,' '));
-       if(strpos($distroname,'0')) $distroname=substr($distroname,0,strpos($distroname,'0'));
-       if(strpos($distroname,'1')) $distroname=substr($distroname,0,strpos($distroname,'1'));
-       if(strpos($distroname,'2')) $distroname=substr($distroname,0,strpos($distroname,'2'));
-       if(strpos($distroname,'3')) $distroname=substr($distroname,0,strpos($distroname,'3'));
-       if(strpos($distroname,'4')) $distroname=substr($distroname,0,strpos($distroname,'4'));
-       if(strpos($distroname,'5')) $distroname=substr($distroname,0,strpos($distroname,'5'));
-       if(strpos($distroname,'6')) $distroname=substr($distroname,0,strpos($distroname,'6'));
-       if(strpos($distroname,'7')) $distroname=substr($distroname,0,strpos($distroname,'7'));
-       if(strpos($distroname,'8')) $distroname=substr($distroname,0,strpos($distroname,'8'));
-       if(strpos($distroname,'9')) $distroname=substr($distroname,0,strpos($distroname,'9'));
-       $distroname=trim($distroname);
        //
        $distronumber="";
-       $s=$_GET['distro'];
+       $s=str_replace("!","",$_GET['distro']);
        if(strpos($s," (")) $s=substr($s,0,strpos($s," ("));
        $n=0;
        while($s[$n] && (($s[$n]<'0') || ($s[$n]>'9'))) $n++;
-       $e=$n;
+       $e=0;
        $hasver=0;
-       while($s[$e] && ((($s[$e]>='0') && ($s[$e]<='9'))||($s[$e]=='.'))) {$hasver=1;$e++;}
-       if($hasver) {$distronumber=trim(substr($_GET['distro'],$n,$e-$n+1));}
+       while($s[$n+$e] && ((($s[$n+$e]>='0') && ($s[$n+$e]<='9')) || ($s[$n+$e]=='.'))) {$hasver=1;$e++;}
+       if($hasver) {$distronumber=trim(substr($_GET['distro'],$n,$e+2));}
+       //
+       if($hasver) $distroname=trim(substr($s,0,$n-1)); else $distroname=$s;
+       $distroname=trim(str_replace(" ","",$distroname));
+       if(strpos($distroname,"buntu")) $distroname="Ubuntu";
        //
        if(!$hasver) {
 	  //$distroname=trim(str_replace(" ","",$s));
@@ -92,6 +70,7 @@
 	  $hasver=1;
        }
        $check=1;
+       $filenames="";
        while($check){
            if($DEBUG) echo "DistroName=".$distroname.". - DistroNumber=".$distronumber.".<br>";
 	   $found=0;
@@ -110,7 +89,7 @@
 	       if($hasver && !strstr($dcmp,$distronumber)) $distro=0;
 	       //echo $arch.$distro.$d."<br>";
 	       if($DEBUG) echo $arch.$distro.$dcmp."<br>";
-	       if($arch && $distro) {$found=1; echo "New Package: ".$d."<br>";}
+	       if($arch && $distro) {$found=1; if($showupdate) echo "New Package: ".$d."<br>";if(strlen($filenames)) $filenames.=", ";$filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);}
 
 	       $p=strstr($p,"<br>");
                $p=strstr($p,"<a");
@@ -119,11 +98,9 @@
            else if(strpos($distronumber,'.')) {$distronumber=substr($distronumber,0,strpos($distronumber,'.'));}
            else $check=0;
        }
-       if(!$found) {
+       if(!$found) 
           echo "Please build new package from source <a href='https://github.com/hardinfo2/hardinfo2'>https://github.com/hardinfo2/hardinfo2</a>";
-	  mysqli_query($db,"insert into settings values ('updates-".$db->real_escape_string($_GET['arch']."-".$_GET['distro'])."','')");
-       }
-    }
+       mysqli_query($db,"insert into updates values ('".$db->real_escape_string($_GET['arch'])."','".$db->real_escape_string($_GET['distro'])."','".$db->real_escape_string($distroname)."','".$db->real_escape_string($distronumber)."',".$found.",'".$filenames."',1) on duplicate key update times=times*1 + 1,distroname='".$db->real_escape_string($distroname)."',distronumber='".$db->real_escape_string($distronumber)."',found=".$found.",filenames='".$filenames."';");
 
     echo "</article><br><br><br><br><br>";
 

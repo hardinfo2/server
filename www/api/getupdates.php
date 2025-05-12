@@ -99,7 +99,7 @@
 	       if( (strstr($dcmp,$distronumber)) && (strstr($dcmp,$distroname)) ) $distro=1;
 
 	       if($DEBUG) echo $arch.$distro.$dcmp."<br>";
-	       if($arch && $distro) {$found=1; if($showupdate) echo "New Package: ".$d."<br>";if(strlen($filenames)) $filenames.=", ";$filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);}
+	       if($arch && $distro) {$found++; if($showupdate) echo "New Package: ".$d."<br>";if(strlen($filenames)) $filenames.=", ";$filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);}
 
 	       $p=strstr($p,"<br>");
                $p=strstr($p,"<a");

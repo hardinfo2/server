@@ -66,8 +66,9 @@
        if(!$hasver) {
 	  $distronumber=trim(substr($s,strripos($s," "),999));
 	  if(strpos($distronumber,"/")) $distronumber=substr($distronumber,0,strpos($distronumber,"/"));
+	  if(($distronumber==$distroname) || ($distronumber=="Linux")) $distronumber="";
           $distroname=str_replace($distronumber,"",$distroname);
-	  $hasver=1;
+	  if(strlen($distronumber)) $hasver=1;
        }
        //Special changes
        //if(strstr($distroname,"Pop")) $distroname="Pop";

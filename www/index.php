@@ -27,7 +27,9 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	 //increase value
          $mysqli->query("update settings set value=value+1 WHERE NAME='lastdatanumber';");
       }
-      $j=json_decode(file_get_contents("php://input"),true,3);
+      $input=file_get_contents("php://input");
+      if(!$input || (strlen($input)<10)) exit(0); //empty {}
+      $j=json_decode($input,true,3);
       $url=$_SERVER['SCRIPT_URI']."?".$_SERVER['QUERY_STRING'];
       foreach($j as $k=>$v){
           $stmt=$mysqli->prepare("insert into benchmark_result values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?, unix_timestamp(now()),?,?,?,?,?,?,?,0,?,?,?,? );");

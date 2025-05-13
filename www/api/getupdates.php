@@ -21,6 +21,7 @@
     $showupdate=0;
     if(version_compare($_GET['ver'],$maxver,">")){
         echo "<font color=blue><br><b>Your version is DEVELOPMENT edition.</b><br><br></font>";
+	$showupdate=2;
     } else if(version_compare($_GET['ver'],$relver,"=")){
         echo "<font color=green><br><b>Your version is the newest DISTRO released.</b><br><br></font>";
 	if($beta) {
@@ -100,7 +101,13 @@
 	       if( (strstr($dcmp,$distronumber)) && (strstr($dcmp,$distroname)) ) $distro=1;
 
 	       if($DEBUG) echo $arch.$distro.$dcmp."<br>";
-	       if($arch && $distro) {$found++; if($showupdate) echo "New Package: ".$d."<br>";if(strlen($filenames)) $filenames.=", ";$filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);}
+	       if($arch && $distro) {
+	           $found++;
+		   if($showupdate==1) echo "New Package: ".$d."<br>";
+		   if($showupdate==2) echo "Stable Package: ".$d."<br>";
+		   if(strlen($filenames)) $filenames.=", ";
+		   $filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);
+	       }
 
 	       $p=strstr($p,"<br>");
                $p=strstr($p,"<a");

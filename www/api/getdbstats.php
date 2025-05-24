@@ -48,7 +48,7 @@ function show_table_color($q){
     $BOARD='replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(board,"version",""),"Not Defined",""),"Vendor",""),"Board",""),"Version",""),"Type1",""),"Type2",""),"Name1",""),"Not Available",""),"Micro-Star International Co., Ltd.","MSI"),"Micro-Star International Co., Ltd","MSI"),"Not Applicable",""),"Build Date:",""),"/"," ")';
 
     echo "<h1>Last incoming benchmarks</h1>";
-    $q=$mysqli->query('SELECT REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(programver,"://api.hardinfo2.org/benchmark.json?ver=",""),"&rel=0",""),"&rel=1",""),"https",""),"http","") API,count(*) cnt, left('.$BOARD.',45) ,cpu_name,  replace(gpu,"(D3D12)","")  ,if(instr(if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type)),"nknown"),"Unknown",if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type))) MachineType, if(locate("-",replace(linux_os,"(","-")),left(linux_os,locate("-",replace(linux_os,"(","-"))-2),linux_os) LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) and instr(programver,"://api.hardinfo2.org/benchmark.json?ver=") GROUP BY programver,board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');
+    $q=$mysqli->query('SELECT REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(programver,"://api.hardinfo2.org/benchmark.json?ver=",""),"&rel=0",""),"&rel=1",""),"https",""),"http","") API,count(*) cnt, left('.$BOARD.',20) ,cpu_name,  replace(gpu,"(D3D12)","")  ,if(instr(if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type)),"nknown"),"Unknown",if(instr(machine_type,"board")or instr(cpu_name,"Atom"),"SBC",TRIM(machine_type))) MachineType, if(locate("-",replace(linux_os,"(","-")),left(linux_os,locate("-",replace(linux_os,"(","-"))-2),linux_os) LinuxOS FROM benchmark_result WHERE timestamp>(unix_timestamp()-24*3600) and instr(programver,"://api.hardinfo2.org/benchmark.json?ver=") GROUP BY programver,board,cpu_name,machine_type,linux_os ORDER BY max(timestamp) desc');
     show_table_color($q);
 
 
@@ -73,7 +73,7 @@ function show_table_color($q){
     $q=$mysqli->query("SELECT COUNT(*) FROM benchmark_result WHERE valid=1 AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown')");
     $r=$q->fetch_row();
     $total=$r[0];
-    $q=$mysqli->query("SELECT ".$BOARD.", ROUND((COUNT(*)*100)/".$total.",1) percent FROM benchmark_result WHERE valid=1 AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown') GROUP BY board ORDER BY percent DESC;");
+    $q=$mysqli->query("SELECT left(".$BOARD.",30), ROUND((COUNT(*)*100)/".$total.",1) percent FROM benchmark_result WHERE valid=1 AND NOT INSTR(board,'WSL')  AND NOT INSTR(board,'Unknown') GROUP BY board ORDER BY percent DESC;");
     show_table($q);
 
 

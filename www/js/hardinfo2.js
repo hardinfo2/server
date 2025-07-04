@@ -154,9 +154,15 @@ function create_chart_compare() {
     //set Height
     document.getElementById("bcchart").style.height=graph.height+"px";
     document.getElementById("bcchartdiv").style.height=(graph.height)+"px";
-    document.getElementById("Page-benchmarkcompare").style.height=(graph.height+100)+"px";
+    //document.getElementById("Page-benchmarkcompare").style.height=(graph.height+100)+"px";
     //create Chart
     window["bcchart"] = new Chart(ctx, graph);
+    //Start getting CPU infos
+    fetch('/api/getcpuinfo?cpu1='+window["bmcpus"][bc1]+'&cpu2='+window["bmcpus"][bc2]+'&cpu3='+window["bmcpus"][bc3])
+	.then((response) => response.text())
+        .then((text) => {
+	    bcinfodiv.innerHTML=text;
+	});
 };
 
 

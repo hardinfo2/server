@@ -100,7 +100,7 @@ function show_table_color($q){
     show_table($q);
 
     echo "<h1>Unknown CPUs</h1>";
-    $q=$mysqli->query('SELECT cpuen,cpuname FROM (SELECT REGEXP_SUBSTR(cpu_name, "[^(]+") cpuen FROM benchmark_result WHERE valid=1 GROUP BY cpu_name) a LEFT JOIN cpudb ON cpuname=cpuen WHERE ISNULL(cpuname) OR (LENGTH(cpuname)<1)');
+    $q=$mysqli->query('SELECT cpuen,cpuname FROM (SELECT REGEXP_SUBSTR(cpu_name, "[^(]+") cpuen FROM benchmark_result WHERE valid=1 GROUP BY cpu_name) a LEFT JOIN cpudb ON cpuname=cpuen WHERE ISNULL(cpuname) OR (LENGTH(cpuname)<1) HAVING cpuen<>""');
     show_table($q);
 
 

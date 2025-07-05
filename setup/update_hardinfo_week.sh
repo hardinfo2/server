@@ -34,3 +34,7 @@ cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep PCL>> /var/www/html
 echo "<h1>Arch/PACMAN Based</h1>sudo pacman -U ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
 rm -f /var/www/html/server/www/downloads1.ids
+
+
+#update cpu db from benchmarks
+/usr/bin/php /var/www/html/server/setup/update_cpudb_from_benchmarks.php

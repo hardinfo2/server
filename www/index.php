@@ -101,7 +101,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 	   $filter=" and (machine_type='Single-board Computer')";
 	 }
 	 if($req=="SERVER") {
-	   $filter=" and (machine_type='Server' || machine_type='Workstation')";
+	   $filter=" and (instr(cpu_name,'ThreadRipper') || instr(cpu_name,'XEON') || instr(cpu_name,'EPYC') || machine_type='Server' || machine_type='Workstation')";
 	 }
 	 if($req=="DESKTOP") {
 	   $filter=" and (machine_type='Desktop' || machine_type='Tower')";

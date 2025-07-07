@@ -36,5 +36,3 @@ cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /va
 rm -f /var/www/html/server/www/downloads1.ids
 
 
-#update cpu db from benchmarks
-/usr/bin/php /var/www/html/server/setup/update_cpudb_from_benchmarks.php

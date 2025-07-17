@@ -13,11 +13,15 @@ function show_table($q){
     }
     echo "Total: ".($q->num_rows)."\n";
 }
-
 echo "Update cores+threads...\n";
-    $q=$mysqli->query('SELECT TRIM(REGEXP_REPLACE(cpu_name, "\\\\(\[^)\]*\\\\)", "")) cpu_name2,  MIN(ROUND(num_cores/num_cpus)) minc,MAX(ROUND(num_cores/num_cpus)) maxc,   MIN(ROUND(num_threads/num_cpus)) mint,MAX(ROUND(num_threads/num_cpus)) maxt, (SELECT cores FROM cpudb WHERE cpuname=cpu_name2) cores, (SELECT threads FROM cpudb WHERE cpuname=cpu_name2) threads FROM benchmark_result WHERE valid=1 GROUP BY cpu_name2 HAVING maxc=minc AND mint=maxt AND (ISNULL(cores) OR ISNULL(threads));');
+    $q=$mysqli->query('SELECT TRIM(REGEXP_REPLACE(cpu_name, "\\\\(\[^)\]*\\\\)", "")) cpu_name2,  MAX(ROUND(num_cores/num_cpus)) maxc, MAX(ROUND(num_threads/num_cpus)) maxt, (SELECT cores FROM cpudb WHERE cpuname=cpu_name2) cores, (SELECT threads FROM cpudb WHERE cpuname=cpu_name2) threads FROM benchmark_result WHERE valid=1 GROUP BY cpu_name2 HAVING (ISNULL(cores) OR ISNULL(threads) or cores<>maxc or threads<>maxt);');
     show_table($q);
-    $q->data_seek(0); while($row = $q->fetch_row()){$mysqli->query('update cpudb set cores='.$row[1].',threads='.$row[3].' where cpuname="'.$row[0].'"');}
+    $q->data_seek(0); while($row = $q->fetch_row()){$mysqli->query('update cpudb set cores='.$row[1].',threads='.$row[2].' where cpuname="'.$row[0].'"');}
+
+//echo "Update cores+threads...\n";
+//    $q=$mysqli->query('SELECT TRIM(REGEXP_REPLACE(cpu_name, "\\\\(\[^)\]*\\\\)", "")) cpu_name2,  MIN(ROUND(num_cores/num_cpus)) minc,MAX(ROUND(num_cores/num_cpus)) maxc,   MIN(ROUND(num_threads/num_cpus)) mint,MAX(ROUND(num_threads/num_cpus)) maxt, (SELECT cores FROM cpudb WHERE cpuname=cpu_name2) cores, (SELECT threads FROM cpudb WHERE cpuname=cpu_name2) threads FROM benchmark_result WHERE valid=1 GROUP BY cpu_name2 HAVING maxc=minc AND mint=maxt AND (ISNULL(cores) OR ISNULL(threads));');
+//    show_table($q)
+//    $q->data_seek(0); while($row = $q->fetch_row()){$mysqli->query('update cpudb set cores='.$row[1].',threads='.$row[3].' where cpuname="'.$row[0].'"');}
 
 
 echo "Update SW Architectures...\n";

@@ -414,7 +414,7 @@ function create_tables_graphs(bm) {
 	    }else{
 	        if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
 	        if(i==2 && bmcpus[t].toString()==="AMD Ryzen 9 7950X") text=text+"selected ";
-		//if(i==3 && bmcpus[t].toString()==="AMD EPYC 9354P") text=text+"selected ";
+		if(i==3 && bmcpus[t].toString()==="AMD Ryzen 9 9950X3D") text=text+"selected ";
 	    }
 	    text=text+"value="+t+">"+bmcpus[t].toString()+"</option>";
 	}

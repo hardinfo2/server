@@ -202,12 +202,18 @@ function toggleMenuContent() {
     //dropdowns
     if(this.name=="benchgraph"){
       document.getElementById(this.name).classList.toggle("show");
+      document.getElementById("benchstat").classList.remove("show");
+      document.getElementById("appinfomenu").classList.remove("show");
     }
     if(this.name=="benchstat"){
       document.getElementById(this.name).classList.toggle("show");
+      document.getElementById("benchgraph").classList.remove("show");
+      document.getElementById("appinfomenu").classList.remove("show");
     }
     if(this.name=="appinfomenu"){
       document.getElementById(this.name).classList.toggle("show");
+      document.getElementById("benchstat").classList.remove("show");
+      document.getElementById("benchgraph").classList.remove("show");
     }
 }
 
@@ -482,6 +488,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("bs").addEventListener('click',toggleMenuContent,false);
     document.getElementById("bg").addEventListener('click',toggleMenuContent,false);
     document.getElementById("appinfo").addEventListener('click',toggleMenuContent,false);
+    window.onclick = function(event) {
+	if (!event.target.matches('.dropbtn')) {
+	    var dropdowns = document.getElementsByClassName("dropdown-content");
+	    var i;
+	    for (i = 0; i < dropdowns.length; i++) {
+		var openDropdown = dropdowns[i];
+		if (openDropdown.classList.contains('show')) {
+		    openDropdown.classList.remove('show');
+		}
+	    }
+	}
+    }
     //setup filter
     let url=window.location.href;
     window["bclookup"]=0;

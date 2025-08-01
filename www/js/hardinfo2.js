@@ -196,6 +196,21 @@ function toggleMenu() {
     }
 }
 
+function toggleMenuContent() {
+    //console.log("toggleMenuContent " + this.name);
+    event.preventDefault();
+    //dropdowns
+    if(this.name=="benchgraph"){
+      document.getElementById(this.name).classList.toggle("show");
+    }
+    if(this.name=="benchstat"){
+      document.getElementById(this.name).classList.toggle("show");
+    }
+    if(this.name=="appinfomenu"){
+      document.getElementById(this.name).classList.toggle("show");
+    }
+}
+
 function showPage() {
     //console.log("showPage " + this.name);
     event.preventDefault();
@@ -412,9 +427,24 @@ function create_tables_graphs(bm) {
 			delimiter.includes(bmcpus[t].charAt(bmcpus[t].toUpperCase().indexOf(cpu3.toUpperCase())+cpu3.length)))) text=text+"selected ";
 		}
 	    }else{
-	        if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
-	        if(i==2 && bmcpus[t].toString()==="AMD Ryzen 9 7950X") text=text+"selected ";
-		if(i==3 && bmcpus[t].toString()==="AMD Ryzen 9 9950X3D") text=text+"selected ";
+		//workserver
+		if(document.getElementById("filter").value=="WORKSERVER"){
+	            if(i==1 && bmcpus[t].toString()==="Intel Xeon E5-2690 v4 (Dual)") text=text+"selected ";
+	            if(i==2 && bmcpus[t].toString()==="AMD EPYC 9354P") text=text+"selected ";
+		    if(i==3 && bmcpus[t].toString()==="Intel Xeon Gold 6138 (Dual)") text=text+"selected ";
+		}
+		//desktop
+		if(document.getElementById("filter").value=="DESKTOP"){
+	            if(i==1 && bmcpus[t].toString()==="AMD Ryzen 9 5950X") text=text+"selected ";
+	            if(i==2 && bmcpus[t].toString()==="AMD Ryzen 9 7950X") text=text+"selected ";
+		    if(i==3 && bmcpus[t].toString()==="AMD Ryzen 9 9950X3D") text=text+"selected ";
+		}
+		//SBC
+		if(document.getElementById("filter").value=="SBC"){
+	            if(i==1 && bmcpus[t].toString()==="Broadcom BCM2712 (RPi5)") text=text+"selected ";
+	            if(i==2 && bmcpus[t].toString()==="Qualcomm Pineapple (SD8g3)") text=text+"selected ";
+		    if(i==3 && bmcpus[t].toString()==="Apple T8103 (M1 A14X)") text=text+"selected ";
+		}
 	    }
 	    text=text+"value="+t+">"+bmcpus[t].toString()+"</option>";
 	}
@@ -449,6 +479,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	e=navlist[i];
 	navlist[i].addEventListener('click', showPage, false);
     }
+    document.getElementById("bs").addEventListener('click',toggleMenuContent,false);
+    document.getElementById("bg").addEventListener('click',toggleMenuContent,false);
+    document.getElementById("appinfo").addEventListener('click',toggleMenuContent,false);
     //setup filter
     let url=window.location.href;
     window["bclookup"]=0;

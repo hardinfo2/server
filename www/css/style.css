@@ -122,9 +122,9 @@ canvas {
     color: black;
 }
 
-.dropdown:hover .dropdown-content {
+/*.dropdown:hover .dropdown-content {
     display: block;
-}
+}*/
 
 .notactive {
     display: none;
@@ -254,3 +254,4 @@ c { text-align:center;}
 #    background-color: #ddd;
     color: yellow;
 }
+.show {display:block;}

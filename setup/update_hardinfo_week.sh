@@ -1,6 +1,8 @@
 #!/bin/bash
-wget -O /var/www/html/server/www/pci.ids https://pci-ids.ucw.cz/v2.2/pci.ids
-wget -O /var/www/html/server/www/usb.ids http://www.linux-usb.org/usb.ids
+#wget -O /var/www/html/server/www/pci.ids https://pci-ids.ucw.cz/v2.2/pci.ids
+#wget -O /var/www/html/server/www/usb.ids http://www.linux-usb.org/usb.ids
+wget -O /var/www/html/server/www/pci.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/pci.ids
+wget -O /var/www/html/server/www/usb.json https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/usb.json
 wget -O /var/www/html/server/www/arm.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/arm.ids
 wget -O /var/www/html/server/www/cpuflags.json https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/cpuflags.json
 wget -O /var/www/html/server/www/edid.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/edid.ids

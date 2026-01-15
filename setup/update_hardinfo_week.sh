@@ -24,7 +24,7 @@ cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep PCL>> /var/www/html
 echo "<h1>Arch/PACMAN Based</h1>sudo pacman -U ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
 rm -f /var/www/html/server/www/downloads1.ids
-exit
+#exit
 
 #wget -O /var/www/html/server/www/pci.ids https://pci-ids.ucw.cz/v2.2/pci.ids
 #wget -O /var/www/html/server/www/usb.ids http://www.linux-usb.org/usb.ids

@@ -72,7 +72,7 @@
 	  if(strlen($distronumber)) $hasver=1;
        }
        //Special changes
-       //if(strstr($distroname,"Pop")) $distroname="Pop";
+       if(strstr($distroname,"MX")) $distroname="MXLinux";
        if(strstr($distroname,"buntu")) $distroname="Ubuntu";
        if(strstr($distroname,"Fedora") && strlen($distronumber)>3) $distroname="FedoraAtomic";
        if(strstr($distronumber,"sid")) $distronumber=str_replace("sid","",$distronumber);

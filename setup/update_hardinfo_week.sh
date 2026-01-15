@@ -2,7 +2,7 @@
 #wget -O /var/www/html/server/www/pci.ids https://pci-ids.ucw.cz/v2.2/pci.ids
 #wget -O /var/www/html/server/www/usb.ids http://www.linux-usb.org/usb.ids
 wget -O /var/www/html/server/www/pci.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/pci.ids
-wget -O /var/www/html/server/www/usb.json https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/usb.json
+wget -O /var/www/html/server/www/usb.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/usb.ids
 wget -O /var/www/html/server/www/arm.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/arm.ids
 wget -O /var/www/html/server/www/cpuflags.json https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/cpuflags.json
 wget -O /var/www/html/server/www/edid.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/edid.ids
@@ -21,7 +21,12 @@ git commit -a -m "Database Backup"
 git push
 
 #create downloads from github
-curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|grep -v debug|sed 's/    <span data-view-component="true" class="Truncate-text text-bold">//g' |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' |sed 's/<\/span>/<\/a><br>/g' |sed 's/  //g'|sed ':a;N;$!ba;s/">\n/">/g' |sed 's/href="/href="https:\/\/github.com/g' >/var/www/html/server/www/downloads1.ids
+curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|grep -v debug |grep -o '<a href.*>' \
+     |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' \
+     |sed 's/href="/href="https:\/\/github.com/g' \
+     >/var/www/html/server/www/downloads1.ids
+#     sed ':a;N;$!ba;s/">\n/">/g' |
+#exit
 rm -f /var/www/html/server/www/downloads.ids
 echo "<h1>Debian/APT Based</h1>sudo apt install ./hardinfo2_FULLNAME<br><br>" >/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep '2_2'>> /var/www/html/server/www/downloads.ids

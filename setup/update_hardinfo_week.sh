@@ -6,7 +6,7 @@ curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo
      |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' \
      |sed 's/href="/href="https:\/\/github.com/g' \
      |sed 's/<span data-view-component="true" class="Truncate-text text-bold">//g' \
-     |sed 's/<\/span>/<a><br>/g' \
+     |sed 's/<\/span>/<\/a><br>/g' \
      |sed 's/    //g' \
      >/var/www/html/server/www/downloads1.ids
 #exit
@@ -23,8 +23,8 @@ echo "<h1>PCLinuxOS/APT/RPM Based</h1>sudo apt install ./hardinfo2-FULLNAME<br><
 cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep PCL>> /var/www/html/server/www/downloads.ids
 echo "<h1>Arch/PACMAN Based</h1>sudo pacman -U ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
 cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
-#exit
 rm -f /var/www/html/server/www/downloads1.ids
+exit
 
 #wget -O /var/www/html/server/www/pci.ids https://pci-ids.ucw.cz/v2.2/pci.ids
 #wget -O /var/www/html/server/www/usb.ids http://www.linux-usb.org/usb.ids

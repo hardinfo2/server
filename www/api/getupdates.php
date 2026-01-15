@@ -103,9 +103,9 @@
 	       if($DEBUG) echo $arch.$distro.$dcmp."<br>";
 	       if($arch && $distro) {
 	           $found++;
-		   if($showupdate==1) echo "New Package: ".$d."<br>";
-		   if($showupdate==2) echo "Stable Package: ".$d."<br>";
-		   if(strlen($filenames)) $filenames.=", ";
+		   if($showupdate==1) echo "New Package: ".$d."</a><br>";
+		   if($showupdate==2) echo "Stable Package: ".$d."</a><br>";
+		   if(strlen($filenames)) {$filenames.=", ";}
 		   $filenames.=substr($d,strpos($d,'">')+2,strpos($d,'</')-strpos($d,'">')-2);
 	       }
 
@@ -119,7 +119,7 @@
        }
        if(!$found) 
           echo "Please build new package from source <a href='https://github.com/hardinfo2/hardinfo2'>https://github.com/hardinfo2/hardinfo2</a>";
-       mysqli_query($db,"insert into updates values ('".$db->real_escape_string($_GET['arch'])."','".$db->real_escape_string($_GET['distro'])."','".$db->real_escape_string($distroname)."','".$db->real_escape_string($distronumber)."',".$found.",'".$filenames."',1) on duplicate key update times=times*1 + 1,distroname='".$db->real_escape_string($distroname)."',distronumber='".$db->real_escape_string($distronumber)."',found=".$found.",filenames='".$filenames."';");
+       mysqli_query($db,"insert into updates values ('".$db->real_escape_string($_GET['arch'])."','".$db->real_escape_string($_GET['distro'])."','".$db->real_escape_string($distroname)."','".$db->real_escape_string($distronumber)."',".$found.",'".$filenames."',1) on duplicate key update times=times*1 + 1,distroname='".$db->real_escape_string($distroname)."',distronumber='".$db->real_escape_string($distronumber)."',found=".$found.",filenames='".$db->real_escape_string($filenames)."';");
 
     echo "</article><br><br><br><br><br>";
 

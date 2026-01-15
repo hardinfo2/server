@@ -1,4 +1,31 @@
 #!/bin/bash
+#create downloads from github
+curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|grep -v debug \
+     |sed ':a;N;$!ba;s/">\n/">/g' \
+     |grep -o '<a href.*span>' \
+     |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' \
+     |sed 's/href="/href="https:\/\/github.com/g' \
+     |sed 's/<span data-view-component="true" class="Truncate-text text-bold">//g' \
+     |sed 's/<\/span>/<a><br>/g' \
+     |sed 's/    //g' \
+     >/var/www/html/server/www/downloads1.ids
+#exit
+rm -f /var/www/html/server/www/downloads.ids
+echo "<h1>Debian/APT Based</h1>sudo apt install ./hardinfo2_FULLNAME<br><br>" >/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2_2'>> /var/www/html/server/www/downloads.ids
+echo "<h1>Fedora/DNF/RPM Based</h1>sudo dnf install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep -v SUSE|grep -v PCL|grep -v Atomic>> /var/www/html/server/www/downloads.ids
+echo "<h1>Fedora/OSTREE/RPM Based</h1>sudo rpm-ostree install ./hardinfo2-FULLNAME (And reboot)<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep Atomic>> /var/www/html/server/www/downloads.ids
+echo "<h1>OpenSuse/ZYPPER/RPM Based</h1>sudo zypper --no-gpg-checks install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep SUSE>> /var/www/html/server/www/downloads.ids
+echo "<h1>PCLinuxOS/APT/RPM Based</h1>sudo apt install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep PCL>> /var/www/html/server/www/downloads.ids
+echo "<h1>Arch/PACMAN Based</h1>sudo pacman -U ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
+cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
+exit
+rm -f /var/www/html/server/www/downloads1.ids
+
 #wget -O /var/www/html/server/www/pci.ids https://pci-ids.ucw.cz/v2.2/pci.ids
 #wget -O /var/www/html/server/www/usb.ids http://www.linux-usb.org/usb.ids
 wget -O /var/www/html/server/www/pci.ids https://raw.githubusercontent.com/hardinfo2/hardinfo2/master/data/pci.ids
@@ -19,27 +46,5 @@ cd /var/www/html/serverDB
 mysqldump -h127.0.0.1 -uhardinfo -phardinfo hardinfo |gzip -c > hardinfo2.sql.tgz
 git commit -a -m "Database Backup"
 git push
-
-#create downloads from github
-curl -s -L https://hardinfo2.org/github?downloadlist |grep "hardinfo2_\|hardinfo2-"|grep -v debug |grep -o '<a href.*>' \
-     |sed 's/" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">/">/g' \
-     |sed 's/href="/href="https:\/\/github.com/g' \
-     >/var/www/html/server/www/downloads1.ids
-#     sed ':a;N;$!ba;s/">\n/">/g' |
-#exit
-rm -f /var/www/html/server/www/downloads.ids
-echo "<h1>Debian/APT Based</h1>sudo apt install ./hardinfo2_FULLNAME<br><br>" >/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep '2_2'>> /var/www/html/server/www/downloads.ids
-echo "<h1>Fedora/DNF/RPM Based</h1>sudo dnf install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep -v SUSE|grep -v PCL|grep -v Atomic>> /var/www/html/server/www/downloads.ids
-echo "<h1>Fedora/OSTREE/RPM Based</h1>sudo rpm-ostree install ./hardinfo2-FULLNAME (And reboot)<br><br>" >>/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep Atomic>> /var/www/html/server/www/downloads.ids
-echo "<h1>OpenSuse/ZYPPER/RPM Based</h1>sudo zypper --no-gpg-checks install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep SUSE>> /var/www/html/server/www/downloads.ids
-echo "<h1>PCLinuxOS/APT/RPM Based</h1>sudo apt install ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep '2-2'|grep PCL>> /var/www/html/server/www/downloads.ids
-echo "<h1>Arch/PACMAN Based</h1>sudo pacman -U ./hardinfo2-FULLNAME<br><br>" >>/var/www/html/server/www/downloads.ids
-cat /var/www/html/server/www/downloads1.ids |grep -v '2_2' |grep -v '2-2' >> /var/www/html/server/www/downloads.ids
-rm -f /var/www/html/server/www/downloads1.ids
 
 

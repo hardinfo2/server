@@ -77,6 +77,8 @@
        if(strstr($distroname,"Fedora") && strlen($distronumber)>3) $distroname="FedoraAtomic";
        if(strstr($distronumber,"sid")) $distronumber=str_replace("sid","",$distronumber);
        if(strstr($distroname,"SystemRescue")) $distronumber="";
+       if(strstr($distroname,"Alma")) $distroname="RedHatEnterpriseLinux";
+       if(strstr($distroname,"Rocky")) $distroname="RedHatEnterpriseLinux";
        //
        $check=1;
        $filenames="";

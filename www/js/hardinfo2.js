@@ -440,9 +440,12 @@ function create_tables_graphs(bm) {
     if(bmtypes.length>14) create_chart(bmtypes[14],bmval[14],'bg14');
     if(bmtypes.length>15) create_chart(bmtypes[15],bmval[15],'bg15');
     //create selectors for benchmark compare
-    text="<table align=center><tr><td><font size='2'>Filter1 <input id=filter1 size=6></input></td><td><font size='2'>Filter2 <input id=filter2 size=6></input></td><td><font size='2'>Filter3 <input id=filter3 size=6></input></td></tr><tr>";
+    text="";
     for (let i = 1; i <= 3; i++) {
-	text=text+"<td><select name=\"bc"+i+"\" id=\"bc"+i+"\">";
+	if(i==1) text=text+"<div nowrap><input id=filter1 size=5></input>";
+	if(i==2) text=text+"<div nowrap><input id=filter2 size=5></input>";
+	if(i==3) text=text+"<div nowrap><input id=filter3 size=5></input>";
+	text=text+"<select name=\"bc"+i+"\" id=\"bc"+i+"\">";
 	text=text+"<option value=-1>Please Select</option>";
         for(var t=0; t<bmcpus.length; t++){
 	    text=text+"<option ";
@@ -494,9 +497,9 @@ function create_tables_graphs(bm) {
 	    }
 	    text=text+"value="+t+">"+bmcpus[t].toString()+"</option>";
 	}
-	text=text+"</select></td> ";
+	text=text+"</select></div> ";
     }
-    bcsel.innerHTML=text+"</tr><tr><td colspan=3 valing=left><font size='2'>Select 1: Shows numbers for cpu type instead of % compare</font></td></tr></table>";
+    bcsel.innerHTML=text+"<font size='2'>First field is quick filter for list. eg. ultra, 7950, x3d<br>Select only 1->Shows numbers for cpu type instead of % compare</font>";
     //save calculated data globally
     window["bmtypes"]=bmtypes;
     window["bmcpus"]=bmcpus;

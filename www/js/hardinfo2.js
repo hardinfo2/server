@@ -20,6 +20,46 @@ function changeFilter(){
 	});
 }
 
+function filterCPU1(){
+    //filter for cpu names
+    //console.log("Changing CPU1 filter to " + document.getElementById("filter1").value);
+    var filter1=document.getElementById("filter1").value;
+    var bc1=document.getElementById("bc1");
+    for(var i=0; i<bc1.length; i++) {
+	var o=bc1[i].text.toLowerCase();
+	if(filter1.length<1 || o.includes(filter1.toLowerCase()))
+	    bc1[i].hidden=false;
+	else
+	    bc1[i].hidden=true;
+    }
+}
+function filterCPU2(){
+    //filter for cpu names
+    //console.log("Changing CPU2 filter to " + document.getElementById("filter2").value);
+    var filter2=document.getElementById("filter2").value;
+    var bc1=document.getElementById("bc2");
+    for(var i=0; i<bc2.length; i++) {
+	var o=bc2[i].text.toLowerCase();
+	if(filter2.length<1 || o.includes(filter2.toLowerCase()))
+	    bc2[i].hidden=false;
+	else
+	    bc2[i].hidden=true;
+    }
+}
+function filterCPU3(){
+    //filter for cpu names
+    //console.log("Changing CPU3 filter to " + document.getElementById("filter3").value);
+    var filter3=document.getElementById("filter3").value;
+    var bc3=document.getElementById("bc3");
+    for(var i=0; i<bc3.length; i++) {
+	var o=bc3[i].text.toLowerCase();
+	if(filter3.length<1 || o.includes(filter3.toLowerCase()))
+	    bc3[i].hidden=false;
+	else
+	    bc3[i].hidden=true;
+    }
+}
+
 function getUrlVars() {
     var vars = [];//{};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -400,9 +440,9 @@ function create_tables_graphs(bm) {
     if(bmtypes.length>14) create_chart(bmtypes[14],bmval[14],'bg14');
     if(bmtypes.length>15) create_chart(bmtypes[15],bmval[15],'bg15');
     //create selectors for benchmark compare
-    text="";
+    text="<table align=center><tr><td><font size='2'>Filter1 <input id=filter1 size=6></input></td><td><font size='2'>Filter2 <input id=filter2 size=6></input></td><td><font size='2'>Filter3 <input id=filter3 size=6></input></td></tr><tr>";
     for (let i = 1; i <= 3; i++) {
-	text=text+"<select name=\"bc"+i+"\" id=\"bc"+i+"\">";
+	text=text+"<td><select name=\"bc"+i+"\" id=\"bc"+i+"\">";
 	text=text+"<option value=-1>Please Select</option>";
         for(var t=0; t<bmcpus.length; t++){
 	    text=text+"<option ";
@@ -434,7 +474,7 @@ function create_tables_graphs(bm) {
 		}
 	    }else{
 		//workserver
-		if(document.getElementById("filter").value=="WORKSERVER"){
+		if(document.getElementById("filter").value=="WORKSERV"){
 	            if(i==1 && bmcpus[t].toString()==="Intel Xeon E5-2690 v4 (Dual)") text=text+"selected ";
 	            if(i==2 && bmcpus[t].toString()==="AMD EPYC 9354P") text=text+"selected ";
 		    if(i==3 && bmcpus[t].toString()==="Intel Xeon Gold 6138 (Dual)") text=text+"selected ";
@@ -454,9 +494,9 @@ function create_tables_graphs(bm) {
 	    }
 	    text=text+"value="+t+">"+bmcpus[t].toString()+"</option>";
 	}
-	text=text+"</select> ";
+	text=text+"</select></td> ";
     }
-    bcsel.innerHTML=text+"<br><font size='2'>Select 1: Shows numbers for cpu type instead of % compare</font>";
+    bcsel.innerHTML=text+"</tr><tr><td colspan=3 valing=left><font size='2'>Select 1: Shows numbers for cpu type instead of % compare</font></td></tr></table>";
     //save calculated data globally
     window["bmtypes"]=bmtypes;
     window["bmcpus"]=bmcpus;
@@ -467,6 +507,13 @@ function create_tables_graphs(bm) {
     document.getElementById("bc1").addEventListener('change', create_chart_compare, false);
     document.getElementById("bc2").addEventListener('change', create_chart_compare, false);
     document.getElementById("bc3").addEventListener('change', create_chart_compare, false);
+    //event for cpu filters
+    if(document.getElementById("filter1"))
+	document.getElementById("filter1").addEventListener('change', filterCPU1, false);
+    if(document.getElementById("filter2"))
+	document.getElementById("filter2").addEventListener('change', filterCPU2, false);
+    if(document.getElementById("filter3"))
+	document.getElementById("filter3").addEventListener('change', filterCPU3, false);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -509,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	window["bclookup"]=1;
 	url="benchcompare";
     } else if(vars["u"] !== undefined){
-	filters=["ALL","SBC","DESKTOP","WORKSERVER","32","NOTEBOOK","INTEL","AMD","OTHER"];
+	filters=["ALL","SBC","DESKTOP","WORKSERV","32","NOTEBOOK","INTEL","AMD","OTHER"];
 	if(filters.includes(vars["u"])){
 	    document.getElementById("filter").value=vars["u"];
 	    changeFilter();

@@ -27,7 +27,7 @@ function filterCPU1(){
     var bc1=document.getElementById("bc1");
     for(var i=0; i<bc1.length; i++) {
 	var o=bc1[i].text.toLowerCase();
-	if(filter1.length<1 || o.includes(filter1.toLowerCase()))
+	if(i==0 || filter1.length<1 || o.includes(filter1.toLowerCase()))
 	    bc1[i].hidden=false;
 	else
 	    bc1[i].hidden=true;
@@ -40,7 +40,7 @@ function filterCPU2(){
     var bc1=document.getElementById("bc2");
     for(var i=0; i<bc2.length; i++) {
 	var o=bc2[i].text.toLowerCase();
-	if(filter2.length<1 || o.includes(filter2.toLowerCase()))
+	if(i==0 || filter2.length<1 || o.includes(filter2.toLowerCase()))
 	    bc2[i].hidden=false;
 	else
 	    bc2[i].hidden=true;
@@ -53,7 +53,7 @@ function filterCPU3(){
     var bc3=document.getElementById("bc3");
     for(var i=0; i<bc3.length; i++) {
 	var o=bc3[i].text.toLowerCase();
-	if(filter3.length<1 || o.includes(filter3.toLowerCase()))
+	if(i==0 || filter3.length<1 || o.includes(filter3.toLowerCase()))
 	    bc3[i].hidden=false;
 	else
 	    bc3[i].hidden=true;

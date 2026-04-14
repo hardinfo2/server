@@ -10,8 +10,19 @@ if(in_array($_SERVER['SCRIPT_URL'],array("/repology.svg"))){
 }
 
 //API Interface
-if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
+if($_SERVER['SCRIPT_URL']=="/releaseyear.json"){
+      $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
+      $d=array();
+      $qbt=$mysqli->query("Select cpuname,releasedate from cpudb;");
+      while($rbt=$qbt->fetch_array()){
+        $d[$rbt[0]]=$rbt[1];
+      }
+      echo json_encode($d);
+      $mysqli->close();
+      exit(0);
+}
 
+if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
   //Save data
   if($_SERVER['REQUEST_METHOD']=="POST"){
       if(!isset($_GET['rel']) || $_GET['rel']>=0){

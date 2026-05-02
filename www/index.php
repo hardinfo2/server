@@ -13,7 +13,7 @@ if(in_array($_SERVER['SCRIPT_URL'],array("/repology.svg"))){
 if($_SERVER['SCRIPT_URL']=="/releaseyear.json"){
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
       $d=array();
-      $qbt=$mysqli->query("Select cpuname,releasedate from cpudb;");
+      $qbt=$mysqli->query("Select cpuname,releasedate from cpudb order by cpuname;");
       while($rbt=$qbt->fetch_array()){
         $t=str_replace(" (","(",$rbt[0]);
         if($tp=strpos($t,"(")) $t=substr($t,0,$tp);

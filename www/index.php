@@ -15,9 +15,11 @@ if($_SERVER['SCRIPT_URL']=="/releaseyear.json"){
       $d=array();
       $qbt=$mysqli->query("Select cpuname,releasedate from cpudb;");
       while($rbt=$qbt->fetch_array()){
-        $d[$rbt[0]]=$rbt[1];
+        $t=str_replace(" (","(",$rbt[0]);
+        if($tp=strpos($t,"(")) $t=substr($t,0,$tp);
+        $d[$t]=$rbt[1];
       }
-      echo json_encode($d);
+      echo json_encode($d,JSON_PRETTY_PRINT);
       $mysqli->close();
       exit(0);
 }

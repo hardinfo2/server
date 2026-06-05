@@ -198,7 +198,7 @@ function create_chart_compare() {
     //create Chart
     window["bcchart"] = new Chart(ctx, graph);
     //Start getting CPU infos
-    fetch('/api/getcpuinfo?cpu1='+window["bmcpus"][bc1]+'&cpu2='+window["bmcpus"][bc2]+'&cpu3='+window["bmcpus"][bc3])
+    fetch('/api/getcpuinfo?cpu1='+encodeURIComponent(window["bmcpus"][bc1])+'&cpu2='+encodeURIComponent(window["bmcpus"][bc2])+'&cpu3='+encodeURIComponent(window["bmcpus"][bc3]))
 	.then((response) => response.text())
         .then((text) => {
 	    bcinfodiv.innerHTML=text;

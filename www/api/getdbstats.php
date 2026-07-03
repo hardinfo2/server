@@ -25,11 +25,13 @@ function show_table_color($q){
 	$i=0;
 	while($i<$q->field_count){
             echo "<td class='tableleft'>";
-	    if(($row[0]=="2.2.17")) echo "<font color=blue>";//DEV
+	    if($row[0]=="2.3.2") echo "<font color=blue>";//DEV
+	    else if($row[0]=="2.3.1") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//REL
+	    else if($row[0]=="2.3.0") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//pre
 	    else if($row[0]=="2.2.16") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//REL
 	    else if($row[0]=="2.2.15") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//pre
-            else if($row[0]=="2.2.13") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//REL
-	    else if($row[0]=="2.2.12") {if($row[1]%19==0) echo "<font color=green>";  else echo "<font color=black>";}//pre <--This will be minimum
+            else if($row[0]=="2.2.13") {if($row[1]%19==0) echo "<font color=orange>";  else echo "<font color=black>";}//REL
+	    else if($row[0]=="2.2.12") {if($row[1]%19==0) echo "<font color=orange>";  else echo "<font color=black>";}//pre <--This will be minimum
 	    else if($row[0]=="2.2.10") {if($row[1]%18==0) echo "<font color=orange>";  else echo "<font color=black>";}//REL
 	    else echo "<font color=red>";//TOO OLD, Old Development
 	    echo htmlspecialchars($row[$i])."</td>";

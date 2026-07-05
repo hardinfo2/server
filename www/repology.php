@@ -10,6 +10,8 @@ $r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600*24 from 
 //$r[0]=1;
 
 if(1*$r[0]){ //refresh
+    $r=mysqli_fetch_row($db->query("select value from settings where name='latest-release-version'"));
+    $curver=$r[0];
 
     $opts = [
         'http' => [
@@ -59,7 +61,7 @@ if(1*$r[0]){ //refresh
 	  if($b!==false){
 	     if(substr($v[1],0,$a)=="2"){
 	        $c=substr($v[1],0,$a)*10000+substr($v[1],$a+1,$b-$a-1)*100+substr($v[1],$b+1,99);
-	        if($c>$currentver) {$currentver=$c;$curver=$v[1];}
+	        if($c>$currentver) {$currentver=$c;/*$curver=$v[1];*/}
 	     }
 	  }
         }

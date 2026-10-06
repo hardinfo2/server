@@ -38,9 +38,9 @@
         $showupdate=1;
     }
     echo "<table>";
-    echo "<tr><td>Your version</td><td>".$_GET['ver']."</td></tr>";
-    echo "<tr><td>Your arch </td><td>".$_GET['arch']."</td></tr>";
-    echo "<tr><td>Your distro </td><td>".$_GET['distro']."</td></tr>";
+    echo "<tr><td>Your version</td><td>".htmlspecialchars($_GET['ver'],ENT_QUOTES)."</td></tr>";
+    echo "<tr><td>Your arch </td><td>".htmlspecialchars($_GET['arch'],ENT_QUOTES)."</td></tr>";
+    echo "<tr><td>Your distro </td><td>".htmlspecialchars($_GET['distro'],ENT_QUOTES)."</td></tr>";
     echo "<tr><td>&nbsp; </td><td></td></tr>";
     echo "<tr><td>Lastest release version </td><td>".$relver."</td></tr>";
     echo "<tr><td>Lastest prerelease version </td><td>".$prerelver." (".($beta?"Beta":"Same as $relver").")</td></tr>";

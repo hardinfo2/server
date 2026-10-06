@@ -11,6 +11,7 @@ if(in_array($_SERVER['SCRIPT_URL'],array("/repology.svg"))){
 
 //API Interface
 if($_SERVER['SCRIPT_URL']=="/releaseyear.json"){
+      header('Content-Type: application/json');
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
       $d=array();
       $qbt=$mysqli->query("Select cpuname,releasedate from cpudb order by cpuname;");
@@ -19,7 +20,7 @@ if($_SERVER['SCRIPT_URL']=="/releaseyear.json"){
         if($tp=strpos($t,"(")) $t=substr($t,0,$tp);
         $d[$t]=$rbt[1];
       }
-      echo json_encode($d,JSON_PRETTY_PRINT);
+      echo json_encode($d,JSON_PRETTY_PRINT|JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
       $mysqli->close();
       exit(0);
 }
@@ -201,7 +202,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
          }
        } while($multi);
       }
-      echo json_encode($d);
+      echo json_encode($d,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
       $mysqli->close();
   }
   exit(0);
@@ -211,6 +212,7 @@ if($_SERVER['SCRIPT_URL']=="/benchmark.json"){
 if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
   //Fetch data
   if($_SERVER['REQUEST_METHOD']=="GET"){
+      header('Content-Type: application/json');
       $mysqli=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
       $q=$mysqli->query("Select value from settings where name='blobs-update-version'");
       $r=$q->fetch_array();
@@ -220,7 +222,7 @@ if($_SERVER['SCRIPT_URL']=="/blobs-update-version.json"){
       $q=$mysqli->query("Select value from settings where name='latest-program-version'");
       $r=$q->fetch_array();
       $a['latest-program-version']=$r[0];//set to last prelease before release which equals release
-      echo json_encode($a);
+      echo json_encode($a,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
       $mysqli->close();
   }
   exit(0);

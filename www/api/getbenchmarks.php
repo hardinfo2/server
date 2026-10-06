@@ -1,6 +1,7 @@
 <?php
 //---- get benchmarks ------
 
+  header('Content-Type: application/json');
   $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
 
   if(!isset($_GET['u'])) $_GET['u']="DESKTOP";
@@ -49,5 +50,5 @@
 
   $r = $q->fetch_all();
 
-   echo json_encode($r);
+   echo json_encode($r,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
 ?>

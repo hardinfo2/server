@@ -39,8 +39,12 @@ if(1*$r[0]){ //refresh
     }
     $release_ver=str_replace("v","",$relver);
     $pre_release_ver=str_replace("pre","",str_replace("v","",$prerelver));
-    mysqli_query($db,"update settings set value='".$release_ver."' where name='latest-release-version'");
-    mysqli_query($db,"update settings set value='".$pre_release_ver."' where name='latest-prerelease-version'");
+    $q=$db->prepare("update settings set value=? where name='latest-release-version'");
+    $q->bind_param('s',$release_ver);
+    $q->execute();
+    $q=$db->prepare("update settings set value=? where name='latest-prerelease-version'");
+    $q->bind_param('s',$pre_release_ver);
+    $q->execute();
 
 
 }else{
@@ -85,7 +89,7 @@ if($action=="release_info"){
         if(!$releases[$n]->prerelease){
             $url = $releases[$n]->html_url;
 	    $relver=$releases[$n]->name;
-            $release_info=$releases[$n]->body;
+            $release_info=htmlspecialchars($releases[$n]->body,ENT_QUOTES);
 	    $n=-2;
         }
         $n++;
@@ -97,11 +101,11 @@ if($action=="release_info"){
     $release_info=str_replace("**","<b>",$release_info);
     $release_info=str_replace("\r\n","<br>",$release_info);
     $release_split=explode("Updates from",$release_info);
-    $release_info=$release_split[0]."Updates from".$release_split[1]."Updates from".$release_split[2];
+    $release_info=$release_split[0]."Updates from".($release_split[1]??"")."Updates from".($release_split[2]??"");
     $release_ver=str_replace("v","",$relver);
     //
-    echo "<b><font color=blue>Version: ".$release_ver."</font></b><br><br>".$release_info;
-    echo "See complete change list at github release: <a href='".$url."'>".$release_ver."</a>";
+    echo "<b><font color=blue>Version: ".htmlspecialchars($release_ver,ENT_QUOTES)."</font></b><br><br>".$release_info;
+    echo "See complete change list at github release: <a href='".htmlspecialchars($url,ENT_QUOTES)."'>".htmlspecialchars($release_ver,ENT_QUOTES)."</a>";
     exit(0);
 }
 
@@ -159,7 +163,7 @@ if($action=="latest_git_release"){
 	}
         $n++;
     }
-    echo $url;
+    echo htmlspecialchars($url,ENT_QUOTES);
     exit(0);
 }
 

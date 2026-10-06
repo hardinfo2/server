@@ -3,6 +3,9 @@
 //License: GPL2+
 
 header('Content-type: image/svg+xml');
+
+function xesc($s){return htmlspecialchars((string)$s,ENT_QUOTES|ENT_XML1);}
+
 $db=new mysqli("127.0.0.1","hardinfo","hardinfo","hardinfo");
 $r=mysqli_fetch_row($db->query("select value<unix_timestamp(now())-3600*24 from settings where name='repology-refresh'"));
 
@@ -90,7 +93,7 @@ if(1*$r[0]){ //refresh
         if(strcmp(substr($ps[$x+$col*2][1],0,strlen($curver)),$curver)) {if($ps[$x+$col*2][1][0]=="2") $c3="orange"; else {if(is_null($ps[$x+$col*2][1])) $c3="#555"; else $c3="red";}} else $c3="green";
         
         $packagestatus.='<rect x="142" y="'.(8+16*($x+1)).'" width="83" height="16" fill="'.$c1.'"/><rect x="369" y="'.(8+16*($x+1)).'" width="83" height="16" fill="'.$c2.'"/><rect x="602" y="'.(8+16*($x+1)).'" width="90" height="16" fill="'.$c3.'"/><rect y="'.(8+16*($x+1)).'" width="100%" height="16" fill="url(#grad)"/>
-	<g fill="#fff" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="137" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="end">'.$ps[$x+$col*0][0].'</text><text x="137" y="'.(20+16*($x+1)).'" text-anchor="end">'.$ps[$x+$col*0][0].'</text><text x="183.5" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="middle">'.$ps[$x+$col*0][1].'</text><text x="183.5" y="'.(20+16*($x+1)).'" text-anchor="middle">'.$ps[$x+$col*0][1].'</text><text x="364" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="end">'.$ps[$x+$col*1][0].'</text><text x="364" y="'.(20+16*($x+1)).'" text-anchor="end">'.$ps[$x+$col*1][0].'</text><text x="410.5" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="middle">'.$ps[$x+$col*1][1].'</text><text x="410.5" y="'.(20+16*($x+1)).'" text-anchor="middle">'.$ps[$x+$col*1][1].'</text><text x="597" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="end">'.$ps[$x+$col*2][0].'</text><text x="597" y="'.(20+16*($x+1)).'" text-anchor="end">'.$ps[$x+$col*2][0].'</text><text x="647.0" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="middle">'.$ps[$x+$col*2][1].'</text><text x="647.0" y="'.(20+16*($x+1)).'" text-anchor="middle">'.$ps[$x+$col*2][1].'</text></g>';
+	<g fill="#fff" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="137" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="end">'.xesc($ps[$x+$col*0][0]).'</text><text x="137" y="'.(20+16*($x+1)).'" text-anchor="end">'.xesc($ps[$x+$col*0][0]).'</text><text x="183.5" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="middle">'.xesc($ps[$x+$col*0][1]).'</text><text x="183.5" y="'.(20+16*($x+1)).'" text-anchor="middle">'.xesc($ps[$x+$col*0][1]).'</text><text x="364" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="end">'.xesc($ps[$x+$col*1][0]).'</text><text x="364" y="'.(20+16*($x+1)).'" text-anchor="end">'.xesc($ps[$x+$col*1][0]).'</text><text x="410.5" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="middle">'.xesc($ps[$x+$col*1][1]).'</text><text x="410.5" y="'.(20+16*($x+1)).'" text-anchor="middle">'.xesc($ps[$x+$col*1][1]).'</text><text x="597" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="end">'.xesc($ps[$x+$col*2][0]).'</text><text x="597" y="'.(20+16*($x+1)).'" text-anchor="end">'.xesc($ps[$x+$col*2][0]).'</text><text x="647.0" y="'.(21+16*($x+1)).'" fill="#010101" fill-opacity=".3" text-anchor="middle">'.xesc($ps[$x+$col*2][1]).'</text><text x="647.0" y="'.(20+16*($x+1)).'" text-anchor="middle">'.xesc($ps[$x+$col*2][1]).'</text></g>';
             
     }
     $packagestatus.="</g></svg>";

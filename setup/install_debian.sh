@@ -9,8 +9,8 @@ apt -y install apache2 mariadb-server php certbot
 
 echo "Settings up Mariadb..."
 cp -f 50-server.cnf /etc/mysql/mariadb.conf/
-systemclt enable mariadb
-systemclt restart mariadb
+systemctl enable mariadb
+systemctl restart mariadb
 
 echo "Fetching latest database backup"
 cd /var/www/html
